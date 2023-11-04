@@ -11,19 +11,14 @@ export default function WelcomeScreen({navigation}) {
 
             <View style={styles.header}>
                 <Image source={require('../img/logoColored.png')} style={styles.logo} />
-                <Text style={styles.headerText}>Swift Rent</Text>
             </View>
 
-            <Text style={styles.welcomeText}>Welcome!</Text>
-            <Pressable style={styles.button} onPress={() => console.log('Login Pressed')}>
-                <Text style={styles.buttonText}>Login</Text>
+            <Text style={styles.welcomeText}>Welcome to {'\n'}Swift Rent</Text>
+            <Pressable style={styles.button}
+                       onPress={() => navigation.navigate('LoginScreen')}>
+                <Text style={styles.buttonText}>Get Started</Text>
             </Pressable>
-            <Pressable style={styles.button} onPress={() => console.log('Create Account Pressed')}>
-                <Text style={styles.buttonText}>Create Account</Text>
-            </Pressable>
-            <Pressable onPress={() => navigation.navigate('LoginScreen')}>
-                <Text>Next</Text>
-            </Pressable>
+            <Text style={styles.loginText}>Already have an account? LogIn</Text>
 
             <View style={styles.footerContainer}>
                 <View style={styles.centeredContent}>
@@ -56,6 +51,7 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems:'center',
+
     },
 
     headerText:{
@@ -69,38 +65,42 @@ const styles = StyleSheet.create({
         marginTop: 20,
         fontSize: 30,
         fontWeight: 'bold',
-        marginBottom: 20
+        marginBottom: 20,
+        color: "#47b5ff"
 
     },
     button: {
         width: '60%',
-        paddingVertical: 25,
-        padding: 20,
-        backgroundColor: '#47B5FF',
-        marginTop: 20,
-        borderRadius: 20,
-        borderColor: '#1363DF',
+        paddingVertical: 2,
+        backgroundColor: '#e5e5e5',
+        marginTop: 100,
+        borderRadius: 100,
+        borderColor: '#cdcdcd',
         borderWidth: 1.5,
 
 
         // borderRadius: "5"
     },
     buttonText: {
-        color: 'black',
-        fontWeight: 'bold',
+        color: '#06283d',
+        // fontWeight: 'bold',
         textAlign: 'center',
-        fontSize: 28,
+        fontSize: 25,
 
+    },
+    loginText: {
+      color: "#06283d",
+      paddingTop: 5
     },
     footerContainer: {
         position: 'absolute',
         bottom: 0,
         width: '100%',
-        backgroundColor: '#fff',
+        backgroundColor: '#e5e5e5',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 10,
+        padding: 5,
     },
     earthImage: {
         width: 30,
