@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, Image, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable, TextInput, Platform } from 'react-native';
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { useState } from "react";
 
@@ -16,31 +16,40 @@ export default function GetToKnow({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
+            <Image source={require('../img/logoColored.png' )} style={styles.logo} />
+            <Text style={styles.postHeader}>Let's Get to Know You!</Text>
 
-                <Text style={styles.headerText}>Let's Get to Know You!</Text>
+            <View style={styles.input}>
+                <TextInput placeholder="First Name" placeholderTextColor="#cdcdcd" style={styles.textInput} />
+                <View style={styles.iconContainer}>
+                    <Image source={require('../assets/userIcon.png')} style={styles.placeholderIcon} />
+                </View>
+            </View>
+            <View style={styles.input}>
+                <TextInput placeholder="Last Name" placeholderTextColor="#cdcdcd" style={styles.textInput} />
+                <View style={styles.iconContainer}>
+                    <Image source={require('../assets/userIcon.png')} style={styles.placeholderIcon} />
+                </View>
             </View>
 
-            <TextInput style={styles.input} placeholder="First Name" />
-            <TextInput style={styles.input} placeholder="Last Name" />
-
             <View style={styles.datePickerContainer}>
-
                 <Pressable
                     style={{
-                        backgroundColor: '#47B5FF',
-                        marginTop:5,
-                        marginBottom:5,
+                        backgroundColor: '#fff',
+                        marginTop: 5,
+                        marginBottom: 5,
                         padding: 10,
-                        borderColor: '#1363DF',
-                        borderWidth: 1,
+                        borderColor: 'black',
+                        borderWidth: 2,
                         borderRadius: 20,
                         flexDirection: 'row',
                         alignItems: 'center',
+                        color: '#cdcdcd',
+                        width: '250'
                     }}
                     onPress={() => setShowDatePicker(true)}
                 >
-                    <Text style={{ color: 'white' }}>{selectedDate.toDateString()}</Text>
+                    <Text style={{ color: '#cdcdcd' ,width: 200}}>{selectedDate.toDateString()}</Text>
                     <Image source={require('../img/calendarIcon.png')} style={{ width: 20, height: 20, marginLeft: 10 }} />
                 </Pressable>
             </View>
@@ -65,8 +74,6 @@ export default function GetToKnow({ navigation }) {
                     <Text style={styles.buttonText}>Next</Text>
                 </Pressable>
             </View>
-
-
         </View>
     );
 }
@@ -77,35 +84,42 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-
     },
     logo: {
         width: 100,
         height: 100,
     },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: -300,
-        marginBottom: 50,
-    },
     headerText: {
-        fontSize: 50,
+        fontSize: 25,
         paddingTop: 15,
         color: 'black',
         fontWeight: 'bold',
     },
     input: {
+        flexDirection: 'row',
+        alignItems: 'center',
         width: 250,
         height: 40,
-        borderColor: '#1363DF',
-        borderWidth: 1,
-        borderRadius: 20,
+        borderColor: '#06283d',
+        borderWidth: 2,
+        borderRadius: 15,
         padding: 10,
+        marginTop: 3,
         marginBottom: 10,
-        backgroundColor: '#47B5FF',
-        color: 'white',
+        backgroundColor: '#fff',
         fontWeight: 'bold',
+        justifyContent: 'space-between',
+    },
+    placeholderIcon: {
+        width: 20,
+        height: 20,
+    },
+    textInput: {
+        flex: 1,
+        color: '#06283d',
+    },
+    iconContainer: {
+        justifyContent: 'flex-end',
     },
     buttonContainer: {
         flexDirection: 'row',
@@ -117,26 +131,37 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#47B5FF',
-        borderColor: 'black',
-        borderWidth: 1,
+        backgroundColor: '#e5e5e5',
+        borderColor: '#cdcdcd',
+        borderWidth: 2,
         borderRadius: 20,
         padding: 10,
+
     },
     space: {
-        width: 10,
+        width: 20,
     },
     buttonText: {
-        color: '#fff',
-        fontWeight: 'bold',
+        color: 'black',
+
     },
     datePickerContainer: {
         flexDirection: 'column',
         alignItems: 'flex-start',
+
     },
     selectDateText: {
         color: '#47B5FF',
         fontWeight: 'bold',
         marginBottom: 5,
+    },
+    postHeader: {
+
+        marginTop: 20,
+        fontSize: 30,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        color: '#47b5ff'
+
     },
 });

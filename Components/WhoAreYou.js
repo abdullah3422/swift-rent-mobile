@@ -11,21 +11,17 @@ export default function LoginAs({navigation}) {
 
             <View style={styles.header}>
                 <Image source={require('../img/logoColored.png')} style={styles.logo} />
-                <Text style={styles.headerText}>Swift Rent</Text>
             </View>
+            <Text style={styles.postHeader}>Who are you?</Text>
 
-            <Text style={styles.LoginAs}>Who are you?</Text>
-            <Pressable style={styles.button} onPress={() => console.log('Property Owner')}>
+            <Pressable style={styles.button} onPress={() => navigation.navigate('GetToKnow')}>
                 <Text style={styles.buttonText}>Property Owner</Text>
             </Pressable>
-            <Pressable style={styles.button} onPress={() => console.log('Property Manager')}>
-                <Text style={styles.buttonText}>Property Manager</Text>
+            <Pressable style={styles.button} onPress={() => navigation.navigate('GetToKnow')}>
+                <Text style={styles.buttonText}>Property Agent</Text>
             </Pressable>
-            <Pressable style={styles.button} onPress={() => console.log('Tenant')}>
+            <Pressable style={styles.button} onPress={() => navigation.navigate('GetToKnow')}>
                 <Text style={styles.buttonText}>Tenant</Text>
-            </Pressable>
-            <Pressable onPress={() => navigation.navigate('GetToKnow')}>
-                <Text>Next</Text>
             </Pressable>
 
         </View>
@@ -38,7 +34,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: "#dff6ff",
+        backgroundColor: "#fff",
         marginTop: -140
     },
     logo: {
@@ -65,23 +61,31 @@ const styles = StyleSheet.create({
 
     },
     button: {
-        width: '70%',
-        paddingVertical: 25,
+        width: '60%',
+        paddingVertical: 15,
         padding: 20,
-        backgroundColor: '#47B5FF',
+        backgroundColor: '#e5e5e5',
         marginTop: 20,
-        borderRadius: 20,
-        borderColor: '#1363DF',
-        borderWidth: 1.5,
+        borderRadius: 30,
+        borderColor: '#cdcdcd',
+        borderWidth: 2,
 
 
         // borderRadius: "5"
     },
     buttonText: {
-        color: 'black',
-        fontWeight: 'bold',
+        color: '#06283d',
         textAlign: 'center',
-        fontSize: 28,
+        fontSize: 20,
+
+    },
+    postHeader: {
+
+        marginTop: 20,
+        fontSize: 30,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        color: '#47b5ff'
 
     },
 

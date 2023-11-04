@@ -11,19 +11,20 @@ export default function LoginAs({navigation}) {
 
             <View style={styles.header}>
                 <Image source={require('../img/logoColored.png')} style={styles.logo} />
-                <Text style={styles.headerText}>Swift Rent</Text>
+
             </View>
 
             <Text style={styles.LoginAs}>Login As</Text>
-            <Pressable style={styles.button} onPress={() => console.log('Property Owner')}>
+            <Pressable style={styles.button} onPress={() => navigation.navigate('WhoAreYou')}>
                 <Text style={styles.buttonText}>Property Owner</Text>
             </Pressable>
-            <Pressable style={styles.button} onPress={() => console.log('Tenant')}>
+            <Pressable style={styles.button} onPress={() => navigation.navigate('WhoAreYou')}>
+                <Text style={styles.buttonText}>Property Agent</Text>
+            </Pressable>
+            <Pressable style={styles.button} onPress={() => navigation.navigate('WhoAreYou')}>
                 <Text style={styles.buttonText}>Tenant</Text>
             </Pressable>
-            <Pressable onPress={() => navigation.navigate('WhoAreYou')}>
-                <Text>Next</Text>
-            </Pressable>
+
 
         </View>
 
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: "#fff",
-        marginTop: -250
+        marginTop: -140
     },
     logo: {
         width: 100,
@@ -58,27 +59,27 @@ const styles = StyleSheet.create({
         marginTop: 20,
         fontSize: 30,
         fontWeight: 'bold',
-        marginBottom: 20
+        marginBottom: 20,
+        color: '#47b5ff'
 
     },
     button: {
         width: '60%',
-        paddingVertical: 25,
+        paddingVertical: 15,
         padding: 20,
-        backgroundColor: '#47B5FF',
+        backgroundColor: '#e5e5e5',
         marginTop: 20,
-        borderRadius: 20,
-        borderColor: '#1363DF',
-        borderWidth: 1.5,
+        borderRadius: 30,
+        borderColor: '#cdcdcd',
+        borderWidth: 2,
 
 
         // borderRadius: "5"
     },
     buttonText: {
-        color: 'black',
-        fontWeight: 'bold',
+        color: '#06283d',
         textAlign: 'center',
-        fontSize: 28,
+        fontSize: 20,
 
     },
 

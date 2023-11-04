@@ -1,16 +1,28 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, Image, Pressable, TextInput } from 'react-native';
 
-export default function LoginScreen({navigation}) {
+export default function LoginScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-
+                <Image source={require('../img/logoColored.png')} style={styles.logo} />
                 <Text style={styles.headerText}>We need your information</Text>
             </View>
 
-            <TextInput style={styles.input} placeholder="Email Address" keyboardType="email-address"/>
-            <TextInput style={styles.input} placeholder="Mobile Number"  keyboardType="numeric"/>
+            <View style={styles.inputContainer}>
+                <View style={styles.inputWithIcon}>
+                    <TextInput style={styles.input} placeholder="Email Address" placeholderTextColor="#cdcdcd" keyboardType="email-address" />
+                    <Image source={require('../img/email.png')} style={styles.imageStyle} />
+                </View>
+            </View>
+
+            <View style={styles.inputContainer}>
+                <View style={styles.inputWithIcon}>
+                    <TextInput style={styles.input} placeholder="Mobile Number" placeholderTextColor="#cdcdcd" keyboardType="numeric" />
+                    <Image source={require('../img/hashtag.png')} style={styles.imageStyle} />
+                </View>
+            </View>
+
             <View style={styles.buttonContainer}>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Back</Text>
@@ -19,9 +31,7 @@ export default function LoginScreen({navigation}) {
                 <Pressable style={styles.button} onPress={() => navigation.navigate('SetPassword')}>
                     <Text style={styles.buttonText}>Next</Text>
                 </Pressable>
-
             </View>
-
         </View>
     );
 }
@@ -45,22 +55,37 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     headerText: {
-        fontSize: 50,
-        paddingTop: 15,
-        color: 'black',
+        marginTop: 20,
+        fontSize: 30,
         fontWeight: 'bold',
+        marginBottom: 20,
+        color: '#47b5ff',
+    },
+    inputContainer: {
+        marginBottom: 10,
+    },
+    inputWithIcon: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: 250,
+        borderColor: '#06283d',
+        borderWidth: 2,
+        borderRadius: 15,
+        backgroundColor: '#fff',
+        marginBottom: 10,
+        position: 'relative',
     },
     input: {
-        width: 250,
+        width: '90%',
         height: 40,
-        borderColor: '#1363DF',
-        borderWidth: 1,
-        borderRadius: 20,
         padding: 10,
-        marginBottom: 10,
-        backgroundColor: '#47B5FF',
-        color: 'white',
         fontWeight: 'bold',
+    },
+    imageStyle: {
+        position: 'absolute',
+        right: 10,
+        width: 25,
+        height: 25,
     },
     buttonContainer: {
         flexDirection: 'row',
