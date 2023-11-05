@@ -10,32 +10,53 @@ import GetToKnow from "./Components/GetToKnow"
 import ContactInfo from "./Components/ContactInfo"
 import SetPassword from "./Components/SetPassword"
 import SetUp from "./Components/SetUp"
+import AnalyticsOwner from "./Components/AnalyticsOwner"
+import Properties from "./Components/Properties";
+import AddProperty from "./Components/AddProperty";
+import PropertyInformation from "./Components/PropertyInformation";
+import TenantData from "./Components/TenanData"
+import NotificationAlerts from "./Components/NotificationAlerts";
+import OwnersDashboard from "./Components/OwnersDashboard";
+
+
+
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import BottomTabNavigator from "./Components/BottomTabNavigator";
+
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
     return (
     <NavigationContainer>
 
-      <Stack.Navigator initialRouteName="SplashScreen">
+      <Stack.Navigator initialRouteName="TenantData">
 
 
-        <Stack.Screen name="Splash" component={SplashScreen} />
-          <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
-          <Stack.Screen name="LoginScreen" component={LoginScreen} />
-          <Stack.Screen name="LoginAs" component={LoginAs} />
-          <Stack.Screen name="WhoAreYou" component={WhoAreYou} />
-          <Stack.Screen name="GetToKnow" component={GetToKnow} />
-          <Stack.Screen name="ContactInfo" component={ContactInfo} />
-          <Stack.Screen name="SetPassword" component={SetPassword} />
-          <Stack.Screen name="SetUp" component={SetUp} />
+        <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="LoginAs" component={LoginAs} options={{ headerShown: false }}/>
+          <Stack.Screen name="WhoAreYou" component={WhoAreYou} options={{ headerShown: false }}/>
+          <Stack.Screen name="GetToKnow" component={GetToKnow} options={{ headerShown: false }}/>
+          <Stack.Screen name="ContactInfo" component={ContactInfo} options={{ headerShown: false }}/>
+          <Stack.Screen name="SetPassword" component={SetPassword} options={{ headerShown: false }}/>
+          <Stack.Screen name="SetUp" component={SetUp} options={{ headerShown: false }}/>
+          <Stack.Screen name="AnalyticsOwner" component={AnalyticsOwner} options={{ headerShown: false }}/>
+          {/*<Stack.Screen name="Properties" component={BottomTabNavigator} options={{ headerShown: false }}/>*/}
+          <Stack.Screen name="AddProperty" component={AddProperty} options={{ headerShown: false }}/>
+          <Stack.Screen name="PropertyInformation" component={PropertyInformation} options={{ headerShown: false }}/>
+        <Stack.Screen name="TenantData" component={TenantData} options={{ headerShown: false }}/>
+        <Stack.Screen name="NotificationAlerts" component={NotificationAlerts} options={{ headerShown: false }}/>
+        <Stack.Screen name="OwnersDashboard" component={OwnersDashboard} options={{ headerShown: false }}/>
+
+</Stack.Navigator>
 
 
-        {/* Add other screens here */}
 
-      </Stack.Navigator>
 
     </NavigationContainer>
-    
+
        
     );
 }

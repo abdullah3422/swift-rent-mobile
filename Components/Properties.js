@@ -6,16 +6,14 @@ import WelcomeScreen from "./WelcomeScreen";
 
 
 
-export default function SplashScreen({navigation}) {
+export default function Properties({navigation}) {
 
     return (
         <View style ={styles.container}>
             <Text style={styles.splashText}>
-               You are all {'\n'}Set Up!
+                You are all {'\n'}Set Up!
             </Text>
-            <Pressable onPress={() => navigation.navigate('AnalyticsOwner')}>
-                <Text style={{paddingTop: 15}}>Next</Text>
-            </Pressable>
+
         </View>
     );
 }

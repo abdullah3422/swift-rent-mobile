@@ -6,7 +6,9 @@ export default function LoginScreen({ navigation }) {
         <View style={styles.container}>
             <View style={styles.header}>
                 <Image source={require('../img/logoColored.png')} style={styles.logo} />
-                <Text style={styles.headerText}>We need your information</Text>
+                <View>
+                    <Text style={styles.headerText}>We need your information</Text>
+                </View>
             </View>
 
             <View style={styles.inputContainer}>
@@ -42,16 +44,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        marginTop: -50,
+
     },
     logo: {
         width: 100,
         height: 100,
     },
     header: {
-        flexDirection: 'row',
+        flexDirection: 'column', // Align items in a column
         alignItems: 'center',
-        marginTop: -300,
+        marginTop: -180,
         marginBottom: 10,
     },
     headerText: {
@@ -97,9 +99,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#47B5FF',
-        borderColor: 'black',
-        borderWidth: 1,
+        backgroundColor: '#e5e5e5',
+        borderColor: '#cdcdcd',
+        borderWidth: 2,
         borderRadius: 20,
         padding: 10,
     },
@@ -107,7 +109,6 @@ const styles = StyleSheet.create({
         width: 10,
     },
     buttonText: {
-        color: '#fff',
-        fontWeight: 'bold',
+        color: 'black',
     },
 });

@@ -1,71 +1,43 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, Image, Pressable, TextInput, Platform } from 'react-native';
-import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { useState } from "react";
 
-export default function GetToKnow({ navigation }) {
-    const [selectedDate, setSelectedDate] = useState(new Date());
-    const [showDatePicker, setShowDatePicker] = useState(false);
+export default function TenantData({ navigation }) {
 
-    const handleDateChange = (event, date) => {
-        if (Platform.OS === 'android' && event.type === 'set') {
-            setShowDatePicker(false);
-            setSelectedDate(date || selectedDate);
-        }
-    };
 
     return (
         <View style={styles.container}>
-            <Image source={require('../img/logoColored.png' )} style={styles.logo} />
-            <Text style={styles.postHeader}>Let's Get to Know You!</Text>
+
+            <Text style={styles.postHeader}>Tenant Data</Text>
 
             <View style={styles.input}>
-                <TextInput placeholder="First Name" placeholderTextColor="#cdcdcd" style={styles.textInput} />
+                <TextInput placeholder="Name" placeholderTextColor="#cdcdcd" style={styles.textInput} />
                 <View style={styles.iconContainer}>
-                    <Image source={require('../assets/userIcon.png')} style={styles.placeholderIcon} />
+                    <Image source={require('../img/userIcon.png')} style={styles.placeholderIcon} />
                 </View>
             </View>
             <View style={styles.input}>
-                <TextInput placeholder="Last Name" placeholderTextColor="#cdcdcd" style={styles.textInput} />
+                <TextInput placeholder="Address" placeholderTextColor="#cdcdcd" style={styles.textInput} />
                 <View style={styles.iconContainer}>
-                    <Image source={require('../assets/userIcon.png')} style={styles.placeholderIcon} />
+                    <Image source={require('../img/locationIcon.png')} style={styles.placeholderIcon} />
+                </View>
+            </View>
+            <View style={styles.input}>
+                <TextInput placeholder="Contact No." placeholderTextColor="#cdcdcd" style={styles.textInput} />
+                <View style={styles.iconContainer}>
+                    <Image source={require('../img/hashtag.png')} style={styles.placeholderIcon} />
+                </View>
+            </View>
+            <View style={styles.input}>
+                <TextInput placeholder="Email" placeholderTextColor="#cdcdcd" style={styles.textInput} />
+                <View style={styles.iconContainer}>
+                    <Image source={require('../img/email.png')} style={styles.placeholderIcon} />
                 </View>
             </View>
 
-            <View style={styles.datePickerContainer}>
-                <Pressable
-                    style={{
-                        backgroundColor: '#fff',
-                        marginTop: 5,
-                        marginBottom: 5,
-                        padding: 10,
-                        borderColor: 'black',
-                        borderWidth: 2,
-                        borderRadius: 20,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        color: '#cdcdcd',
-                        width: '250'
-                    }}
-                    onPress={() => setShowDatePicker(true)}
-                >
-                    <Text style={{ color: '#cdcdcd' ,width: 200}}>{selectedDate.toDateString()}</Text>
-                    <Image source={require('../img/calendarIcon.png')} style={{ width: 20, height: 20, marginLeft: 10 }} />
-                </Pressable>
-            </View>
-
-            {showDatePicker && (
-                <RNDateTimePicker
-                    testID="dateTimePicker"
-                    value={selectedDate}
-                    mode="date"
-                    display="default"
-                    onChange={handleDateChange}
-                />)
-            }
 
             <View style={styles.buttonContainer}>
-                <Pressable style={styles.button} onPress={() => navigation.navigate('WhoAreYou')}>
+                <Pressable style={styles.button} >
                     <Text style={styles.buttonText}>Back</Text>
                 </Pressable>
 
@@ -84,12 +56,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
+        marginTop: -200,
+        marginBottom: 30
     },
-    logo: {
-        width: 100,
-        height: 100,
-        marginTop: -180
-    },
+
     headerText: {
         fontSize: 25,
         paddingTop: 15,
@@ -162,7 +132,8 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 20,
-        color: '#47b5ff'
+        color: 'black',
+        textAlign: 'center'
 
     },
 });

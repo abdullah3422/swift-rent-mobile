@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: -180,
+        marginTop: -30,
         marginBottom: 10,
     },
     input: {
@@ -100,11 +100,11 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#06283d',
-        fontWeight: 'bold',
+
     },
     loginText: {
         color: "#47B5FF",
-        fontSize: 20,
+        fontSize: 28,
         fontWeight: 'bold',
         marginBottom: 5,
     },
