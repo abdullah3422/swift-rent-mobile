@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, Image, Pressable, TextInput, Platform } from 'react-native';
-import { useState } from "react";
+import {Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 
 export default function PropertyInformation({ navigation }) {
 

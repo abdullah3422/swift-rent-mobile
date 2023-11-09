@@ -1,6 +1,5 @@
 import React from 'react';
-import Goodbye from './Goodbye';
-import { View, Text, StyleSheet, SectionList,Pressable } from 'react-native';
+import {Pressable, SectionList, StyleSheet, Text, View} from 'react-native';
 
 const menuItemsToDisplay = [
     {

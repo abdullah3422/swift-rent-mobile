@@ -1,6 +1,5 @@
-
 import * as React from 'react';
-import { StyleSheet, Text, View,Image,Pressable, TouchableOpacity} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 
 
 export default function LoginAs({navigation}) {

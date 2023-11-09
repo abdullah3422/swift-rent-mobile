@@ -1,11 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, Image, Pressable, TouchableOpacity,FlatList } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import Properties from "./Properties"
-import WelcomeScreen from "./WelcomeScreen";
-import { Ionicons } from '@expo/vector-icons';
+import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import BottomTabNavigator from './BottomTabNavigator';
 
 

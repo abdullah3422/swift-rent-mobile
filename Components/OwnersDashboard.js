@@ -1,16 +1,9 @@
-
 import * as React from 'react';
-import { StyleSheet, Text, View,Image,Pressable, TouchableOpacity} from 'react-native';
-import BottomTabNavigator from "./BottomTabNavigator";
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 
 
 export default function OwnersDashboard({navigation}) {
-    const cardButtons = [
-        { title: 'Sept', details: '27,000   2,000' },
-        { title: 'Aug', details: '23,000    1,100' },
-        { title: 'Jul', details: '13,000    300' },
 
-    ];
 
     const renderItem = ({ item }) => (
         <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('WhoAreYou')}>
@@ -25,12 +18,18 @@ export default function OwnersDashboard({navigation}) {
 
     return (
         <View style={styles.container}>
+            <View style={styles.header}>
+                <View style={styles.headerContent}>
+                    <Text style={styles.headerText}>Owner's Section</Text>
+                    <Image style={styles.headerImage} source={require('../img/menu.png')}  />
+                </View>
+            </View>
             <View style={styles.topContainer}>
                 <View style={styles.topContainerText}>
                     <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Owners Dashboard</Text>
 
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
-                            <Text style={{ fontSize: 16, width: '50%' }}>Rent Status </Text>
+                        <Text style={{ fontSize: 16, width: '50%' }}>Rent Status </Text>
                         <Text style={{ fontWeight: 'bold', fontSize: 16, }}>{'\t\t\t\t\t\t\t\t\t\t'}Paid</Text>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -94,6 +93,28 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         marginTop: -70
     },
+    header: {
+        marginTop: 60,
+        marginBottom: -20,
+        backgroundColor: "#47b5ff",
+        width: '100%',
+    },
+    headerContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 15,
+    },
+    headerText: {
+        color: "#fff",
+        fontSize: 25,
+        paddingVertical: 10,
+        fontWeight: "bold"
+    },
+    headerImage: {
+        width: 40,
+        height: 40,
+    },
     topContainer: {
         width: '80%',
         paddingVertical: 15,
@@ -101,8 +122,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#a3a9b2',
         marginTop: 70,
         borderRadius: 20,
-        // borderColor: '#1463df',
-        // borderWidth: 4,
         fontSize: 25,
     },
     topContainerText: {
@@ -110,17 +129,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 25,
     },
-    arrowImage: {
-        width: 20,
-        height: 20,
-        marginHorizontal: 5,
-    },
     bottomContainer: {
         flex: 0.8,
         backgroundColor: '#fff',
         marginTop: 15,
         width: '100%',
-
     },
     fullWidth: {
         width: '90%',
@@ -129,7 +142,7 @@ const styles = StyleSheet.create({
     buttonRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: '100%',
+        width: '95%',
     },
 
     cardButtons: {
@@ -159,7 +172,7 @@ const styles = StyleSheet.create({
     },
     widthReduce: {
         marginLeft: -30
-        }
+    }
 
 
 

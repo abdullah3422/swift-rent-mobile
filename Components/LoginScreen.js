@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, Image, Pressable, TextInput } from 'react-native';
+import {Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 
 // Assume 'userIcon' and 'eyeIcon' are imported correctly or provided as local resources
 

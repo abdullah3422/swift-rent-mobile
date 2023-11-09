@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, Image, Pressable, TextInput, Platform } from 'react-native';
+import {useState} from 'react';
+import {Image, Platform, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import RNDateTimePicker from "@react-native-community/datetimepicker";
-import { useState } from "react";
 
 export default function GetToKnow({ navigation }) {
     const [selectedDate, setSelectedDate] = useState(new Date());

@@ -1,9 +1,10 @@
 // BottomTabNavigator.js
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Image, StyleSheet, View } from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {Image, StyleSheet, View} from 'react-native';
 import Properties from './Properties';
-import WelcomeScreen from './WelcomeScreen';
+import WhoAreYou from './WhoAreYou';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -17,12 +18,12 @@ export default function BottomTabNavigator(navigation) {
 
                         if (route.name === 'Properties') {
                             iconPath = focused ? require('../img/propertiesIconFocused.png') : require('../img/propertiesIcon.png');
-                        } else if (route.name === 'WelcomeScreen') {
+                        } else if (route.name === 'Analytics') {
                             iconPath = focused ? require('../img/analyticIconFocused.png') : require('../img/analyticIcon.png');
-                        }else if (route.name === 'WelcomeScreen') {
-                            iconPath = focused ? require('../img/analyticIconFocused.png') : require('../img/analyticIcon.png');
-                        }else if (route.name === 'WelcomeScreen') {
-                            iconPath = focused ? require('../img/analyticIconFocused.png') : require('../img/analyticIcon.png');
+                        }else if (route.name === 'NotificationAlerts') {
+                            iconPath = focused ? require('../img/notificationFocused.png') : require('../img/notification.png');
+                        }else if (route.name === 'Profile') {
+                            iconPath = focused ? require('../img/profile.png') : require('../img/profileFocused.png');
                         }
                         // ... (Repeat for other tabs)
 
@@ -30,9 +31,46 @@ export default function BottomTabNavigator(navigation) {
                     },
                 })}
             >
-                <Tab.Screen name="Properties" component={Properties} />
-                <Tab.Screen name="WelcomeScreen" component={WelcomeScreen} />
-                {/* Add other screens */}
+                <Tab.Screen
+                    name="Properties"
+                    component={Properties}
+                    listeners={({ navigation }) => ({
+                        tabPress: (e) => {
+                            e.preventDefault();
+                            navigation.navigate('Properties');
+                        },
+                    })}
+                />
+                <Tab.Screen
+                    name="Analytics"
+                    component={WhoAreYou}
+                    listeners={({ navigation }) => ({
+                        tabPress: (e) => {
+                            e.preventDefault();
+                            navigation.navigate('WhoAreYou');
+                        },
+                    })}
+                />
+                <Tab.Screen
+                    name="Alerts"
+                    component={WhoAreYou}
+                    listeners={({ navigation }) => ({
+                        tabPress: (e) => {
+                            e.preventDefault();
+                            navigation.navigate('WhoAreYou');
+                        },
+                    })}
+                />
+                <Tab.Screen
+                    name="Profile"
+                    component={WhoAreYou}
+                    listeners={({ navigation }) => ({
+                        tabPress: (e) => {
+                            e.preventDefault();
+                            navigation.navigate('WhoAreYou');
+                        },
+                    })}
+                />
             </Tab.Navigator>
         </View>
     );

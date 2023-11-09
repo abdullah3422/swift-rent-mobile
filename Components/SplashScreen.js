@@ -1,7 +1,5 @@
-
 import * as React from 'react';
-import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
-import WelcomeScreen from "./WelcomeScreen";
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 
 export default function SplashScreen({navigation}) {
 
