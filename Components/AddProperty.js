@@ -47,15 +47,12 @@ export default function AddProperty({ navigation }) {
                     keyExtractor={(item, index) => index.toString()}
                 />
 
-                <BottomTabNavigator/>
             </View>
-
-
-
 
             <Pressable onPress={() => navigation.navigate('PropertyInformation')}>
                 <Text style={{paddingTop: 15}}>Next</Text>
             </Pressable>
+            <BottomTabNavigator/>
         </View>
     );
 }

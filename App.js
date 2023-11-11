@@ -20,41 +20,40 @@ import TenantData from './Components/TenanData';
 import NotificationAlerts from './Components/NotificationAlerts';
 import OwnersDashboard from './Components/OwnersDashboard';
 
-const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const App = () => {
   return (
+
       <NavigationContainer>
-        <Drawer.Navigator >
-          <Drawer.Screen name="My Dashboard" component={OwnersDashboard} />
-          <Drawer.Screen name={"Welcome"} component={WelcomeScreen}/>
-        </Drawer.Navigator>
+        <DrawerNavigator/>
       </NavigationContainer>
   );
 };
 
-const StackNavigator = () => {
-  return (
-      <Stack.Navigator initialRouteName="SplashScreen">
-        <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="LoginAs" component={LoginAs} options={{ headerShown: false }} />
-        <Stack.Screen name="WhoAreYou" component={WhoAreYou} options={{ headerShown: false }} />
-        <Stack.Screen name="GetToKnow" component={GetToKnow} options={{ headerShown: false }} />
-        <Stack.Screen name="ContactInfo" component={ContactInfo} options={{ headerShown: false }} />
-        <Stack.Screen name="SetPassword" component={SetPassword} options={{ headerShown: false }} />
-        <Stack.Screen name="SetUp" component={SetUp} options={{ headerShown: false }} />
-        <Stack.Screen name="AnalyticsOwner" component={AnalyticsOwner} options={{ headerShown: false }} />
-        <Stack.Screen name="Properties" component={Properties} options={{ headerShown: false }} />
-        <Stack.Screen name="AddProperty" component={AddProperty} options={{ headerShown: false }} />
-        <Stack.Screen name="PropertyInformation" component={PropertyInformation} options={{ headerShown: false }} />
-        <Stack.Screen name="TenantData" component={TenantData} options={{ headerShown: false }} />
-        <Stack.Screen name="NotificationAlerts" component={NotificationAlerts} options={{ headerShown: false }} />
-        <Stack.Screen name="OwnersDashboard" component={OwnersDashboard} options={{ headerShown: false }} />
-      </Stack.Navigator>
-  );
+const DrawerNavigator = () => {
+    return (
+        <Drawer.Navigator initialRouteName="SplashScreen">
+            <Drawer.Screen name="SplashScreen" component={SplashScreen} options={{headerShown: false}}/>
+            <Drawer.Screen name="WelcomeScreen" component={WelcomeScreen} options={{ headerShown: false }} />
+            <Drawer.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
+            <Drawer.Screen name="LoginAs" component={LoginAs} options={{ headerShown: false }} />
+            <Drawer.Screen name="WhoAreYou" component={WhoAreYou} options={{ headerShown: false }} />
+            <Drawer.Screen name="GetToKnow" component={GetToKnow} options={{ headerShown: false }} />
+            <Drawer.Screen name="ContactInfo" component={ContactInfo} options={{ headerShown: false }} />
+            <Drawer.Screen name="SetPassword" component={SetPassword} options={{ headerShown: false }} />
+            <Drawer.Screen name="SetUp" component={SetUp} options={{ headerShown: false }} />
+            <Drawer.Screen name="AnalyticsOwner" component={AnalyticsOwner} options={{ headerShown: false }} />
+            <Drawer.Screen name="Properties" component={Properties} options={{ headerShown: false }} />
+            <Drawer.Screen name="AddProperty" component={AddProperty} options={{ headerShown: false }} />
+            <Drawer.Screen name="PropertyInformation" component={PropertyInformation} options={{ headerShown: false }} />
+            <Drawer.Screen name="TenantData" component={TenantData} options={{ headerShown: false }} />
+            <Drawer.Screen name="NotificationAlerts" component={NotificationAlerts} options={{ headerShown: false }} />
+
+            <Drawer.Screen name="OwnersDashboard" component={OwnersDashboard} />
+
+        </Drawer.Navigator>
+    );
 };
 
 export default App;

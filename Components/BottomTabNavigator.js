@@ -78,6 +78,7 @@ export default function BottomTabNavigator(navigation) {
 
 const styles = StyleSheet.create({
     container: {
+        marginTop:20,
         flexDirection: 'row',
         justifyContent: 'space-between',
         backgroundColor: '#fff',
