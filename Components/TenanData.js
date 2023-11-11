@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 
-export default function TenantData({ navigation }) {
+export default function TenantData({navigation}) {
 
 
     return (
@@ -10,37 +10,37 @@ export default function TenantData({ navigation }) {
             <Text style={styles.postHeader}>Tenant Data</Text>
 
             <View style={styles.input}>
-                <TextInput placeholder="Name" placeholderTextColor="#cdcdcd" style={styles.textInput} />
+                <TextInput placeholder="Name" placeholderTextColor="#cdcdcd" style={styles.textInput}/>
                 <View style={styles.iconContainer}>
-                    <Image source={require('../img/userIcon.png')} style={styles.placeholderIcon} />
+                    <Image source={require('../img/userIcon.png')} style={styles.placeholderIcon}/>
                 </View>
             </View>
             <View style={styles.input}>
-                <TextInput placeholder="Address" placeholderTextColor="#cdcdcd" style={styles.textInput} />
+                <TextInput placeholder="Address" placeholderTextColor="#cdcdcd" style={styles.textInput}/>
                 <View style={styles.iconContainer}>
-                    <Image source={require('../img/locationIcon.png')} style={styles.placeholderIcon} />
+                    <Image source={require('../img/locationIcon.png')} style={styles.placeholderIcon}/>
                 </View>
             </View>
             <View style={styles.input}>
-                <TextInput placeholder="Contact No." placeholderTextColor="#cdcdcd" style={styles.textInput} />
+                <TextInput placeholder="Contact No." placeholderTextColor="#cdcdcd" style={styles.textInput}/>
                 <View style={styles.iconContainer}>
-                    <Image source={require('../img/hashtag.png')} style={styles.placeholderIcon} />
+                    <Image source={require('../img/hashtag.png')} style={styles.placeholderIcon}/>
                 </View>
             </View>
             <View style={styles.input}>
-                <TextInput placeholder="Email" placeholderTextColor="#cdcdcd" style={styles.textInput} />
+                <TextInput placeholder="Email" placeholderTextColor="#cdcdcd" style={styles.textInput}/>
                 <View style={styles.iconContainer}>
-                    <Image source={require('../img/email.png')} style={styles.placeholderIcon} />
+                    <Image source={require('../img/email.png')} style={styles.placeholderIcon}/>
                 </View>
             </View>
 
 
             <View style={styles.buttonContainer}>
-                <Pressable style={styles.button} >
+                <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Back</Text>
                 </Pressable>
 
-                <View style={styles.space} />
+                <View style={styles.space}/>
                 <Pressable style={styles.button} onPress={() => navigation.navigate('ContactInfo')}>
                     <Text style={styles.buttonText}>Next</Text>
                 </Pressable>
@@ -50,6 +50,7 @@ export default function TenantData({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
 
     headerText: {
         fontSize: 25,
-        paddingTop: 15,
+        paddingTop: 16,
         color: 'black',
         fontWeight: 'bold',
     },

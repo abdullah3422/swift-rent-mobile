@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import BottomTabNavigator from './BottomTabNavigator';
+import BottomTabNavigator from "./BottomTabNavigator";
+
 
 
 const Tab = createBottomTabNavigator();
@@ -46,12 +47,12 @@ export default function AddProperty({ navigation }) {
                     keyExtractor={(item, index) => index.toString()}
                 />
 
-
+                <BottomTabNavigator/>
             </View>
 
 
 
-            <BottomTabNavigator/>
+
             <Pressable onPress={() => navigation.navigate('PropertyInformation')}>
                 <Text style={{paddingTop: 15}}>Next</Text>
             </Pressable>

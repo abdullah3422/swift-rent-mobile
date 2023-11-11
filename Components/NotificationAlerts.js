@@ -1,7 +1,9 @@
 import * as React from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import BottomTabNavigator from './BottomTabNavigator';
+
+import AddProperty from "./AddProperty";
+import BottomTabNavigator from "./BottomTabNavigator";
 
 
 const Tab = createBottomTabNavigator();
@@ -36,7 +38,7 @@ export default function NotificationAlerts({ navigation }) {
                         <Text style={{ fontWeight: 'bold', fontSize: 20, }}>25</Text>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 20, width: '50%' }}>Tenanats</Text>
+                        <Text style={{ fontSize: 20, width: '50%' }}>Tenants</Text>
                         <Text style={{ fontWeight: 'bold', fontSize: 20 }}>15</Text>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -76,7 +78,6 @@ export default function NotificationAlerts({ navigation }) {
             <Pressable onPress={() => navigation.navigate('AddProperty')}>
                 <Text style={{paddingTop: 15}}>Next</Text>
             </Pressable>
-
 
             <BottomTabNavigator/>
         </View>

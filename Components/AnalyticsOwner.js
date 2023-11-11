@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import BottomTabNavigator from './BottomTabNavigator';
+import BottomTabNavigator from "./BottomTabNavigator";
+
 
 
 const Tab = createBottomTabNavigator();

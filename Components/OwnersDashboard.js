@@ -1,40 +1,51 @@
 import * as React from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 
+import {createDrawerNavigator} from '@react-navigation/drawer';
+
+const Drawer = createDrawerNavigator();
 
 export default function OwnersDashboard({navigation}) {
 
 
-    const renderItem = ({ item }) => (
+    const renderItem = ({item}) => (
         <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('WhoAreYou')}>
             <Text style={styles.cardButtonText}>{item.title}</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-                <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage} />
-                <Text style={{ fontSize: 20 }}> {item.details}</Text>
-                <Image source={require('../img/outgoingArrow.png')} style={styles.arrowImage} />
+            <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
+                <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage}/>
+                <Text style={{fontSize: 20}}> {item.details}</Text>
+                <Image source={require('../img/outgoingArrow.png')} style={styles.arrowImage}/>
             </View>
         </Pressable>
     );
 
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <View style={styles.headerContent}>
-                    <Text style={styles.headerText}>Owner's Section</Text>
-                    <Image style={styles.headerImage} source={require('../img/menu.png')}  />
-                </View>
-            </View>
-            <View style={styles.topContainer}>
-                <View style={styles.topContainerText}>
-                    <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Owners Dashboard</Text>
 
-                    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
-                        <Text style={{ fontSize: 16, width: '50%' }}>Rent Status </Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 16, }}>{'\t\t\t\t\t\t\t\t\t\t'}Paid</Text>
+        <View style={styles.container}>
+
+            {/*<View style={styles.header}>*/}
+            {/*    <View style={styles.headerContent}>*/}
+            {/*        <Text style={styles.headerText}>Owner's Section</Text>*/}
+            {/*        <Image style={styles.headerImage} source={require('../img/menu.png')}/>*/}
+            {/*    </View>*/}
+            {/*</View>*/}
+
+            <View style={styles.topContainer}>
+
+                <View>
+                    <Text style={{fontSize: 30, fontWeight: 'bold'}}>Owners Dashboard</Text>
+
+                    <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
+                        <Text style={{fontSize: 16, width: '50%'}}>Rent Status </Text>
+                        <Text style={{fontWeight: 'bold', fontSize: 16,}}>{'\t\t\t\t\t\t\t\t\t\t'}Paid</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 16, width: '50%' }}>Maintenance Tickets </Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 16, color: "red" }}>{'\t\t\t\t\t\t\t\t\t\t\t\t'}2</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Text style={{fontSize: 16, width: '50%'}}>Maintenance Tickets </Text>
+                        <Text style={{
+                            fontWeight: 'bold',
+                            fontSize: 16,
+                            color: "red"
+                        }}>{'\t\t\t\t\t\t\t\t\t\t\t\t'}2</Text>
                     </View>
 
 
@@ -59,7 +70,7 @@ export default function OwnersDashboard({navigation}) {
                         <View style={styles.cardButtons}>
                             <Text style={styles.cardButtonsText}>Notification Alerts</Text>
                         </View>
-                        <View style={[styles.cardButtons , styles.widthReduce]}>
+                        <View style={[styles.cardButtons, styles.widthReduce]}>
                             <Text style={styles.cardButtonsText}>View Analytics</Text>
                         </View>
                     </View>
@@ -72,20 +83,21 @@ export default function OwnersDashboard({navigation}) {
             </View>
 
             <Pressable onPress={() => navigation.navigate('AddProperty')}>
-                <Text style={{ paddingTop: 15 }}>Next</Text>
+                <Text style={{paddingTop: 15}}>Next</Text>
             </Pressable>
         </View>
-
-
 
 
     );
 }
 
 
-
-
 const styles = StyleSheet.create({
+    headerContainer: {
+        flex: 1,
+        flexDirection: 'row', // Ensure that the drawer and content are in a row
+        backgroundColor: '#333333',
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -94,7 +106,7 @@ const styles = StyleSheet.create({
         marginTop: -70
     },
     header: {
-        marginTop: 60,
+        marginTop: "auto",
         marginBottom: -20,
         backgroundColor: "#47b5ff",
         width: '100%',
@@ -122,13 +134,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#a3a9b2',
         marginTop: 70,
         borderRadius: 20,
-        fontSize: 25,
+
     },
-    topContainerText: {
-        color: '#06283d',
-        textAlign: 'center',
-        fontSize: 25,
-    },
+
     bottomContainer: {
         flex: 0.8,
         backgroundColor: '#fff',
@@ -173,7 +181,6 @@ const styles = StyleSheet.create({
     widthReduce: {
         marginLeft: -30
     }
-
 
 
 });
