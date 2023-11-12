@@ -17,17 +17,20 @@ export default function WelcomeScreen({navigation}) {
                        onPress={() => navigation.navigate('LoginScreen')}>
                 <Text style={styles.buttonText}>Get Started</Text>
             </Pressable>
-            <Text style={styles.loginText}>Already have an account? LogIn</Text>
+            <View style={styles.loginText}>
+                <Text style={{fontSize: 16}}>Already have an account? </Text>
+                <Text style={{color:"#47b5ff", fontWeight: "bold", fontSize: 16}}>LogIn</Text>
+            </View>
+
 
             <View style={styles.footerContainer}>
                 <View style={styles.centeredContent}>
-                    <Image source={require('../img/langIcon.gif')} style={styles.earthImage} />
+                    <Image source={require('../img/langIcon.png')} style={styles.earthImage} />
                     <Text style={styles.selectLanguageText}>Select Language</Text>
                     <TouchableOpacity onPress={() => console.log('Dropdown Arrow Pressed')}>
                         <Image source={require('../img/dropDownArrow.png')} style={styles.dropdownArrow} />
                     </TouchableOpacity>
                 </View>
-
             </View>
 
         </View>
@@ -41,7 +44,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: "#fff",
-        marginTop: -250
+        marginTop: "auto"
     },
     logo: {
         width: 100,
@@ -65,14 +68,15 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 20,
-        color: "#47b5ff"
+        color: "#47b5ff",
+        textAlign: "center"
 
     },
     button: {
         width: '60%',
         paddingVertical: 2,
         backgroundColor: '#e5e5e5',
-        marginTop: 100,
+        marginTop: 150,
         borderRadius: 100,
         borderColor: '#cdcdcd',
         borderWidth: 1.5,
@@ -82,47 +86,56 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#06283d',
-        // fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 25,
 
     },
     loginText: {
-      color: "#06283d",
-      paddingTop: 5
+
+      paddingTop: 5,
+        flexDirection: "row",
+
     },
     footerContainer: {
         position: 'absolute',
-        bottom: 0,
-        width: '100%',
+        bottom: 20,
+        width: '50%',
         backgroundColor: '#e5e5e5',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 5,
+        paddingVertical: 2,
+        borderRadius: 30,
+        paddingRight: -5
+
+
     },
     earthImage: {
-        width: 30,
-        height: 30,
+        width: 20,
+        height: 20,
+        resizeMode: 'contain',
         marginRight: 10,
-        paddingRight: 30,
+        paddingRight: 10,
+        paddingLeft: -10
     },
     selectLanguageText: {
         flex: 1,
         textAlign: 'center',
-        fontSize: 16,
+        fontSize: 12,
+
     },
     dropdownArrow: {
-        width: 20,
-        height: 20,
-        marginTop: 7,
+        width: 12,
+        height: 12,
+        marginTop: 4,
         marginLeft: 7
     },
     centeredContent: {
         flexDirection: 'row',
-        justifyContent: 'center',
+        // justifyContent: 'center',
         alignItems: 'center',
-        paddingRight: 100,
-        paddingLeft: 100,
+        marginRight: 24,
+        marginLeft: 24,
+
     }
 });

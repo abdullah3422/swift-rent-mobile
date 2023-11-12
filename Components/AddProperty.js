@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderColor: '#1463df',
         borderWidth: 4,
-        fontSize: 25,
+
         // borderRadius: "5"
     },
     topContainerText: {

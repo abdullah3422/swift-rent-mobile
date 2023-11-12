@@ -4,6 +4,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Image, StyleSheet, View} from 'react-native';
 import Properties from './Properties';
 import WhoAreYou from './WhoAreYou';
+import NotificationAlerts from "./NotificationAlerts";
+import UserProfile from "./UserProfile";
 
 
 const Tab = createBottomTabNavigator();
@@ -53,21 +55,21 @@ export default function BottomTabNavigator(navigation) {
                 />
                 <Tab.Screen
                     name="Alerts"
-                    component={WhoAreYou}
+                    component={NotificationAlerts}
                     listeners={({ navigation }) => ({
                         tabPress: (e) => {
                             e.preventDefault();
-                            navigation.navigate('WhoAreYou');
+                            navigation.navigate('NotificationAlerts');
                         },
                     })}
                 />
                 <Tab.Screen
                     name="Profile"
-                    component={WhoAreYou}
+                    component={UserProfile}
                     listeners={({ navigation }) => ({
                         tabPress: (e) => {
                             e.preventDefault();
-                            navigation.navigate('WhoAreYou');
+                            navigation.navigate('UserProfile');
                         },
                     })}
                 />
@@ -84,7 +86,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingVertical: 17,
         position: 'absolute',
-        bottom: 0,
+        bottom: -16,
         left: 0,
         right: 0,
     },
