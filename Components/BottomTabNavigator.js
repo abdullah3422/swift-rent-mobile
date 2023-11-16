@@ -22,7 +22,7 @@ export default function BottomTabNavigator(navigation) {
                             iconPath = focused ? require('../img/propertiesIconFocused.png') : require('../img/propertiesIcon.png');
                         } else if (route.name === 'Analytics') {
                             iconPath = focused ? require('../img/analyticIconFocused.png') : require('../img/analyticIcon.png');
-                        }else if (route.name === 'NotificationAlerts') {
+                        }else if (route.name === 'Alerts') {
                             iconPath = focused ? require('../img/notificationFocused.png') : require('../img/notification.png');
                         }else if (route.name === 'Profile') {
                             iconPath = focused ? require('../img/profile.png') : require('../img/profileFocused.png');

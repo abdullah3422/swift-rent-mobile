@@ -37,7 +37,7 @@ const DrawerNavigator = () => {
                               drawerPosition: "left",
 
                           }}>
-            <Drawer.Screen name="OwnersDashboard" component={OwnersDashboard} />
+            <Drawer.Screen name="OwnersDash" component={OwnersDashboard} />
             <Drawer.Screen name="AddProperty" component={AddProperty} options={{ headerShown: false }} />
             <Drawer.Screen name="AnalyticsOwner" component={AnalyticsOwner} options={{ headerShown: false }} />
             <Drawer.Screen name="Properties" component={Properties} options={{ headerShown: false }} />

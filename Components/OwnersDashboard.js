@@ -53,38 +53,31 @@ export default function OwnersDashboard({navigation}) {
             </View>
 
             <View style={styles.bottomContainer}>
-                <Pressable onPress={() => navigation.navigate('AddProperty')}>
-                    <View style={styles.buttonRow}>
-                        <View style={styles.cardButtons}>
+
+                    <View style={styles.buttonRow} >
+                        <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('AddProperty')}>
                             <Text style={styles.cardButtonsText}>Manage Properties</Text>
-                        </View>
-                        <View style={styles.cardButtons}>
+                        </Pressable>
+                        <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('TenantData')}>
                             <Text style={styles.cardButtonsText}>Manage Tenants</Text>
-                        </View>
+                        </Pressable>
                     </View>
-                </Pressable>
 
-
-                <Pressable onPress={() => navigation.navigate('NotificationAlerts')}>
                     <View style={styles.buttonRow}>
-                        <View style={styles.cardButtons}>
+                        <Pressable style={styles.cardButtons } onPress={() => navigation.navigate('NotificationAlerts')}>
                             <Text style={styles.cardButtonsText}>Notification Alerts</Text>
-                        </View>
-                        <View style={[styles.cardButtons, styles.widthReduce]}>
+                        </Pressable>
+                        <Pressable style={[styles.cardButtons, styles.widthReduce]} onPress={() => navigation.navigate('NotificationAlerts')}>
                             <Text style={styles.cardButtonsText}>View Analytics</Text>
-                        </View>
+                        </Pressable>
                     </View>
-                </Pressable>
+
 
 
                 <View style={[styles.cardButtons, styles.fullWidth]}>
                     <Text style={styles.cardButtonsText}>Edit User-Profile</Text>
                 </View>
             </View>
-
-            <Pressable onPress={() => navigation.navigate('AddProperty')}>
-                <Text style={{paddingTop: 15}}>Next</Text>
-            </Pressable>
         </View>
 
 

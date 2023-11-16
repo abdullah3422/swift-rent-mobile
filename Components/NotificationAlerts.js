@@ -30,7 +30,7 @@ export default function NotificationAlerts({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.topContainer}>
-                <View style={styles.topContainerText}>
+
                     <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Notifications {'\t\t\t'} 23</Text>
 
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
@@ -47,7 +47,7 @@ export default function NotificationAlerts({ navigation }) {
                     </View>
 
                 </View>
-            </View>
+
             <View style={styles.bottomContainer}>
                 <View style={styles.cardButtons}>
                     <Text style={styles.cardButtonsText}>Saqib Ali is Requesting Maintenance</Text>
@@ -74,18 +74,10 @@ export default function NotificationAlerts({ navigation }) {
                     </View>
                 </View>
             </View>
-
-            <Pressable onPress={() => navigation.navigate('AddProperty')}>
-                <Text style={{paddingTop: 15}}>Next</Text>
-            </Pressable>
-
             <BottomTabNavigator/>
         </View>
     );
 }
-
-
-
 
 const styles = StyleSheet.create({
     container: {
@@ -104,12 +96,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderColor: '#1463df',
         borderWidth: 4,
-        fontSize: 25,
-    },
-    topContainerText: {
-        color: '#06283d',
-        textAlign: 'center',
-        fontSize: 25,
+
     },
     arrowImage: {
         width: 20,
@@ -145,9 +132,5 @@ const styles = StyleSheet.create({
     arrow: {
         width: 20,
         height: 20,
-
-
     },
-
-
 });

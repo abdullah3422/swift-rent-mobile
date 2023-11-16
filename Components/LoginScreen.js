@@ -25,8 +25,8 @@ export default function LoginScreen({ navigation }) {
             </View>
 
             <View style={styles.buttonContainer}>
-                <Pressable style={styles.button}>
-                    <Text onPress={() => navigation.navigate('LoginAs')} style={styles.buttonText}>Continue</Text>
+                <Pressable style={styles.button} onPress={() => navigation.navigate('LoginAs')}>
+                    <Text  style={styles.buttonText}>Continue</Text>
                 </Pressable>
                 <View style={styles.space} />
             </View>
