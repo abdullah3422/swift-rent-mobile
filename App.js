@@ -16,10 +16,12 @@ import AnalyticsOwner from './Components/AnalyticsOwner';
 import Properties from './Components/Properties';
 import AddProperty from './Components/AddProperty';
 import PropertyInformation from './Components/PropertyInformation';
-import TenantData from './Components/TenanData';
+import ChangePassword from './Components/ChangePassword'
 import NotificationAlerts from './Components/NotificationAlerts';
-import OwnersDashboard from './Components/OwnersDashboard';
+
 import UserProfile from "./Components/UserProfile";
+import ReportBug from "./Components/ReportBug";
+import FAQs from "./Components/FAQs";
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator()
@@ -28,7 +30,7 @@ const Stack = createNativeStackNavigator()
 
 const DrawerNavigator = () => {
     return (
-        <Drawer.Navigator initialRouteName="OwnersDashboard"
+        <Drawer.Navigator initialRouteName="NotificationAlerts"
                           screenOptions={{
                               drawerStyle: {
                                   backgroundColor: '#fff',
@@ -37,12 +39,10 @@ const DrawerNavigator = () => {
                               drawerPosition: "left",
 
                           }}>
-            <Drawer.Screen name="OwnersDash" component={OwnersDashboard} />
             <Drawer.Screen name="AddProperty" component={AddProperty} options={{ headerShown: false }} />
             <Drawer.Screen name="AnalyticsOwner" component={AnalyticsOwner} options={{ headerShown: false }} />
             <Drawer.Screen name="Properties" component={Properties} options={{ headerShown: false }} />
             <Drawer.Screen name="PropertyInformation" component={PropertyInformation} options={{ headerShown: false }} />
-            <Drawer.Screen name="TenantData" component={TenantData} options={{ headerShown: false }} />
             <Drawer.Screen name="NotificationAlerts" component={NotificationAlerts} options={{ headerShown: false }} />
 
 
@@ -67,9 +67,11 @@ const App = () => {
                 <Stack.Screen name="ContactInfo" component={ContactInfo} options={{ headerShown: false }} />
                 <Stack.Screen name="SetPassword" component={SetPassword} options={{ headerShown: false }} />
                 <Stack.Screen name="SetUp" component={SetUp} options={{ headerShown: false }} />
-                <Stack.Screen name="OwnersDashboard" component={DrawerNavigator} options={{ headerShown: false }}/>
+                <Stack.Screen name="NotificationAlerts" component={DrawerNavigator} options={{ headerShown: false }}/>
                 <Stack.Screen name="UserProfile" component={UserProfile} options={{ headerShown: false }}/>
-
+                <Stack.Screen name="ChangePassword" component={ChangePassword} options={{ headerShown: false }}/>
+                <Stack.Screen name="ReportBug" component={ReportBug} options={{ headerShown: false }}/>
+                <Stack.Screen name="FAQs" component={FAQs} options={{ headerShown: false }}/>
 
 
             </Stack.Navigator>

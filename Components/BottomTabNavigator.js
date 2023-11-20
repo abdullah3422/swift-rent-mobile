@@ -39,7 +39,7 @@ export default function BottomTabNavigator(navigation) {
                     listeners={({ navigation }) => ({
                         tabPress: (e) => {
                             e.preventDefault();
-                            navigation.navigate('Properties');
+                            navigation.navigate('AddProperty');
                         },
                     })}
                 />

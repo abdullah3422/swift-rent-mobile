@@ -34,13 +34,14 @@ export default function LoginScreen({ navigation }) {
     );
 }
 
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        marginTop: -200,
+        marginTop: -100,
     },
     logo: {
         width: 100,
@@ -106,6 +107,8 @@ const styles = StyleSheet.create({
         color: "#47B5FF",
         fontSize: 28,
         fontWeight: 'bold',
-        marginBottom: 5,
+        marginBottom: 10,
+
     },
 });
+

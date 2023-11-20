@@ -1,13 +1,19 @@
-import * as React from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import React, { useEffect } from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
-export default function SplashScreen({navigation}) {
+export default function SplashScreen({ navigation }) {
 
-    // let [fontsLoad] = useFonts({OpenSans_Bold});
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            navigation.replace('WelcomeScreen');
+        }, 2000);
+
+        // Clear the timeout to prevent memory leaks
+        return () => clearTimeout(timeout);
+    }, [navigation]);
+
     return (
-
-
-        <View style ={styles.container}>
+        <View style={styles.container}>
             <Image
                 source={require("../img/logoColored.png")}
                 style={styles.logo}
@@ -15,17 +21,12 @@ export default function SplashScreen({navigation}) {
             <Text style={styles.splashText}>
                 Swift Rent
             </Text>
-            <Pressable onPress={() => navigation.navigate('WelcomeScreen')}>
-                <Text>Next</Text>
-            </Pressable>
+            {/* Remove the Pressable button since the navigation will happen automatically */}
         </View>
-
-
     );
 }
 
 const styles = StyleSheet.create({
-
     container: {
         flex: 1,
         backgroundColor: "#fff",
@@ -42,10 +43,7 @@ const styles = StyleSheet.create({
     splashText: {
         paddingTop: 20,
         fontSize: 50,
-        color:"#1363DF",
+        color: "#1363DF",
         fontWeight: 'bold',
-
-
-
     }
 });

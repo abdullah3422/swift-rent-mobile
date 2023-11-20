@@ -1,17 +1,23 @@
 import * as React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {useEffect} from "react";
 
 
 export default function SplashScreen({navigation}) {
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            navigation.replace('LoginAs');
+        }, 1500);
+
+        // Clear the timeout to prevent memory leaks
+        return () => clearTimeout(timeout);
+    },[navigation]);
 
     return (
         <View style ={styles.container}>
             <Text style={styles.splashText}>
                You are all {'\n'}Set Up!
             </Text>
-            <Pressable onPress={() => navigation.navigate('AnalyticsOwner')}>
-                <Text style={{paddingTop: 15}}>Next</Text>
-            </Pressable>
         </View>
     );
 }

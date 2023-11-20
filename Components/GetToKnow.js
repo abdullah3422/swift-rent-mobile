@@ -49,6 +49,8 @@ export default function GetToKnow({ navigation }) {
                     }}
                     onPress={() => setShowDatePicker(true)}
                 >
+                    {/*add placeholder color change when select date*/}
+
                     <Text style={{ color: '#cdcdcd' ,width: 200}}>{selectedDate.toDateString()}</Text>
                     <Image source={require('../img/calendarIcon.png')} style={{ width: 20, height: 20, marginLeft: 10 }} />
                 </Pressable>
@@ -65,7 +67,7 @@ export default function GetToKnow({ navigation }) {
             }
 
             <View style={styles.buttonContainer}>
-                <Pressable style={styles.button} onPress={() => navigation.navigate('WhoAreYou')}>
+                <Pressable style={styles.button} onPress={() => navigation.navigate('WelcomeScreen')}>
                     <Text style={styles.buttonText}>Back</Text>
                 </Pressable>
 

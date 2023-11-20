@@ -13,7 +13,7 @@ export default function LoginAs({navigation}) {
             </View>
             <Text style={styles.postHeader}>Who are you?</Text>
 
-            <Pressable style={styles.button} onPress={() => navigation.navigate('OwnersDashboard')}>
+            <Pressable style={styles.button} onPress={() => navigation.navigate('NotificationAlerts')}>
                 <Text style={styles.buttonText}>Property Owner</Text>
             </Pressable>
             <Pressable style={styles.button} onPress={() => navigation.navigate('GetToKnow')}>

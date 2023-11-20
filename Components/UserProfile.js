@@ -4,6 +4,7 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
 import AddProperty from "./AddProperty";
 import BottomTabNavigator from "./BottomTabNavigator";
+import FAQs from "./FAQs";
 
 
 const Tab = createBottomTabNavigator();
@@ -24,24 +25,24 @@ export default function UserProfile({ navigation }) {
 
             </View>
             <View style={styles.bottomContainer}>
-                <View style={styles.cardButtons}>
+                <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('ChangePassword')}>
                     <Text style={styles.cardButtonsText}>Change Password</Text>
                     <View style={{ flex: 1, alignItems: 'flex-end' }}>
                         <Image style={styles.Pics} source={require('../img/change.png') }/>
                     </View>
-                </View>
-                <View style={styles.cardButtons}>
+                </Pressable>
+                <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('ReportBug')}>
                     <Text style={styles.cardButtonsText}>Report a bug</Text>
                     <View style={{ flex: 1, alignItems: 'flex-end' }}>
                         <Image style={styles.Pics} source={require('../img/bug.png') }/>
                     </View>
-                </View>
-                <View style={styles.cardButtons}>
+                </Pressable>
+                <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('FAQs')}>
                     <Text style={styles.cardButtonsText}>FAQs</Text>
                     <View style={{ flex: 1, alignItems: 'flex-end' }}>
                         <Image style={styles.Pics} source={require('../img/faqs.png') }/>
                     </View>
-                </View>
+                </Pressable>
                 <View style={styles.cardButtons}>
                     <Text style={styles.cardButtonsText}>Logout</Text>
                     <View style={{ flex: 1, alignItems: 'flex-end' }}>
@@ -50,9 +51,9 @@ export default function UserProfile({ navigation }) {
                 </View>
             </View>
 
-            <Pressable onPress={() => navigation.navigate('AddProperty')}>
-                <Text style={{paddingTop: 15}}>Next</Text>
-            </Pressable>
+            {/*<Pressable onPress={() => navigation.navigate('AddProperty')}>*/}
+            {/*    <Text style={{paddingTop: 15}}>Next</Text>*/}
+            {/*</Pressable>*/}
 
             <BottomTabNavigator/>
         </View>
@@ -68,7 +69,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: "#fff",
-        marginTop: -70
+        marginTop: -70,
+
     },
     topContainer: {
         width: '80%',
@@ -94,10 +96,11 @@ const styles = StyleSheet.create({
     bottomContainer: {
         flex: 0.7,
         backgroundColor: '#47b5ff',
-        marginTop: 15,
+        marginTop: '5%',
         paddingBottom:200,
         marginBottom: -180,
         width: '100%',
+        paddingTop:'12.5%'
 
     },
     cardButtons: {

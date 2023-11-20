@@ -14,13 +14,13 @@ export default function WelcomeScreen({navigation}) {
 
             <Text style={styles.welcomeText}>Welcome to {'\n'}Swift Rent</Text>
             <Pressable style={styles.button}
-                       onPress={() => navigation.navigate('LoginScreen')}>
+                       onPress={() => navigation.navigate('GetToKnow')}>
                 <Text style={styles.buttonText}>Get Started</Text>
             </Pressable>
-            <View style={styles.loginText}>
+            <Pressable style={styles.loginText} onPress={() => navigation.navigate('LoginScreen')}>
                 <Text style={{fontSize: 16}}>Already have an account? </Text>
                 <Text style={{color:"#47b5ff", fontWeight: "bold", fontSize: 16}}>LogIn</Text>
-            </View>
+            </Pressable>
 
 
             <View style={styles.footerContainer}>
@@ -80,9 +80,8 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         borderColor: '#cdcdcd',
         borderWidth: 1.5,
+        marginBottom: 10
 
-
-        // borderRadius: "5"
     },
     buttonText: {
         color: '#06283d',
