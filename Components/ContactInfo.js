@@ -1,32 +1,30 @@
 import * as React from 'react';
-import {Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Dimensions, Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 
 export default function LoginScreen({ navigation }) {
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <Image source={require('../img/logoColored.png')} style={styles.logo} />
-                <View>
-                    <Text style={styles.headerText}>We need your information</Text>
-                </View>
-            </View>
 
+                <Image source={require('../img/logoColored.png')} style={styles.logo} />
+
+
+            <Text style={styles.headerText}>We need your information</Text>
             <View style={styles.inputContainer}>
                 <View style={styles.inputWithIcon}>
-                    <TextInput style={styles.input} placeholder="Email Address" placeholderTextColor="#cdcdcd" keyboardType="email-address" />
+                    <TextInput style={styles.input} placeholder="Email Address" placeholderTextColor="#888" keyboardType="email-address" />
                     <Image source={require('../img/email.png')} style={styles.imageStyle} />
                 </View>
             </View>
 
             <View style={styles.inputContainer}>
                 <View style={styles.inputWithIcon}>
-                    <TextInput style={styles.input} placeholder="Mobile Number" placeholderTextColor="#cdcdcd" keyboardType="numeric" />
+                    <TextInput style={styles.input} placeholder="Mobile Number" placeholderTextColor="#888" keyboardType="numeric" />
                     <Image source={require('../img/hashtag.png')} style={styles.imageStyle} />
                 </View>
             </View>
 
             <View style={styles.buttonContainer}>
-                <Pressable style={styles.button}>
+                <Pressable onPress={() => navigation.goBack()} style={styles.button} >
                     <Text style={styles.buttonText}>Back</Text>
                 </Pressable>
                 <View style={styles.space} />
@@ -37,6 +35,9 @@ export default function LoginScreen({ navigation }) {
         </View>
     );
 }
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 
 const styles = StyleSheet.create({
     container: {
@@ -44,23 +45,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-
+        width: '100%',
+        padding: windowWidth * 0.05,
     },
     logo: {
-        width: 100,
-        height: 100,
+        width: windowWidth * 0.25,
+        height: windowWidth * 0.25,
+        marginTop: -windowHeight * 0.25,
     },
-    header: {
-        flexDirection: 'column', // Align items in a column
-        alignItems: 'center',
-        marginTop: -180,
-        marginBottom: 10,
-    },
+
     headerText: {
-        marginTop: 20,
-        fontSize: 30,
+        fontSize: windowWidth * 0.07, // Responsive font size
+        marginTop: windowHeight * 0.02,
         fontWeight: 'bold',
-        marginBottom: 20,
+        marginBottom: windowHeight * 0.02, // Responsive margin
         color: '#47b5ff',
     },
     inputContainer: {
@@ -69,31 +67,31 @@ const styles = StyleSheet.create({
     inputWithIcon: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: 250,
+        width: windowWidth * 0.8,
         borderColor: '#06283d',
         borderWidth: 2,
-        borderRadius: 15,
+        borderRadius: windowWidth * 0.05,
         backgroundColor: '#fff',
-        marginBottom: 10,
+        marginBottom: windowHeight * 0.01,
         position: 'relative',
     },
     input: {
         width: '90%',
-        height: 40,
-        padding: 10,
-        fontWeight: 'bold',
+        height: windowHeight * 0.06,
+        padding: windowWidth * 0.03,
+        // fontWeight: 'bold',
     },
     imageStyle: {
         position: 'absolute',
-        right: 10,
+        right: windowWidth * 0.025,
         width: 25,
         height: 25,
     },
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: 150,
-        marginTop: 10,
+        width: '55%',
+        marginTop: windowHeight * 0.02,
     },
     button: {
         flex: 1,
@@ -102,11 +100,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#e5e5e5',
         borderColor: '#cdcdcd',
         borderWidth: 2,
-        borderRadius: 20,
-        padding: 10,
+        borderRadius: windowWidth * 0.06,
+        padding: windowWidth * 0.02,
     },
     space: {
-        width: 10,
+        width: windowWidth * 0.04,
     },
     buttonText: {
         color: 'black',

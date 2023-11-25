@@ -55,7 +55,6 @@ const App = () => {
     return (
 
         <NavigationContainer>
-            {/*<DrawerNavigator/>*/}
 
             <Stack.Navigator initialRouteName="SplashScreen">
                 <Stack.Screen name="SplashScreen" component={SplashScreen} options={{headerShown: false}}/>

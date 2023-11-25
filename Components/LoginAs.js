@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: "#fff",
-        marginTop: -140
+        marginTop: -100
     },
     logo: {
         width: 100,
