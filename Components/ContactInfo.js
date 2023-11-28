@@ -55,14 +55,14 @@ const styles = StyleSheet.create({
     },
 
     headerText: {
-        fontSize: windowWidth * 0.07, // Responsive font size
+        fontSize: windowWidth * 0.07,
         marginTop: windowHeight * 0.02,
         fontWeight: 'bold',
-        marginBottom: windowHeight * 0.02, // Responsive margin
+        marginBottom: windowHeight * 0.02,
         color: '#47b5ff',
     },
     inputContainer: {
-        marginBottom: 10,
+        marginBottom: windowHeight * 0.0125,    // = 10
     },
     inputWithIcon: {
         flexDirection: 'row',

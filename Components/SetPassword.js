@@ -99,40 +99,40 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        marginTop: -windowHeight * 0.025, // Responsive marginTop
+        marginTop: -windowHeight * 0.025,
     },
     logo: {
-        width: windowWidth * 0.25, // Responsive logo size
-        height: windowWidth * 0.25, // Responsive logo size
+        width: windowWidth * 0.25,
+        height: windowWidth * 0.25,
     },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: -windowHeight * 0.2, // Responsive marginTop
-        marginBottom: windowHeight * 0.01, // Responsive marginBottom
+        marginTop: -windowHeight * 0.2,
+        marginBottom: windowHeight * 0.01,
     },
     headerText: {
-        fontSize: windowWidth * 0.06, // Responsive font size
+        fontSize: windowWidth * 0.06,
         color: 'black',
         fontWeight: 'bold',
     },
     passwordText: {
         color: '#47B5FF',
-        fontSize: windowWidth * 0.08, // Responsive font size
+        fontSize: windowWidth * 0.08,
         fontWeight: 'bold',
-        marginBottom: windowHeight * 0.02, // Responsive marginBottom
+        marginBottom: windowHeight * 0.02,
     },
     input: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: '80%', // Take up the full width
-        height: windowHeight * 0.06, // Responsive height
+        width: '80%',
+        height: windowHeight * 0.06,
         borderColor: '#06283d',
         borderWidth: 2,
-        borderRadius: windowWidth * 0.05, // Responsive border radius
-        padding: windowWidth * 0.03, // Responsive padding
-        marginTop: windowHeight * 0.005, // Responsive spacing
-        marginBottom: windowHeight * 0.01, // Responsive spacing
+        borderRadius: windowWidth * 0.05,
+        padding: windowWidth * 0.03,
+        marginTop: windowHeight * 0.005,
+        marginBottom: windowHeight * 0.01,
         backgroundColor: '#fff',
         fontWeight: 'bold',
         justifyContent: 'space-between',
@@ -154,13 +154,13 @@ const styles = StyleSheet.create({
         padding: windowWidth * 0.02,
     },
     space: {
-        width: windowWidth * 0.02, // Responsive width
+        width: windowWidth * 0.02,
     },
     buttonText: {
         color: 'black',
     },
     errorTxt: {
-        fontSize: windowWidth * 0.03, // Responsive font size
+        fontSize: windowWidth * 0.03,
         color: '#FF0D10',
     },
 });

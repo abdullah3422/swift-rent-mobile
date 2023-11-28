@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
 import AddProperty from "./AddProperty";
@@ -79,34 +79,37 @@ export default function NotificationAlerts({ navigation }) {
     );
 }
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: "#fff",
-        marginTop: -70
+        marginTop: -windowHeight * 0.077    // = 70
     },
     topContainer: {
         width: '80%',
         paddingVertical: 15,
-        padding: 20,
+        padding: windowHeight *0.024,       // 20
         backgroundColor: '#fff',
-        marginTop: 20,
+        marginTop: windowHeight *0.024,
         borderRadius: 20,
         borderColor: '#1463df',
         borderWidth: 4,
 
     },
     arrowImage: {
-        width: 20,
-        height: 20,
+        width: windowWidth *0.020,
+        height: windowHeight *0.020,
         marginHorizontal: 5,
     },
     bottomContainer: {
         flex: 0.7,
         backgroundColor: '#47b5ff',
-        marginTop: 15,
+        marginTop: windowHeight *0.024,
         width: '100%',
 
     },

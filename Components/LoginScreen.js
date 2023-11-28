@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Dimensions, Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 
 // Assume 'userIcon' and 'eyeIcon' are imported correctly or provided as local resources
 
@@ -34,6 +34,8 @@ export default function LoginScreen({ navigation }) {
     );
 }
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     container: {
@@ -41,35 +43,35 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        marginTop: -100,
+        marginTop: -windowHeight *0.11,
     },
     logo: {
-        width: 100,
-        height: 100,
+        width: windowWidth * 0.25,
+        height: windowWidth * 0.25,
     },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: -30,
-        marginBottom: 10,
+        marginTop: windowHeight * 0.025,
+        marginBottom: windowHeight * 0.0125,
     },
     input: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: 250,
-        height: 40,
+        width: windowHeight * 0.33,     // = 250
+        height: windowHeight * 0.055,
         borderColor: '#06283d',
         borderWidth: 2,
         borderRadius: 15,
-        padding: 10,
-        marginTop: 3,
-        marginBottom: 10,
+        padding: windowHeight * 0.013,      //  = 10
+        marginTop: windowHeight * 0.003,    //= 3
+        marginBottom: windowHeight * 0.01,
         backgroundColor: '#fff',
         fontWeight: 'bold',
     },
     placeholderIcon: {
-        width: 20,
-        height: 20,
+        width: windowHeight * 0.025,
+        height: windowHeight * 0.025,
 
     },
     textInput: {
@@ -82,22 +84,22 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: 150,
-        marginTop: 10,
+        width: windowWidth * 0.38, // = 150
+        marginTop:  windowHeight * 0.02,
     },
     button: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        width: 40,
+        width: windowWidth * 0.4,
         backgroundColor: '#e5e5e5',
         borderColor: '#cdcdcd',
         borderWidth: 2,
         borderRadius: 30,
-        padding: 10,
+        padding: windowHeight * 0.013,
     },
     space: {
-        width: 10,
+        width: windowHeight * 0.01,
     },
     buttonText: {
         color: '#06283d',
@@ -105,9 +107,9 @@ const styles = StyleSheet.create({
     },
     loginText: {
         color: "#47B5FF",
-        fontSize: 28,
+        fontSize: windowWidth * 0.07,
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginBottom: windowHeight * 0.013,
 
     },
 

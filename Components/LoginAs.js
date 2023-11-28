@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 
 
 export default function LoginAs({navigation}) {
@@ -30,17 +30,20 @@ export default function LoginAs({navigation}) {
     );
 };
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: "#fff",
-        marginTop: -100
+        marginTop: -windowHeight * 0.1
     },
     logo: {
-        width: 100,
-        height: 100,
+        width: windowWidth * 0.25,
+        height: windowWidth * 0.25,
     },
     header: {
         flexDirection: 'row',
@@ -48,29 +51,29 @@ const styles = StyleSheet.create({
     },
 
     headerText:{
-        fontSize: 50,
-        paddingTop: 15,
+        fontSize: windowWidth * 0.06,
+        paddingTop: windowHeight * 0.15,
         color: "#1363DF",
         fontWeight: 'bold'
     },
     LoginAs: {
 
-        marginTop: 20,
-        fontSize: 30,
+        marginTop: windowHeight * 0.025,    // = 20
+        fontSize: windowWidth * 0.08,
         fontWeight: 'bold',
-        marginBottom: 20,
+        marginBottom: windowHeight * 0.025,  // = 30
         color: '#47b5ff'
 
     },
     button: {
         width: '60%',
-        paddingVertical: 15,
-        padding: 20,
+        paddingVertical: windowHeight * 0.02,  // = 15
+        padding: windowHeight * 0.025,
         backgroundColor: '#e5e5e5',
-        marginTop: 20,
-        borderRadius: 30,
+        marginTop: windowHeight * 0.025,    // =20
+        borderRadius: windowHeight * 0.3,
         borderColor: '#cdcdcd',
-        borderWidth: 2,
+        borderWidth: windowHeight * 0.002,  // = 2
 
 
         // borderRadius: "5"
@@ -78,7 +81,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#06283d',
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: windowWidth * 0.05,       // = 20
 
     },
 

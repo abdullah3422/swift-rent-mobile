@@ -144,38 +144,38 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        width: '100%', // Take up the full width of the screen
-        padding: windowWidth * 0.05, // Responsive padding based on screen width
+        width: '100%',
+        padding: windowWidth * 0.05,
     },
     logo: {
-        width: windowWidth * 0.25, // Responsive logo size
-        height: windowWidth * 0.25, // Responsive logo size
-        marginTop: -windowHeight * 0.2, // Responsive margin
+        width: windowWidth * 0.25,
+        height: windowWidth * 0.25,
+        marginTop: -windowHeight * 0.2,
     },
     headerText: {
-        fontSize: windowWidth * 0.05, // Responsive font size
-        paddingTop: windowHeight * 0.02, // Responsive spacing
+        fontSize: windowWidth * 0.05,
+        paddingTop: windowHeight * 0.02,
         color: 'black',
         fontWeight: 'bold',
     },
     input: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: '90%', // Take up the full width
-        height: windowHeight * 0.06, // Responsive height
+        width: '90%',
+        height: windowHeight * 0.06,
         borderColor: '#06283d',
         borderWidth: 2,
-        borderRadius: windowWidth * 0.05, // Responsive border radius
-        padding: windowWidth * 0.03, // Responsive padding
-        marginTop: windowHeight * 0.005, // Responsive spacing
-        marginBottom: windowHeight * 0.01, // Responsive spacing
+        borderRadius: windowWidth * 0.05,
+        padding: windowWidth * 0.03,
+        marginTop: windowHeight * 0.005,
+        marginBottom: windowHeight * 0.01,
         backgroundColor: '#fff',
         fontWeight: 'bold',
         justifyContent: 'space-between',
     },
     placeholderIcon: {
-        width: windowWidth * 0.06, // Responsive icon size
-        height: windowWidth * 0.06, // Responsive icon size
+        width: windowWidth * 0.06,
+        height: windowWidth * 0.06,
     },
     textInput: {
         flex: 1,
@@ -187,8 +187,8 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: '55%', // Responsive width
-        marginTop: windowHeight * 0.02, // Responsive spacing
+        width: '55%',
+        marginTop: windowHeight * 0.02,
     },
     button: {
         flex: 1,
@@ -212,9 +212,9 @@ const styles = StyleSheet.create({
         //width: '90%',
     },
     datePlaceholderIcon: {
-        width: windowWidth * 0.06, // Adjust the multiplier as needed
-        height: windowWidth * 0.05, // Adjust the multiplier as needed
-        marginLeft: windowWidth * 0.17, // Adjust the multiplier as needed
+        width: windowWidth * 0.06,
+        height: windowWidth * 0.05,
+        marginLeft: windowWidth * 0.17,
     },
     selectDateText: {
         color: '#47B5FF',
