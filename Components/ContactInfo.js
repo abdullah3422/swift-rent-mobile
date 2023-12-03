@@ -1,7 +1,37 @@
 import * as React from 'react';
-import {Dimensions, Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Alert, Dimensions, Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {useState} from "react";
+import axios from "axios";
 
 export default function LoginScreen({ navigation }) {
+
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+
+    const handleNext = async () => {
+        try {
+            console.log(email);
+            console.log(phone);
+
+            const response = await axios.post('http://192.168.18.59:3000/api/signup-contact', {
+                email: email,
+                phone: phone,
+            });
+
+            // Check the response for success or error
+            if (response.data.success) {
+                // Navigate to the next screen or perform other actions
+                navigation.navigate('SetPassword');
+                Alert.alert('Credentials are Unique!');
+            } else {
+                // Handle errors, show appropriate messages to the user
+                console.error('API Error:', response.data.error, response.statusText);
+            }
+        } catch (error) {
+            console.error('Network Error:', error);
+            // Handle network errors, show appropriate messages to the user
+        }
+    };
     return (
         <View style={styles.container}>
 
@@ -11,14 +41,26 @@ export default function LoginScreen({ navigation }) {
             <Text style={styles.headerText}>We need your information</Text>
             <View style={styles.inputContainer}>
                 <View style={styles.inputWithIcon}>
-                    <TextInput style={styles.input} placeholder="Email Address" placeholderTextColor="#888" keyboardType="email-address" />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Email Address"
+                        placeholderTextColor="#888"
+                        keyboardType="email-address"
+                        value={email}
+                        onChangeText={setEmail}/>
                     <Image source={require('../img/email.png')} style={styles.imageStyle} />
                 </View>
             </View>
 
             <View style={styles.inputContainer}>
                 <View style={styles.inputWithIcon}>
-                    <TextInput style={styles.input} placeholder="Mobile Number" placeholderTextColor="#888" keyboardType="numeric" />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Mobile Number"
+                        placeholderTextColor="#888"
+                        keyboardType="numeric"
+                        value={phone}
+                        onChangeText={setPhone}/>
                     <Image source={require('../img/hashtag.png')} style={styles.imageStyle} />
                 </View>
             </View>
@@ -28,7 +70,7 @@ export default function LoginScreen({ navigation }) {
                     <Text style={styles.buttonText}>Back</Text>
                 </Pressable>
                 <View style={styles.space} />
-                <Pressable style={styles.button} onPress={() => navigation.navigate('SetPassword')}>
+                <Pressable style={styles.button} onPress={handleNext}>
                     <Text style={styles.buttonText}>Next</Text>
                 </Pressable>
             </View>

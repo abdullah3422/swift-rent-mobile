@@ -13,12 +13,12 @@ export default function LoginAs({navigation}) {
             </View>
             <Text style={styles.postHeader}>Who are you?</Text>
 
-            <Pressable style={styles.button} onPress={() => navigation.navigate('NotificationAlerts')}>
+            <Pressable style={styles.button} onPress={() => navigation.navigate('GetToKnow')}>
                 <Text style={styles.buttonText}>Property Owner</Text>
             </Pressable>
-            <Pressable style={styles.button} onPress={() => navigation.navigate('GetToKnow')}>
-                <Text style={styles.buttonText}>Property Agent</Text>
-            </Pressable>
+            {/*<Pressable style={styles.button} onPress={() => navigation.navigate('GetToKnow')}>*/}
+            {/*    <Text style={styles.buttonText}>Property Agent</Text>*/}
+            {/*</Pressable>*/}
             <Pressable style={styles.button} onPress={() => navigation.navigate('GetToKnow')}>
                 <Text style={styles.buttonText}>Tenant</Text>
             </Pressable>

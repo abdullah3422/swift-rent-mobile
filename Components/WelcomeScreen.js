@@ -14,7 +14,7 @@ export default function WelcomeScreen({navigation}) {
 
             <Text style={styles.welcomeText}>Welcome to {'\n'}Swift Rent</Text>
             <Pressable style={styles.button}
-                       onPress={() => navigation.navigate('GetToKnow')}>
+                       onPress={() => navigation.navigate('WhoAreYou')}>
                 <Text style={styles.buttonText}>Get Started</Text>
             </Pressable>
             <Pressable style={styles.loginText} onPress={() => navigation.navigate('LoginScreen')}>

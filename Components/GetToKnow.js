@@ -117,7 +117,7 @@ export default function GetToKnow({ navigation }) {
                 }
 
                 <View style={styles.buttonContainer}>
-                    <Pressable style={styles.button} onPress={() => navigation.navigate('WelcomeScreen')}>
+                    <Pressable style={styles.button} onPress={() => navigation.navigate('WhoAreYou')}>
                         <Text style={styles.buttonText}>Back</Text>
                     </Pressable>
 
