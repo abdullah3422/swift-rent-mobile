@@ -1,9 +1,33 @@
-import * as React from 'react';
-import {Dimensions, Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
-
-// Assume 'userIcon' and 'eyeIcon' are imported correctly or provided as local resources
+import React, { useState } from 'react';
+import {Image, Pressable, StyleSheet, Text, TextInput, View, Alert, Dimensions} from 'react-native';
+import axios from 'axios';
 
 export default function LoginScreen({ navigation }) {
+    const [emailOrPhone, setEmailOrPhone] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleLogin = async () => {
+        try {
+            const response = await axios.post('http://192.168.18.115:3000/api/login', {
+                emailOrPhone: emailOrPhone,
+                password: password,
+            });
+
+            if (response.data.success) {
+                console.log('Login Successful');
+                Alert.alert('Login Successful!');
+                // Optionally navigate to another screen
+                navigation.navigate('LoginAs');
+            } else {
+                console.log('Login Failed:', response.data.error);
+                Alert.alert('Login Failed', response.data.error);
+            }
+        } catch (error) {
+            console.error('Login Error:', error);
+            Alert.alert('Login Error', 'An error occurred during login.');
+        }
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -12,28 +36,40 @@ export default function LoginScreen({ navigation }) {
             <Text style={styles.loginText}>Login</Text>
 
             <View style={styles.input}>
-                <TextInput placeholder="Email or Number" placeholderTextColor="#cdcdcd" style={styles.textInput} />
+                <TextInput
+                    placeholder="Email or Number"
+                    placeholderTextColor="#cdcdcd"
+                    style={styles.textInput}
+                    value={emailOrPhone}
+                    onChangeText={setEmailOrPhone}
+                />
                 <View style={styles.iconContainer}>
                     <Image source={require('../assets/userIcon.png')} style={styles.placeholderIcon} />
                 </View>
             </View>
             <View style={styles.input}>
-                <TextInput placeholder="Password" placeholderTextColor="#cdcdcd" style={styles.textInput} secureTextEntry={true} />
+                <TextInput
+                    placeholder="Password"
+                    placeholderTextColor="#cdcdcd"
+                    style={styles.textInput}
+                    secureTextEntry={true}
+                    value={password}
+                    onChangeText={setPassword}
+                />
                 <View style={styles.iconContainer}>
                     <Image source={require('../assets/eye.png')} style={styles.placeholderIcon} />
                 </View>
             </View>
 
             <View style={styles.buttonContainer}>
-                <Pressable style={styles.button} onPress={() => navigation.navigate('LoginAs')}>
-                    <Text  style={styles.buttonText}>Continue</Text>
+                <Pressable style={styles.button} onPress={handleLogin}>
+                    <Text style={styles.buttonText}>Continue</Text>
                 </Pressable>
                 <View style={styles.space} />
             </View>
         </View>
     );
 }
-
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
