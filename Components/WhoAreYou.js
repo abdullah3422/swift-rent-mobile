@@ -1,8 +1,36 @@
 import * as React from 'react';
-import {Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Alert, Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {useState} from "react";
+import axios from "axios";
 
 
 export default function LoginAs({navigation}) {
+
+    const [userType, setUserType] = useState('');
+
+    const handleRole = async (role) => {
+        try {
+            // Save the role into the userType state
+            setUserType(role);
+
+            console.log(userType);
+
+            const response = await axios.post('http://192.168.1.9:3000/api/register-account', {
+                userType: role,
+            });
+
+            if (response.data.success) {
+                // Navigate to the next screen or perform other actions
+                navigation.navigate('SetPassword');
+                Alert.alert('User-Type-Added: ' + role);
+            } else {
+                // Handle errors, show appropriate messages to the user
+                console.error('API Error:', response.data.error, response.statusText);
+            }
+        } catch (error) {
+            console.error('Network Error:', error);
+        }
+    };
 
     // let [fontsLoad] = useFonts({OpenSans_Bold});
     return (
@@ -13,7 +41,7 @@ export default function LoginAs({navigation}) {
             </View>
             <Text style={styles.postHeader}>Who are you?</Text>
 
-            <Pressable style={styles.button} onPress={() => navigation.navigate('GetToKnow')}>
+            <Pressable style={styles.button} onPress={() => handleRole('owner')}>
                 <Text style={styles.buttonText}>Property Owner</Text>
             </Pressable>
             {/*<Pressable style={styles.button} onPress={() => navigation.navigate('GetToKnow')}>*/}

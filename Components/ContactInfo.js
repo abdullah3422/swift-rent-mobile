@@ -13,7 +13,7 @@ export default function LoginScreen({ navigation }) {
             console.log(email);
             console.log(phone);
 
-            const response = await axios.post('http://192.168.18.59:3000/api/signup-contact', {
+            const response = await axios.post('http://192.168.1.9:3000/api/signup-contact', {
                 email: email,
                 phone: phone,
             });
