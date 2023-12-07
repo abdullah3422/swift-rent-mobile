@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Dimensions, Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import {Dimensions, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Formik} from 'formik';
 import * as Yup from 'yup';
 
 export default function SetPassword({ navigation }) {

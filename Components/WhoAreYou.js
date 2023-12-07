@@ -4,10 +4,11 @@ import {useState} from "react";
 import axios from "axios";
 
 
-export default function LoginAs({navigation}) {
+export default function LoginAs({navigation, route}) {
 
     const [userType, setUserType] = useState('');
 
+    const ipAddress = route.params.ipAddress;
     const handleRole = async (role) => {
         try {
             // Save the role into the userType state
@@ -15,14 +16,14 @@ export default function LoginAs({navigation}) {
 
             console.log(userType);
 
-            const response = await axios.post('http://192.168.1.9:3000/api/register-account', {
+            const response = await axios.post(ipAddress + 'api/register-account', {
                 userType: role,
             });
 
             if (response.data.success) {
                 // Navigate to the next screen or perform other actions
                 navigation.navigate('SetPassword');
-                Alert.alert('User-Type-Added: ' + role);
+                console.log('User-Type-Added: ' + role);
             } else {
                 // Handle errors, show appropriate messages to the user
                 console.error('API Error:', response.data.error, response.statusText);
@@ -32,8 +33,12 @@ export default function LoginAs({navigation}) {
         }
     };
 
+
+
     // let [fontsLoad] = useFonts({OpenSans_Bold});
     return (
+
+
         <View style={styles.container}>
 
             <View style={styles.header}>
@@ -50,6 +55,10 @@ export default function LoginAs({navigation}) {
             <Pressable style={styles.button} onPress={() => navigation.navigate('GetToKnow')}>
                 <Text style={styles.buttonText}>Tenant</Text>
             </Pressable>
+            <Pressable onPress={() => navigation.navigate('GetToKnow')}>
+                <Text style={styles.newRoleText}>Create new role on existing credentials?</Text>
+            </Pressable>
+
 
         </View>
 
@@ -119,5 +128,12 @@ const styles = StyleSheet.create({
         color: '#47b5ff'
 
     },
+    newRoleText:{
+        marginTop: windowHeight *0.05,  // This will make the text fall almost to the end of the screen
+        marginBottom: windowHeight * 0.03,  // Add some margin at the bottom
+        fontSize: windowWidth * 0.04,  // Adjust the font size
+        textDecorationLine: 'underline',  // Underline the text
+        color: '#06283d',
+    }
 
 });

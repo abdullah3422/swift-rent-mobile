@@ -1,10 +1,30 @@
 import * as React from 'react';
-import {Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Alert, Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 
 
-export default function LoginAs({navigation}) {
+export default function LoginAs({navigation, route}) {
 
-    // let [fontsLoad] = useFonts({OpenSans_Bold});
+    const { ownerId, tenantId } = route.params;
+    console.log(ownerId);
+    const handleOwnerPress = () => {
+        if (ownerId !== 0) {
+            navigation.navigate('NotificationAlerts'); // Replace with your actual Owner dashboard screen name
+        } else {
+            // Handle the case when ownerId is 0
+            Alert.alert("Not Registered as an Owner!");
+        }
+    };
+
+    const handleTenantPress = () => {
+        if (tenantId !== 0) {
+            navigation.navigate('NotificationAlerts'); // Replace with your actual Tenant dashboard screen name
+        } else {
+            // Handle the case when tenantId is 0
+            Alert.alert("Not Registered as a Tenant!");
+        }
+    };
+
+
     return (
         <View style={styles.container}>
 
@@ -13,14 +33,14 @@ export default function LoginAs({navigation}) {
 
             </View>
 
-            <Text style={styles.LoginAs}>Login As</Text>
-            <Pressable style={styles.button} onPress={() => navigation.navigate('WhoAreYou')}>
-                <Text style={styles.buttonText}>Property Owner</Text>
+            <Text style={styles.LoginAs}>Sign-in As</Text>
+            <Pressable style={styles.button} onPress={handleOwnerPress}>
+                <Text style={styles.buttonText}>Owner</Text>
             </Pressable>
-            <Pressable style={styles.button} onPress={() => navigation.navigate('WhoAreYou')}>
-                <Text style={styles.buttonText}>Property Agent</Text>
-            </Pressable>
-            <Pressable style={styles.button} onPress={() => navigation.navigate('WhoAreYou')}>
+            {/*<Pressable style={styles.button} onPress={() => navigation.navigate('WhoAreYou')}>*/}
+            {/*    <Text style={styles.buttonText}>Property Agent</Text>*/}
+            {/*</Pressable>*/}
+            <Pressable style={styles.button} onPress={handleTenantPress}>
                 <Text style={styles.buttonText}>Tenant</Text>
             </Pressable>
 

@@ -3,17 +3,20 @@ import {Alert, Dimensions, Image, Pressable, StyleSheet, Text, TextInput, View} 
 import {useState} from "react";
 import axios from "axios";
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen({ navigation, route}) {
 
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
+
+    //routing the ipAddress as a prop through the route keyword
+    const ipAddress = route.params.ipAddress;
 
     const handleNext = async () => {
         try {
             console.log(email);
             console.log(phone);
 
-            const response = await axios.post('http://192.168.1.9:3000/api/signup-contact', {
+            const response = await axios.post(ipAddress + 'api/signup-contact', {
                 email: email,
                 phone: phone,
             });

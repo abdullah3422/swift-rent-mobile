@@ -2,13 +2,21 @@ import React, { useState } from 'react';
 import {Image, Pressable, StyleSheet, Text, TextInput, View, Alert, Dimensions} from 'react-native';
 import axios from 'axios';
 
-export default function LoginScreen({ navigation }) {
+
+export default function LoginScreen({ navigation, route }) {
+
+    const [userId, setUserId] = useState(0);
+    const [ownerId, setOwnerId] = useState(0);
+    const [tenantId, setTenantId] = useState(0);
+
     const [emailOrPhone, setEmailOrPhone] = useState('');
     const [password, setPassword] = useState('');
 
+    const ipAddress = route.params.ipAddress;
+
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://192.168.1.9:3000/api/login', {
+            const response = await axios.post(ipAddress + 'api/login', {
                 emailOrPhone: emailOrPhone,
                 password: password,
             });
@@ -16,17 +24,33 @@ export default function LoginScreen({ navigation }) {
             if (response.data.success) {
                 console.log('Login Successful');
                 Alert.alert('Login Successful!');
-                // Optionally navigate to another screen
-                navigation.navigate('LoginAs');
+
+                // Extracting ownerId and tenantId from the response
+                const { userID, ownerID, tenantID } = response.data;
+
+                // Updating the state
+                setUserId(userID);
+                setOwnerId(ownerID);
+                setTenantId(tenantID);
+
+                console.log('User ID:', userID);
+                console.log('Owner ID:', ownerID);
+                console.log('Tenant ID:', tenantID);
+
+                // In your LoginScreen component, modify the navigation to pass parameters
+                navigation.navigate('LoginAs', { ownerId, tenantId });
+
+
             } else {
                 console.log('Login Failed:', response.data.error);
                 Alert.alert('Login Failed', response.data.error);
             }
         } catch (error) {
             console.error('Login Error:', error);
-            Alert.alert('Login Error', 'An error occurred during login.');
+            Alert.alert('Login Error', 'Email or Password Invalid!');
         }
     };
+
 
     return (
         <View style={styles.container}>
