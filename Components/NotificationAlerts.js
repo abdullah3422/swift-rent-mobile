@@ -13,7 +13,6 @@ export default function NotificationAlerts({ navigation }) {
         { title: 'Sept', details: '27,000   2,000' },
         { title: 'Aug', details: '23,000    1,100' },
         { title: 'Jul', details: '13,000    300' },
-
     ];
 
     const renderItem = ({ item }) => (

@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import {Image, Pressable, StyleSheet, Text, TextInput, View, Alert, Dimensions} from 'react-native';
 import axios from 'axios';
+import { md5 } from 'js-md5';
 
 
 export default function LoginScreen({ navigation, route }) {
-
-    const [userId, setUserId] = useState(0);
-    const [ownerId, setOwnerId] = useState(0);
-    const [tenantId, setTenantId] = useState(0);
 
     const [emailOrPhone, setEmailOrPhone] = useState('');
     const [password, setPassword] = useState('');
@@ -18,7 +15,7 @@ export default function LoginScreen({ navigation, route }) {
         try {
             const response = await axios.post(ipAddress + 'api/login', {
                 emailOrPhone: emailOrPhone,
-                password: password,
+                password: md5(password)
             });
 
             if (response.data.success) {
@@ -28,18 +25,14 @@ export default function LoginScreen({ navigation, route }) {
                 // Extracting ownerId and tenantId from the response
                 const { userID, ownerID, tenantID } = response.data;
 
-                // Updating the state
-                setUserId(userID);
-                setOwnerId(ownerID);
-                setTenantId(tenantID);
-
-                console.log('User ID:', userID);
-                console.log('Owner ID:', ownerID);
-                console.log('Tenant ID:', tenantID);
-
-                // In your LoginScreen component, modify the navigation to pass parameters
-                navigation.navigate('LoginAs', { ownerId, tenantId });
-
+                if (ownerID !== 0 && tenantID !== 0) {
+                    navigation.navigate('LoginAs', { userID ,ownerID, tenantID });
+                } else if (ownerID !== 0) {
+                    navigation.navigate('NotificationAlerts', { userID, ownerID});
+                } else if (tenantID !== 0) {
+                    Alert.alert("Not Developed Yet :(");
+                    //navigation.navigate('NotificationAlerts', { userID, tenantID });
+                }
 
             } else {
                 console.log('Login Failed:', response.data.error);

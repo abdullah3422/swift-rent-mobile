@@ -4,11 +4,12 @@ import {Alert, Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react
 
 export default function LoginAs({navigation, route}) {
 
-    const { ownerId, tenantId } = route.params;
-    console.log(ownerId);
+    const { userID, ownerID, tenantID } = route.params;
+
+    console.log(ownerID);
     const handleOwnerPress = () => {
-        if (ownerId !== 0) {
-            navigation.navigate('NotificationAlerts'); // Replace with your actual Owner dashboard screen name
+        if (ownerID !== 0) {
+            navigation.navigate('NotificationAlerts', { userID, ownerID});
         } else {
             // Handle the case when ownerId is 0
             Alert.alert("Not Registered as an Owner!");
@@ -16,8 +17,9 @@ export default function LoginAs({navigation, route}) {
     };
 
     const handleTenantPress = () => {
-        if (tenantId !== 0) {
-            navigation.navigate('NotificationAlerts'); // Replace with your actual Tenant dashboard screen name
+        if (tenantID !== 0) {
+            Alert.alert("Not Developed Yet :(");
+            //navigation.navigate('NotificationAlerts', { userID, tenantID });
         } else {
             // Handle the case when tenantId is 0
             Alert.alert("Not Registered as a Tenant!");
