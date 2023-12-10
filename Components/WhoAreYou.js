@@ -2,38 +2,20 @@ import * as React from 'react';
 import {Alert, Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {useState} from "react";
 import axios from "axios";
+import { md5 } from 'js-md5';
 
 
-export default function LoginAs({navigation, route}) {
+export default function WhoAreYou({navigation, route}) {
+    console.log(md5("Anas@2001"));
 
-    const [userType, setUserType] = useState('');
-
-    const ipAddress = route.params.ipAddress;
-    const handleRole = async (role) => {
-        try {
-            // Save the role into the userType state
-            setUserType(role);
-
-            console.log(userType);
-
-            const response = await axios.post(ipAddress + 'api/register-account', {
-                userType: role,
-            });
-
-            if (response.data.success) {
-                // Navigate to the next screen or perform other actions
-                navigation.navigate('SetPassword');
-                console.log('User-Type-Added: ' + role);
-            } else {
-                // Handle errors, show appropriate messages to the user
-                console.error('API Error:', response.data.error, response.statusText);
-            }
-        } catch (error) {
-            console.error('Network Error:', error);
-        }
+    const ipAddressContainer = route.params.ipAddress;
+        const handleRole = async (role) => {
+        // Save the role into the userType state
+        console.log('User-Type-Added: ' + role);
+        let userType;
+        userType = role;
+        navigation.navigate('GetToKnow', userType);
     };
-
-
 
     // let [fontsLoad] = useFonts({OpenSans_Bold});
     return (
@@ -45,21 +27,18 @@ export default function LoginAs({navigation, route}) {
                 <Image source={require('../img/logoColored.png')} style={styles.logo} />
             </View>
             <Text style={styles.postHeader}>Who are you?</Text>
-
             <Pressable style={styles.button} onPress={() => handleRole('owner')}>
                 <Text style={styles.buttonText}>Property Owner</Text>
             </Pressable>
             {/*<Pressable style={styles.button} onPress={() => navigation.navigate('GetToKnow')}>*/}
             {/*    <Text style={styles.buttonText}>Property Agent</Text>*/}
             {/*</Pressable>*/}
-            <Pressable style={styles.button} onPress={() => navigation.navigate('GetToKnow')}>
+            <Pressable style={styles.button} onPress={() => handleRole('tenant')}>
                 <Text style={styles.buttonText}>Tenant</Text>
             </Pressable>
-            <Pressable onPress={() => navigation.navigate('GetToKnow')}>
+            <Pressable onPress={() => navigation.navigate('LoginScreen')}>
                 <Text style={styles.newRoleText}>Create new role on existing credentials?</Text>
             </Pressable>
-
-
         </View>
 
     );

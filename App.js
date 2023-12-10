@@ -27,13 +27,15 @@ import FAQs from "./Components/FAQs";
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator()
 
+
 // passing this ipAddress as a prop to other screens where needed, so it needs to be change only here
 const ipAddress = 'http://192.168.1.10:3000/';
+
 
 // Adding screens to DrawerNavigator in order to add a Drawer to the added screen
 const DrawerNavigator = () => {
     return (
-        <Drawer.Navigator initialRouteName="NotificationAlerts"
+        <Drawer.Navigator initialRouteName="ReportBug"
                           screenOptions={{
                               drawerStyle: {
                                   backgroundColor: '#fff',
@@ -66,11 +68,12 @@ const DrawerNavigator = () => {
 };
 
 const App = () => {
+
     return (
 
         <NavigationContainer>
 
-            <Stack.Navigator initialRouteName="SplashScreen">
+            <Stack.Navigator initialRouteName="LoginScreen">
                 <Stack.Screen
                     name="SplashScreen"
                     component={SplashScreen}
@@ -105,7 +108,8 @@ const App = () => {
                 <Stack.Screen
                     name="SetPassword"
                     component={SetPassword}
-                    options={{ headerShown: false }} />
+                    options={{ headerShown: false }}
+                    initialParams={{ ipAddress: ipAddress }}/>
                 <Stack.Screen
                     name="SetUp"
                     component={SetUp}
@@ -121,7 +125,8 @@ const App = () => {
                 <Stack.Screen
                     name="ChangePassword"
                     component={ChangePassword}
-                    options={{ headerShown: false }}/>
+                    options={{ headerShown: false }}
+                    initialParams={{ ipAddress: ipAddress }}/>
                 <Stack.Screen
                     name="ReportBug"
                     component={ReportBug}

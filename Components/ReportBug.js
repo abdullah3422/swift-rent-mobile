@@ -1,7 +1,11 @@
 import * as React from 'react';
 import {Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 
-export default function ReportBug({ navigation }) {
+export default function ReportBug({ navigation,route }) {
+
+    // const ipAddress = route.params.ipAddress;
+    // console.log(ipAddress);
+
     return (
         <View style={styles.container}>
             <Text style={styles.headerText}>Report a Bug </Text>

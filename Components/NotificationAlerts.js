@@ -8,12 +8,15 @@ import BottomTabNavigator from "./BottomTabNavigator";
 
 const Tab = createBottomTabNavigator();
 
-export default function NotificationAlerts({ navigation }) {
+export default function NotificationAlerts({ navigation, route }) {
+
+    const { userID } = route.params;
+
+    console.log(userID);
     const cardButtons = [
         { title: 'Sept', details: '27,000   2,000' },
         { title: 'Aug', details: '23,000    1,100' },
         { title: 'Jul', details: '13,000    300' },
-
     ];
 
     const renderItem = ({ item }) => (
