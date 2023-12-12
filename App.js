@@ -29,7 +29,7 @@ const Stack = createNativeStackNavigator()
 
 
 // passing this ipAddress as a prop to other screens where needed, so it needs to be change only here
-const ipAddress = 'http://192.168.1.12:3000/';
+const ipAddress = 'http://192.168.137.1:3000/';
 
 
 // Adding screens to DrawerNavigator in order to add a Drawer to the added screen
@@ -73,7 +73,7 @@ const App = () => {
 
         <NavigationContainer>
 
-            <Stack.Navigator initialRouteName="LoginScreen">
+            <Stack.Navigator initialRouteName="SplashScreen">
                 <Stack.Screen
                     name="SplashScreen"
                     component={SplashScreen}

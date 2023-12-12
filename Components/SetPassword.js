@@ -1,12 +1,57 @@
 import * as React from 'react';
-import {Dimensions, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Alert, Dimensions, Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
+import axios from "axios";
+import { md5 } from 'js-md5';
 
-export default function SetPassword({ navigation }) {
+export default function SetPassword({ navigation, route }) {
     const [passwordsMatch, setPasswordsMatch] = React.useState(true); // Initialize to true initially
 
-    // Validation schema used from formik's official website:
+    // Routing the ipAddress as a prop through the route keyword
+    const ipAddress = route.params.ipAddress;
+
+    const handleRegister = async (values) => {
+        try {
+            const { userType, firstName, lastName, DOB, email, phone } = route.params;
+            console.log(route.params);
+            console.log(userType);
+            console.log(firstName);
+            console.log(lastName);
+            console.log(DOB);
+            console.log(email);
+            console.log(phone);
+            let password = values.password;
+            console.log(password);
+
+
+            console.log(ipAddress);
+            const response = await axios.post(ipAddress + 'api/register-account', {
+                userType : userType,    firstName : firstName,
+                lastName : lastName,    DOB : DOB,
+                email : email,          phone : phone,
+                password : md5(password)
+            });
+
+            if (response.data.success) {
+                console.log('Registration successful', response.data);
+
+                // Extracting ownerId and tenantId from the response
+                const { userID, ownerID, tenantID } = response.data;
+                if (userType === 'owner') {
+                    navigation.navigate('NotificationAlerts', { userID, ownerID});
+                } else if (userType === 'tenant') {
+                    Alert.alert("Not Developed Yet :(");
+                    //navigation.navigate('NotificationAlerts', { userID, tenantID });
+                }
+            } else {
+                console.error('Registration failed', response.data.error);
+            }
+        } catch (error) {
+            console.error('Error during registration:', error);
+        }
+    };
+
 
     const passwordValidationSchema = Yup.object().shape({
         password: Yup.string()
@@ -15,8 +60,7 @@ export default function SetPassword({ navigation }) {
             .required('Cant leave empty'),
         confirmPassword: Yup.string()
             .oneOf([Yup.ref('password'), 'Your Passwords dont match!'], 'Passwords must match!')
-            .required('Confirm password is needed'),
-        email: Yup.string().email('Invalid email').required('Required'),
+            .required('Confirm password is needed')
     });
 
     return (
@@ -26,17 +70,7 @@ export default function SetPassword({ navigation }) {
                 confirmPassword: '',
             }}
             validationSchema={passwordValidationSchema}
-            onSubmit={(values) => {
-                // form submission logic here
-                // You can check passwords match here if needed
-                if (values.password === values.confirmPassword) {
-                    setPasswordsMatch(true);
-                    // Perform your registration logic here
-                    navigation.navigate('SetUp'); // Navigate to the next screen upon successful submission
-                } else {
-                    setPasswordsMatch(false);
-                }
-            }}
+            onSubmit={handleRegister}
         >
             {({ values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit }) => (
                 <View style={styles.container}>
@@ -73,16 +107,9 @@ export default function SetPassword({ navigation }) {
                             <Text style={styles.buttonText}>Back</Text>
                         </TouchableOpacity>
                         <View style={styles.space} />
-                        <TouchableOpacity
-                            onPress={ () =>{navigation.navigate('SetUp')}}
-                            disabled={!passwordsMatch || (touched.password && errors.password) || (touched.confirmPassword && errors.confirmPassword)} // Disable the button only if passwords don't match
-                            style={[
-                                styles.button,
-                                //{ backgroundColor: (!passwordsMatch || (touched.password && errors.password) || (touched.confirmPassword && errors.confirmPassword)) ? 'red' : '#e5e5e5' }
-                            ]}
-                        >
-                            <Text style={styles.buttonText}>Register</Text>
-                        </TouchableOpacity>
+                        <Pressable style={[ styles.button]} onPress={handleSubmit}>
+                            <Text style={styles.buttonText} >Register</Text>
+                        </Pressable>
                     </View>
                 </View>
             )}

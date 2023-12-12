@@ -9,7 +9,7 @@ export default function WhoAreYou({navigation, route}) {
     console.log(md5("Anas@2001"));
 
     const ipAddressContainer = route.params.ipAddress;
-        const handleRole = async (role) => {
+    const handleRole = async (role) => {
         // Save the role into the userType state
         console.log('User-Type-Added: ' + role);
         let userType;
