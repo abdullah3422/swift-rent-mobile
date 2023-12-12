@@ -1,46 +1,45 @@
 import React, { useState } from 'react';
 import {Image, Pressable, StyleSheet, Text, TextInput, View, Alert, Dimensions} from 'react-native';
 import axios from 'axios';
-import { md5 } from 'js-md5';
 
 
 export default function LoginScreen({ navigation, route }) {
+
+    const [userId, setUserId] = useState(0);
+    const [ownerId, setOwnerId] = useState(0);
+    const [tenantId, setTenantId] = useState(0);
 
     const [emailOrPhone, setEmailOrPhone] = useState('');
     const [password, setPassword] = useState('');
 
     const ipAddress = route.params.ipAddress;
 
-
-
     const handleLogin = async () => {
         try {
             const response = await axios.post(ipAddress + 'api/login', {
                 emailOrPhone: emailOrPhone,
-                password: md5(password)
+                password: password,
             });
 
             if (response.data.success) {
                 console.log('Login Successful');
                 Alert.alert('Login Successful!');
 
-
                 // Extracting ownerId and tenantId from the response
                 const { userID, ownerID, tenantID } = response.data;
 
+                // Updating the state
+                setUserId(userID);
+                setOwnerId(ownerID);
+                setTenantId(tenantID);
 
-                if (ownerID !== 0 && tenantID !== 0) {
-                    navigation.navigate('LoginAs', { userID: userID ,ownerID, tenantID });
+                console.log('User ID:', userID);
+                console.log('Owner ID:', ownerID);
+                console.log('Tenant ID:', tenantID);
 
+                // In your LoginScreen component, modify the navigation to pass parameters
+                navigation.navigate('LoginAs', { ownerId, tenantId });
 
-                } else if (ownerID !== 0) {
-                    navigation.navigate('NotificationAlerts', { userID: userID, ownerID});
-                    // navigation.navigate('ChangePassword',{userID}); //this piece of code when ran only allowed to change the password making it  a must to run this code before resetting the password
-
-                } else if (tenantID !== 0) {
-                    Alert.alert("Not Developed Yet :(");
-                    //navigation.navigate('NotificationAlerts', { userID: userID, tenantID });
-                }
 
             } else {
                 console.log('Login Failed:', response.data.error);
@@ -50,7 +49,6 @@ export default function LoginScreen({ navigation, route }) {
             console.error('Login Error:', error);
             Alert.alert('Login Error', 'Email or Password Invalid!');
         }
-
     };
 
 
