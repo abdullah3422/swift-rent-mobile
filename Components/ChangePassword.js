@@ -6,7 +6,7 @@ import {md5} from "js-md5"; // Import axios
 
 export default function ChangePassword({ navigation, route }) {
 
-    const { userID, ownerID, tenantID } = route.params;
+    const { userID, ownerID, tenantID} = route.params;
     const ipAddress = route.params.ipAddress;
 
     const [password, setPassword] = useState('');
