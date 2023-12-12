@@ -8,11 +8,7 @@ import BottomTabNavigator from "./BottomTabNavigator";
 
 const Tab = createBottomTabNavigator();
 
-export default function NotificationAlerts({ navigation, route }) {
-
-    const { userID } = route.params;
-
-    console.log(userID);
+export default function NotificationAlerts({ navigation }) {
     const cardButtons = [
         { title: 'Sept', details: '27,000   2,000' },
         { title: 'Aug', details: '23,000    1,100' },
@@ -34,22 +30,22 @@ export default function NotificationAlerts({ navigation, route }) {
         <View style={styles.container}>
             <View style={styles.topContainer}>
 
-                <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Notifications {'\t\t\t'} 23</Text>
+                    <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Notifications {'\t\t\t'} 23</Text>
 
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
-                    <Text style={{ fontSize: 20, width: '50%' }}>Rents </Text>
-                    <Text style={{ fontWeight: 'bold', fontSize: 20, }}>25</Text>
-                </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 20, width: '50%' }}>Tenants</Text>
-                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>15</Text>
-                </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 20, width: '50%' }}>Managers</Text>
-                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>10</Text>
-                </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
+                        <Text style={{ fontSize: 20, width: '50%' }}>Rents </Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20, }}>25</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{ fontSize: 20, width: '50%' }}>Tenants</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>15</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{ fontSize: 20, width: '50%' }}>Managers</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>10</Text>
+                    </View>
 
-            </View>
+                </View>
 
             <View style={styles.bottomContainer}>
                 <View style={styles.cardButtons}>
@@ -59,11 +55,11 @@ export default function NotificationAlerts({ navigation, route }) {
                     </View>
                 </View>
                 <View style={styles.cardButtons}>
-                    <Text style={styles.cardButtonsText}>  Saad Ijaz has paid their rent</Text>
+                <Text style={styles.cardButtonsText}>  Saad Ijaz has paid their rent</Text>
                     <View style={{ flex: 1, alignItems: 'flex-end' }}>
                         <Image style={styles.arrow} source={require('../img/upRightArrow.png') }/>
                     </View>
-                </View>
+            </View>
                 <View style={styles.cardButtons}>
                     <Text style={styles.cardButtonsText}>Hussain collected Saad’s rent </Text>
                     <View style={{ flex: 1, alignItems: 'flex-end' }}>

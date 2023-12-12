@@ -268,3 +268,5 @@ const styles = StyleSheet.create({
         color: '#FF0D10',
     },
 });
+
+

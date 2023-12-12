@@ -11,8 +11,6 @@ export default function LoginScreen({ navigation, route }) {
 
     const ipAddress = route.params.ipAddress;
 
-
-
     const handleLogin = async () => {
         try {
             const response = await axios.post(ipAddress + 'api/login', {
@@ -24,22 +22,16 @@ export default function LoginScreen({ navigation, route }) {
                 console.log('Login Successful');
                 Alert.alert('Login Successful!');
 
-
                 // Extracting ownerId and tenantId from the response
                 const { userID, ownerID, tenantID } = response.data;
 
-
                 if (ownerID !== 0 && tenantID !== 0) {
-                    navigation.navigate('LoginAs', { userID: userID ,ownerID, tenantID });
-
-
+                    navigation.navigate('LoginAs', { userID ,ownerID, tenantID });
                 } else if (ownerID !== 0) {
-                    navigation.navigate('NotificationAlerts', { userID: userID, ownerID});
-                    // navigation.navigate('ChangePassword',{userID}); //this piece of code when ran only allowed to change the password making it  a must to run this code before resetting the password
-
+                    navigation.navigate('NotificationAlerts', { userID, ownerID});
                 } else if (tenantID !== 0) {
                     Alert.alert("Not Developed Yet :(");
-                    //navigation.navigate('NotificationAlerts', { userID: userID, tenantID });
+                    //navigation.navigate('NotificationAlerts', { userID, tenantID });
                 }
 
             } else {
@@ -50,7 +42,6 @@ export default function LoginScreen({ navigation, route }) {
             console.error('Login Error:', error);
             Alert.alert('Login Error', 'Email or Password Invalid!');
         }
-
     };
 
 
@@ -176,3 +167,4 @@ const styles = StyleSheet.create({
     },
 
 });
+

@@ -23,14 +23,15 @@ export default function SetPassword({ navigation, route }) {
             console.log(phone);
             let password = values.password;
             console.log(password);
+            let passwordHash = CryptoJS.MD5(values.password).toString();
 
 
             console.log(ipAddress);
             const response = await axios.post(ipAddress + 'api/register-account', {
-                userType : userType,    firstName : firstName,
-                lastName : lastName,    DOB : DOB,
-                email : email,          phone : phone,
-                password : md5(password)
+                    userType : userType,    firstName : firstName,
+                    lastName : lastName,    DOB : DOB,
+                    email : email,          phone : phone,
+                    password : password
             });
 
             if (response.data.success) {
