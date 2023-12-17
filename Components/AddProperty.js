@@ -7,7 +7,7 @@ import BottomTabNavigator from "./BottomTabNavigator";
 
 const Tab = createBottomTabNavigator();
 
-export default function AddProperty({ navigation }) {
+export default function AddProperty({ navigation,route }) {
     const cardButtons = [
         { title: '#1', details: '27,000    2,000' },
         { title: '#2', details: '23,000    1,100' },

@@ -2,13 +2,16 @@ import * as React from 'react';
 import {Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
-import AddProperty from "./AddProperty";
 import BottomTabNavigator from "./BottomTabNavigator";
 
 
 const Tab = createBottomTabNavigator();
 
-export default function NotificationAlerts({ navigation }) {
+export default function NotificationAlerts({ navigation, route}) {
+
+    const { userID, ownerID, tenantID } = route.params;
+    console.log(userID,ownerID,tenantID);
+
     const cardButtons = [
         { title: 'Sept', details: '27,000   2,000' },
         { title: 'Aug', details: '23,000    1,100' },
