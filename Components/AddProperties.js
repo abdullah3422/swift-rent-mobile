@@ -2,102 +2,135 @@ import * as React from 'react';
 import {Alert, Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import {useState} from "react";
 import axios from "axios";
-import {goBack} from "@react-navigation/routers/src/CommonActions";
+import {Formik} from 'formik';
+import * as Yup from 'yup';
 
-export default function AddProperties({ navigation, route }) {
+export default function AddProperties({navigation, route}) {
 
     const {userID, ownerID, tenantID} = route.params;
     const ipAddress = route.params.ipAddress;
-    console.log("userID: "+userID);
-    console.log("ownerID: "+ownerID);
-    console.log("tenantID: "+tenantID);
+    console.log("userID: " + userID);
+    console.log("ownerID: " + ownerID);
+    console.log("tenantID: " + tenantID);
 
     const [propertyAddress, setPropertyAddress] = useState('');
     const [dueDate, setDueDate] = useState('');
     const [rentAmount, setRentAmount] = useState('');
     const [error, setError] = useState('');
 
-    const handleAddProperty = async () => {
 
+    const addPropertiesSchema = Yup.object().shape({
+        propertyAddress: Yup.string()
+            .min(5, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        dueDate: Yup.number()
+            .integer('Due Date must be an integer')
+            .min(1, 'Due Date must be between 1 and 31')
+            .max(31, 'Due Date must be between 1 and 31')
+            .required('Required'),
+        rentAmount: Yup.number()
+            .min(1, 'Rent Amount must be at least 1')
+            // .max(1000000, 'Rent Amount must be less than 1,000,000')
+            .required('Required'),
+    });
 
+    const handleAddProperty = async (values) => {
+        try {
+            const response = await axios.post(ipAddress + 'api/add-property', {
+                ownerID: ownerID,
+                rent: values.rentAmount,
+                dueDate: values.dueDate,
+                propertyAddress: values.propertyAddress
+            });
 
-        // ADD FORMIK FIRST || ADDRESS NOT EMPTY, DUE DATE 1 - 31 (NUMBERS), Rent Amount Numbers
-        // try {
-        //     const response = await axios.post(ipAddress + 'api/add-property', {
-        //         ownerID: ownerID,
-        //         rent: rentAmount,
-        //         dueDate: dueDate,
-        //         propertyAddress: propertyAddress
-        //     });
-        //
-        //     if (response.data.success) {
-        //         // Property added successfully, you can navigate to another screen or show a success message here.
-        //         Alert.alert('Property Successfully Added!')
-        //         navigation.navigate('MyProperties', {userID, ownerID, tenantID});
-        //     }
-        // } catch (error) {
-        //     setError('Error adding property');
-        //     console.error('Error during adding property:', error);
-        // }
+            if (response.data.success) {
+                Alert.alert('Property Successfully Added!')
+                navigation.navigate('MyProperties', {userID, ownerID, tenantID});
+            }
+        } catch (error) {
+            console.error('Error during adding property:', error);
+        }
     };
 
     return (
 
-        <View style={styles.container}>
+        <Formik
+            initialValues={{propertyAddress: '', dueDate: '', rentAmount: ''}}
+            validationSchema={addPropertiesSchema}
+            onSubmit={handleAddProperty}
+        >
+            {({values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit}) => (
 
-            <Text style={styles.postHeader}>Add Property {'\n'}Information</Text>
+                <View style={styles.container}>
 
-            <View style={styles.input}>
-                <TextInput
-                    placeholder="Address"
-                    placeholderTextColor="#cdcdcd"
-                    style={styles.textInput}
-                    value={propertyAddress}
-                    onChangeText={(text) => setPropertyAddress(text)}
-                />
-                <View style={styles.iconContainer}>
-                    <Image source={require('../img/locationIcon.png')} style={styles.placeholderIcon} />
+                    <Text style={styles.postHeader}>Add Property {'\n'}Information</Text>
+
+                    <View style={styles.input}>
+                        <TextInput
+                            placeholder="Address"
+                            style={styles.textInput}
+                            onChangeText={handleChange('propertyAddress')}
+                            onBlur={() => setFieldTouched('propertyAddress')}
+                            value={values.propertyAddress}
+                        />
+                        <View style={styles.iconContainer}>
+                            <Image source={require('../img/locationIcon.png')} style={styles.placeholderIcon}/>
+                        </View>
+                    </View>
+                    {touched.propertyAddress && errors.propertyAddress &&
+                        <Text style={styles.errorText}>{errors.propertyAddress}</Text>
+                    }
+                    <View style={styles.input}>
+                        <TextInput
+                            placeholder="Due Date"
+                            keyboardType="numeric"
+                            style={styles.textInput}
+                            onChangeText={handleChange('dueDate')}
+                            onBlur={() => setFieldTouched('dueDate')}
+                            value={values.dueDate}
+                        />
+                        <View style={styles.iconContainer}>
+                            <Image source={require('../img/hashtag.png')} style={styles.placeholderIcon}/>
+                        </View>
+                    </View>
+                    {touched.dueDate && errors.dueDate &&
+                        <Text style={styles.errorText}>{errors.dueDate}</Text>
+                    }
+
+                    <View style={styles.input}>
+                        <TextInput
+                            placeholder="Rent Amount"
+                            keyboardType="numeric"
+                            style={styles.textInput}
+                            onChangeText={handleChange('rentAmount')}
+                            onBlur={() => setFieldTouched('rentAmount')}
+                            value={values.rentAmount}
+                        />
+                        <View style={styles.iconContainer}>
+                            <Image source={require('../img/dollarIcon.png')} style={styles.placeholderIcon}/>
+                        </View>
+                    </View>
+                    {touched.rentAmount && errors.rentAmount &&
+                        <Text style={styles.errorText}>{errors.rentAmount}</Text>
+                    }
+
+                    <View style={styles.buttonContainer}>
+                        <Pressable style={styles.button}
+                                   onPress={() => navigation.navigate('MyProperties', {userID, ownerID, tenantID})}>
+                            <Text style={styles.buttonText}>Back</Text>
+                        </Pressable>
+
+                        <View style={styles.space}/>
+                        <Pressable style={styles.button} onPress={handleSubmit}>
+                            <Text style={styles.buttonText}>Next</Text>
+                        </Pressable>
+
+                    </View>
                 </View>
-            </View>
-            <View style={styles.input}>
-                <TextInput
-                    placeholder="Due Date"
-                    placeholderTextColor="#cdcdcd"
-                    keyboardType="numeric"
-                    style={styles.textInput}
-                    value={dueDate}
-                    onChangeText={(text) => setDueDate(text)}
-                />
-                <View style={styles.iconContainer}>
-                    <Image source={require('../img/hashtag.png')} style={styles.placeholderIcon} />
-                </View>
-            </View>
-            <View style={styles.input}>
-                <TextInput
-                    placeholder="Rent Amount"
-                    placeholderTextColor="#cdcdcd"
-                    keyboardType="numeric"
-                    style={styles.textInput}
-                    value={rentAmount}
-                    onChangeText={(text) => setRentAmount(text)}
-                />
-                <View style={styles.iconContainer}>
-                    <Image source={require('../img/dollarIcon.png')} style={styles.placeholderIcon} />
-                </View>
-            </View>
+            )}
+        </Formik>
 
-            <View style={styles.buttonContainer}>
-                <Pressable style={styles.button} onPress={() => navigation.navigate('MyProperties', {userID, ownerID, tenantID})}>
-                    <Text style={styles.buttonText}>Back</Text>
-                </Pressable>
-
-                <View style={styles.space} />
-                <Pressable style={styles.button} onPress={handleAddProperty}>
-                    <Text style={styles.buttonText}>Next</Text>
-                </Pressable>
-
-            </View>
-        </View>
     );
 }
 
@@ -185,6 +218,11 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         color: 'black',
         textAlign: 'center'
+
+    },
+    errorText: {
+        fontSize: 12,
+        color: '#FF0D10',
 
     },
 });

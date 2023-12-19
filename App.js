@@ -16,7 +16,6 @@ import MyProperties from "./Components/MyProperties";
 import AddProperties from "./Components/AddProperties";
 import ChangePassword from "./Components/ChangePassword";
 import NotificationAlerts from "./Components/NotificationAlerts";
-
 import UserProfile from "./Components/UserProfile";
 import ReportBug from "./Components/ReportBug";
 import FAQs from "./Components/FAQs";
@@ -26,7 +25,7 @@ import FAQs from "./Components/FAQs";
 const Stack = createNativeStackNavigator();
 
 // passing this ipAddress as a prop to other screens where needed, so it needs to be change only here
-const ipAddress = "http://192.168.18.59:3000/";
+const ipAddress = "http://192.168.1.10:3000/";
 
 const App = () => {
   return (
