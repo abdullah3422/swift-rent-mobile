@@ -1,16 +1,11 @@
 import * as React from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+export default function UserProfile({ navigation, route }) {
 
-import AddProperty from "./AddProperty";
-import BottomTabNavigator from "./BottomTabNavigator";
-import FAQs from "./FAQs";
-
-
-const Tab = createBottomTabNavigator();
-
-export default function UserProfile({ navigation }) {
-
+    const {userID, ownerID, tenantID} = route.params;
+    console.log(userID);
+    console.log(ownerID);
+    console.log(tenantID);
     return (
         <View style={styles.container}>
             <View style={styles.topContainer}>
@@ -24,14 +19,14 @@ export default function UserProfile({ navigation }) {
                     </View>
 
             </View>
-            <View style={styles.bottomContainer}>
-                <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('ChangePassword')}>
+            <View style={styles.middleContainer}>
+                <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('ChangePassword', {userID, ownerID, tenantID})}>
                     <Text style={styles.cardButtonsText}>Change Password</Text>
                     <View style={{ flex: 1, alignItems: 'flex-end' }}>
                         <Image style={styles.Pics} source={require('../img/change.png') }/>
                     </View>
                 </Pressable>
-                <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('ReportBug')}>
+                <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('ReportBug', {userID, ownerID, tenantID})}>
                     <Text style={styles.cardButtonsText}>Report a bug</Text>
                     <View style={{ flex: 1, alignItems: 'flex-end' }}>
                         <Image style={styles.Pics} source={require('../img/bug.png') }/>
@@ -43,25 +38,54 @@ export default function UserProfile({ navigation }) {
                         <Image style={styles.Pics} source={require('../img/faqs.png') }/>
                     </View>
                 </Pressable>
-                <View style={styles.cardButtons}>
-                    <Text style={styles.cardButtonsText}>Logout</Text>
-                    <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                        <Image style={styles.Pics} source={require('../img/logout.png') }/>
+                <Pressable onPress={() => navigation.navigate('WelcomeScreen')}>
+                    <View style={styles.cardButtons}>
+                        <Text style={styles.cardButtonsText}>Logout</Text>
+                        <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                            <Image style={styles.Pics} source={require('../img/logout.png') }/>
+                        </View>
                     </View>
-                </View>
-            </View>
+                </Pressable>
 
+            </View>
             {/*<Pressable onPress={() => navigation.navigate('AddProperty')}>*/}
             {/*    <Text style={{paddingTop: 15}}>Next</Text>*/}
             {/*</Pressable>*/}
-
-            <BottomTabNavigator/>
+            <View style={styles.bottomContainer}>
+                <View style={styles.bottomNavRow}>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('MyProperties')}>
+                        <Image
+                            style={{ width: 40, height: 40 }}
+                            source={require('../img/propertiesIcon.png')}
+                        />
+                        <Text style={styles.bottomContainerText}>Properties</Text>
+                    </Pressable>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('AnalyticsOwner')}>
+                        <Image
+                            style={{ width: 40, height: 40 }}
+                            source={require('../img/analyticIcon.png')}
+                        />
+                        <Text style={styles.bottomContainerText}>Analytics</Text>
+                    </Pressable>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('NotificationAlerts')}>
+                        <Image
+                            style={{ width: 40, height: 40 }}
+                            source={require('../img/notification.png')}
+                        />
+                        <Text style={styles.bottomContainerText}>Alerts</Text>
+                    </Pressable>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('UserProfile')}>
+                        <Image
+                            style={{ width: 40, height: 40 }}
+                            source={require('../img/profileFocused.png')}
+                        />
+                        <Text style={styles.bottomContainerText}>Profile</Text>
+                    </Pressable>
+                </View>
+            </View>
         </View>
     );
 }
-
-
-
 
 const styles = StyleSheet.create({
     container: {
@@ -77,7 +101,7 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         padding: 20,
         backgroundColor: '#fff',
-        marginTop: 20,
+        marginTop: 70,
         borderRadius: 20,
         borderColor: '#1463df',
         borderWidth: 4,
@@ -93,14 +117,14 @@ const styles = StyleSheet.create({
         height: 20,
         marginHorizontal: 5,
     },
-    bottomContainer: {
-        flex: 0.7,
+    middleContainer: {
+        flex: 0.6,
         backgroundColor: '#47b5ff',
         marginTop: '5%',
-        paddingBottom:200,
-        marginBottom: -180,
+        paddingBottom:290,
+        marginBottom: '1%',
         width: '100%',
-        paddingTop:'12.5%'
+        paddingTop:'4%'
 
     },
     cardButtons: {
@@ -125,9 +149,24 @@ const styles = StyleSheet.create({
     Pics: {
         width: 30,
         height: 30,
-
-
     },
 
+    bottomContainer: {
+        marginBottom: -40
+    },
+    bottomNavRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between', // Add spacing between Pressables
+        alignItems: 'center',
+        paddingHorizontal: 20, // Adjust the horizontal padding for spacing
 
+    },
+    bottomNavButton: {
+        marginHorizontal: 20, // Adjust the margin for spacing
+        marginTop: 2
+    },
+    bottomContainerText:{
+        fontSize: 14,
+        fontWeight: "bold"
+    },
 });

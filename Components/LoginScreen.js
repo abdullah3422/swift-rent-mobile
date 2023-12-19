@@ -10,9 +10,11 @@ export default function LoginScreen({ navigation, route }) {
     const [password, setPassword] = useState('');
 
     const ipAddress = route.params.ipAddress;
-
+    console.log(ipAddress);
     const handleLogin = async () => {
         try {
+            console.log(emailOrPhone);
+            console.log(password);
             const response = await axios.post(ipAddress + 'api/login', {
                 emailOrPhone: emailOrPhone,
                 password: md5(password)
@@ -28,7 +30,7 @@ export default function LoginScreen({ navigation, route }) {
                 if (ownerID !== 0 && tenantID !== 0) {
                     navigation.navigate('LoginAs', { userID ,ownerID, tenantID });
                 } else if (ownerID !== 0) {
-                    navigation.navigate('NotificationAlerts', { userID, ownerID});
+                    navigation.navigate('NotificationAlerts', { userID, ownerID, tenantID});
                 } else if (tenantID !== 0) {
                     Alert.alert("Not Developed Yet :(");
                     //navigation.navigate('NotificationAlerts', { userID, tenantID });

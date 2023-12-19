@@ -6,7 +6,7 @@ export default function LoginAs({ navigation, route }) {
 console.log(userID);
     const handleOwnerPress = () => {
         if (ownerID !== 0) {
-            navigation.navigate('DrawerScreens', { userID, ownerID, tenantID });
+            navigation.navigate('NotificationAlerts', { userID, ownerID, tenantID });
         } else {
             // Handle the case when ownerId is 0
             Alert.alert("Not Registered as an Owner!");

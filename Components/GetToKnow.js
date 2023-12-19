@@ -5,15 +5,18 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 export default function GetToKnow({ navigation, route }) {
+    const {userType} = route.params;
+    console.log(userType);
     const [year, setYear] = useState('');
     const [month, setMonth] = useState('');
     const [day, setDay] = useState('');
+
     const handleData = async (values) => {
-        const userType = route.params;
+
         console.log(values.firstName);
         console.log(values.lastName);
         console.log(values.year+"-"+values.month+"-"+values.day);
-        console.log(userType);
+
         let firstName = values.firstName, lastName = values.lastName, DOB = values.year+"-"+values.month+"-"+values.day;
         navigation.navigate('ContactInfo', { userType, firstName, lastName, DOB });
 

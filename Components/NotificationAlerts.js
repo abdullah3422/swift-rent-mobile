@@ -1,30 +1,25 @@
 import * as React from 'react';
 import {Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
-import BottomTabNavigator from "./BottomTabNavigator";
+export default function NotificationAlerts({navigation, route}) {
 
-
-const Tab = createBottomTabNavigator();
-
-export default function NotificationAlerts({ navigation, route}) {
-
-    const { userID, ownerID, tenantID } = route.params;
-    console.log(userID,ownerID,tenantID);
-
+    const {userID, ownerID, tenantID} = route.params;
+    console.log(userID);
+    console.log(ownerID);
+    console.log(tenantID);
     const cardButtons = [
-        { title: 'Sept', details: '27,000   2,000' },
-        { title: 'Aug', details: '23,000    1,100' },
-        { title: 'Jul', details: '13,000    300' },
+        {title: 'Sept', details: '27,000   2,000'},
+        {title: 'Aug', details: '23,000    1,100'},
+        {title: 'Jul', details: '13,000    300'},
     ];
 
-    const renderItem = ({ item }) => (
+    const renderItem = ({item}) => (
         <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('WhoAreYou')}>
             <Text style={styles.cardButtonText}>{item.title}</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-                <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage} />
-                <Text style={{ fontSize: 20 }}> {item.details}</Text>
-                <Image source={require('../img/outgoingArrow.png')} style={styles.arrowImage} />
+            <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
+                <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage}/>
+                <Text style={{fontSize: 20}}> {item.details}</Text>
+                <Image source={require('../img/outgoingArrow.png')} style={styles.arrowImage}/>
             </View>
         </Pressable>
     );
@@ -32,51 +27,82 @@ export default function NotificationAlerts({ navigation, route}) {
     return (
         <View style={styles.container}>
             <View style={styles.topContainer}>
-
-                    <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Notifications {'\t\t\t'} 23</Text>
-
-                    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
-                        <Text style={{ fontSize: 20, width: '50%' }}>Rents </Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20, }}>25</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 20, width: '50%' }}>Tenants</Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>15</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 20, width: '50%' }}>Managers</Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>10</Text>
-                    </View>
-
+                <Text style={{fontSize: 30, fontWeight: 'bold'}}>Notifications {'\t\t\t'} 23</Text>
+                <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
+                    <Text style={{fontSize: 20, width: '50%'}}>Rents </Text>
+                    <Text style={{fontWeight: 'bold', fontSize: 20,}}>25</Text>
                 </View>
-
-            <View style={styles.bottomContainer}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={{fontSize: 20, width: '50%'}}>Tenants</Text>
+                    <Text style={{fontWeight: 'bold', fontSize: 20}}>15</Text>
+                </View>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={{fontSize: 20, width: '50%'}}>Managers</Text>
+                    <Text style={{fontWeight: 'bold', fontSize: 20}}>10</Text>
+                </View>
+            </View>
+            <View style={styles.middleContainer}>
                 <View style={styles.cardButtons}>
                     <Text style={styles.cardButtonsText}>Saqib Ali is Requesting Maintenance</Text>
-                    <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                        <Image style={styles.arrow} source={require('../img/upRightArrow.png') }/>
+                    <View style={{flex: 1, alignItems: 'flex-end'}}>
+                        <Image style={styles.arrow} source={require('../img/upRightArrow.png')}/>
                     </View>
                 </View>
                 <View style={styles.cardButtons}>
-                <Text style={styles.cardButtonsText}>  Saad Ijaz has paid their rent</Text>
-                    <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                        <Image style={styles.arrow} source={require('../img/upRightArrow.png') }/>
+                    <Text style={styles.cardButtonsText}> Saad Ijaz has paid their rent</Text>
+                    <View style={{flex: 1, alignItems: 'flex-end'}}>
+                        <Image style={styles.arrow} source={require('../img/upRightArrow.png')}/>
                     </View>
-            </View>
+                </View>
                 <View style={styles.cardButtons}>
                     <Text style={styles.cardButtonsText}>Hussain collected Saad’s rent </Text>
-                    <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                        <Image style={styles.arrow} source={require('../img/upRightArrow.png') }/>
+                    <View style={{flex: 1, alignItems: 'flex-end'}}>
+                        <Image style={styles.arrow} source={require('../img/upRightArrow.png')}/>
                     </View>
                 </View>
                 <View style={styles.cardButtons}>
                     <Text style={styles.cardButtonsText}>Baqir's rent is overdue</Text>
-                    <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                        <Image style={styles.arrow} source={require('../img/upRightArrow.png') }/>
+                    <View style={{flex: 1, alignItems: 'flex-end'}}>
+                        <Image style={styles.arrow} source={require('../img/upRightArrow.png')}/>
                     </View>
                 </View>
             </View>
-            <BottomTabNavigator/>
+            <View style={styles.bottomContainer}>
+                <View style={styles.bottomNavRow}>
+                    <Pressable style={styles.bottomNavButton}
+                               onPress={() => navigation.navigate('MyProperties', {userID, ownerID, tenantID})}>
+                        <Image
+                            style={{width: 40, height: 40}}
+                            source={require('../img/propertiesIcon.png')}
+                        />
+                        <Text style={styles.bottomContainerText}>Properties</Text>
+                    </Pressable>
+                    <Pressable style={styles.bottomNavButton}
+                               onPress={() => navigation.navigate('AnalyticsOwner', {userID, ownerID, tenantID})}>
+                        <Image
+                            style={{width: 40, height: 40}}
+                            source={require('../img/analyticIcon.png')}
+                        />
+                        <Text style={styles.bottomContainerText}>Analytics</Text>
+                    </Pressable>
+                    <Pressable style={styles.bottomNavButton}
+                               onPress={() => navigation.navigate('NotificationAlerts', {userID, ownerID, tenantID})}>
+                        <Image
+                            style={{width: 40, height: 40}}
+                            source={require('../img/notification.png')}
+                        />
+                        <Text style={styles.bottomContainerText}>Alerts</Text>
+                    </Pressable>
+                    <Pressable style={styles.bottomNavButton}
+                               onPress={() => navigation.navigate('UserProfile', {userID, ownerID, tenantID})}>
+                        <Image
+                            style={{width: 40, height: 40}}
+                            source={require('../img/profileFocused.png')}
+                        />
+                        <Text style={styles.bottomContainerText}>Profile</Text>
+                    </Pressable>
+                </View>
+            </View>
         </View>
     );
 }
@@ -95,23 +121,23 @@ const styles = StyleSheet.create({
     topContainer: {
         width: '80%',
         paddingVertical: 15,
-        padding: windowHeight *0.024,       // 20
+        padding: windowHeight * 0.024,       // 20
         backgroundColor: '#fff',
-        marginTop: windowHeight *0.024,
+        marginTop: windowHeight * 0.024,
         borderRadius: 20,
         borderColor: '#1463df',
         borderWidth: 4,
 
     },
     arrowImage: {
-        width: windowWidth *0.020,
-        height: windowHeight *0.020,
+        width: windowWidth * 0.020,
+        height: windowHeight * 0.020,
         marginHorizontal: 5,
     },
-    bottomContainer: {
+    middleContainer: {
         flex: 0.7,
         backgroundColor: '#47b5ff',
-        marginTop: windowHeight *0.024,
+        marginTop: windowHeight * 0.024,
         width: '100%',
 
     },
@@ -132,6 +158,26 @@ const styles = StyleSheet.create({
         color: '#06283d',
         textAlign: 'left',
         fontSize: 20,
+        fontWeight: "bold"
+    },
+    bottomContainer: {
+        flex: 0.025,
+        marginBottom: -30
+
+    },
+    bottomNavRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between', // Add spacing between Pressables
+        alignItems: 'center',
+        paddingHorizontal: 20, // Adjust the horizontal padding for spacing
+
+    },
+    bottomNavButton: {
+        marginHorizontal: 20, // Adjust the margin for spacing
+        marginTop: 10
+    },
+    bottomContainerText: {
+        fontSize: 14,
         fontWeight: "bold"
     },
     arrow: {

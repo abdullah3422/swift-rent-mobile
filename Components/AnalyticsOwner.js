@@ -1,17 +1,12 @@
 import * as React from 'react';
 import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import BottomTabNavigator from "./BottomTabNavigator";
-
-
-
-const Tab = createBottomTabNavigator();
 
 export default function AnalyticsOwner({ navigation }) {
     const cardButtons = [
         { title: 'Sept', details: '27,000   2,000' },
         { title: 'Aug', details: '23,000    1,100' },
         { title: 'Jul', details: '13,000    300' },
+        { title: 'Feb', details: '20,000    300' },
 
     ];
 
@@ -51,22 +46,46 @@ export default function AnalyticsOwner({ navigation }) {
 
                 </View>
             </View>
-            <View style={styles.bottomContainer}>
-                <Text style={styles.bottomContainerText}>Monthly</Text>
+            <View style={styles.middleContainer}>
+                <Text style={styles.middleContainerText}>Monthly</Text>
                 <FlatList
                     data={cardButtons}
                     renderItem={renderItem}
                     keyExtractor={(item, index) => index.toString()}
                 />
-
-
             </View>
-            <Pressable onPress={() => navigation.navigate('AddProperty')}>
-                <Text style={{paddingTop: 15}}>Next</Text>
-            </Pressable>
-
-
-            <BottomTabNavigator/>
+            <View style={styles.bottomContainer}>
+                <View style={styles.bottomNavRow}>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('MyProperties')}>
+                        <Image
+                            style={{ width: 40, height: 40 }}
+                            source={require('../img/propertiesIcon.png')}
+                        />
+                        <Text style={styles.bottomContainerText}>Properties</Text>
+                    </Pressable>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('AnalyticsOwner')}>
+                        <Image
+                            style={{ width: 40, height: 40 }}
+                            source={require('../img/analyticIcon.png')}
+                        />
+                        <Text style={styles.bottomContainerText}>Analytics</Text>
+                    </Pressable>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('NotificationAlerts')}>
+                        <Image
+                            style={{ width: 40, height: 40 }}
+                            source={require('../img/notification.png')}
+                        />
+                        <Text style={styles.bottomContainerText}>Alerts</Text>
+                    </Pressable>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('UserProfile')}>
+                        <Image
+                            style={{ width: 40, height: 40 }}
+                            source={require('../img/profileFocused.png')}
+                        />
+                        <Text style={styles.bottomContainerText}>Profile</Text>
+                    </Pressable>
+                </View>
+            </View>
         </View>
     );
 }
@@ -93,7 +112,7 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         padding: 20,
         backgroundColor: '#fff',
-        marginTop: 20,
+        marginTop: 40,
         borderRadius: 20,
         borderColor: '#1463df',
         borderWidth: 4,
@@ -111,14 +130,15 @@ const styles = StyleSheet.create({
         height: 20,
         marginHorizontal: 5,
     },
-    bottomContainer: {
+    middleContainer: {
         flex: 0.7,
         backgroundColor: '#47b5ff',
         marginTop: 15,
         width: '100%',
+        // marginBottom: -83
 
     },
-    bottomContainerText: {
+    middleContainerText: {
         color: "#fff",
         fontSize: 25,
         fontWeight: 'bold',
@@ -152,10 +172,27 @@ const styles = StyleSheet.create({
     cardButtonContainer: {
         alignItems: "center"
     },
-    tabNavigationContainer: {
 
+    bottomContainer: {
+        flex: 0.025,
+        marginBottom: -15
 
-    }
+    },
+    bottomNavRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between', // Add spacing between Pressables
+        alignItems: 'center',
+        paddingHorizontal: 20, // Adjust the horizontal padding for spacing
+
+    },
+    bottomNavButton: {
+        marginHorizontal: 20, // Adjust the margin for spacing
+        marginTop: 10
+    },
+    bottomContainerText:{
+        fontSize: 14,
+        fontWeight: "bold"
+    },
 
 
 });

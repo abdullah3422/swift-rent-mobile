@@ -3,6 +3,7 @@ import {Alert, Dimensions, Image, Pressable, StyleSheet, Text, TextInput, Toucha
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import axios from "axios";
+import CryptoJS from "react-native-crypto-js";
 import { md5 } from 'js-md5';
 
 export default function SetPassword({ navigation, route }) {
@@ -16,6 +17,7 @@ export default function SetPassword({ navigation, route }) {
             const { userType, firstName, lastName, DOB, email, phone } = route.params;
             console.log(route.params);
             console.log(userType);
+            console.log(userType);
             console.log(firstName);
             console.log(lastName);
             console.log(DOB);
@@ -23,7 +25,6 @@ export default function SetPassword({ navigation, route }) {
             console.log(phone);
             let password = values.password;
             console.log(password);
-            let passwordHash = CryptoJS.MD5(values.password).toString();
 
 
             console.log(ipAddress);
@@ -31,7 +32,7 @@ export default function SetPassword({ navigation, route }) {
                     userType : userType,    firstName : firstName,
                     lastName : lastName,    DOB : DOB,
                     email : email,          phone : phone,
-                    password : password
+                    password : md5(password)
             });
 
             if (response.data.success) {

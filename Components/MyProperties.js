@@ -1,16 +1,26 @@
 import * as React from 'react';
 import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import BottomTabNavigator from "./BottomTabNavigator";
+
 
 
 
 const Tab = createBottomTabNavigator();
 
-export default function AddProperty({ navigation,route }) {
+export default function MyProperties({ navigation, route }) {
+
+    const {userID, ownerID, tenantID} = route.params;
+    const ipAddress = route.params.ipAddress;
+    console.log(userID);
+    console.log(ownerID);
+    console.log(tenantID);
+
+
     const cardButtons = [
         { title: '#1', details: '27,000    2,000' },
         { title: '#2', details: '23,000    1,100' },
+        { title: '#3', details: '13,000    300' },
+        { title: '#3', details: '13,000    300' },
         { title: '#3', details: '13,000    300' },
 
     ];
@@ -30,7 +40,7 @@ export default function AddProperty({ navigation,route }) {
 
         <View style={styles.container}>
             <View style={styles.topContainer}>
-                <Pressable onPress={() => navigation.navigate('PropertyInformation')}>
+                <Pressable onPress={() => navigation.navigate('AddProperties', {userID, ownerID, tenantID})}>
                     <View style={styles.topContainerText}>
                         <Text style={{ fontSize: 35}}>+ Add a Property</Text>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
@@ -39,8 +49,8 @@ export default function AddProperty({ navigation,route }) {
                 </Pressable>
 
             </View>
-            <View style={styles.bottomContainer}>
-                <Text style={styles.bottomContainerText}>My Properties</Text>
+            <View style={styles.middleContainer}>
+                <Text style={styles.middleContainerText}>My Properties</Text>
                 <FlatList
                     data={cardButtons}
                     renderItem={renderItem}
@@ -48,7 +58,40 @@ export default function AddProperty({ navigation,route }) {
                 />
 
             </View>
-            <BottomTabNavigator/>
+            <View style={styles.bottomContainer}>
+
+                <View style={styles.bottomNavRow}>
+
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('MyProperties')}>
+                        <Image
+                            style={{ width: 40, height: 40 }}
+                            source={require('../img/propertiesIcon.png')}
+                        />
+                        <Text style={styles.bottomContainerText}>Properties</Text>
+                    </Pressable>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('AnalyticsOwner')}>
+                        <Image
+                            style={{ width: 40, height: 40 }}
+                            source={require('../img/analyticIcon.png')}
+                        />
+                        <Text style={styles.bottomContainerText}>Analytics</Text>
+                    </Pressable>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('NotificationAlerts')}>
+                        <Image
+                            style={{ width: 40, height: 40 }}
+                            source={require('../img/notification.png')}
+                        />
+                        <Text style={styles.bottomContainerText}>Alerts</Text>
+                    </Pressable>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('UserProfile')}>
+                        <Image
+                            style={{ width: 40, height: 40 }}
+                            source={require('../img/profileFocused.png')}
+                        />
+                        <Text style={styles.bottomContainerText}>Profile</Text>
+                    </Pressable>
+                </View>
+            </View>
         </View>
     );
 }
@@ -93,20 +136,40 @@ const styles = StyleSheet.create({
         height: 20,
         marginHorizontal: 5,
     },
-    bottomContainer: {
+    middleContainer: {
         flex: 0.7,
         backgroundColor: '#47b5ff',
         marginTop: 15,
         width: '100%',
 
     },
-    bottomContainerText: {
+    middleContainerText: {
         color: "#fff",
         fontSize: 25,
         fontWeight: 'bold',
         marginTop: 10,
         marginLeft: 10,
 
+    },
+    bottomContainer: {
+        flex: 0.025,
+        marginBottom: -30
+
+    },
+    bottomNavRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between', // Add spacing between Pressables
+        alignItems: 'center',
+        paddingHorizontal: 20, // Adjust the horizontal padding for spacing
+
+    },
+    bottomNavButton: {
+        marginHorizontal: 20, // Adjust the margin for spacing
+        marginTop: 10
+    },
+    bottomContainerText:{
+        fontSize: 14,
+        fontWeight: "bold"
     },
 
     cardButtons: {

@@ -1,26 +1,69 @@
 import * as React from 'react';
 import {Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {useState} from "react";
+import axios from "axios";
 
-export default function ReportBug({ navigation }) {
+export default function ReportBug({ navigation, route }) {
+
+    const ipAddress = route.params.ipAddress;
+    const {userID, ownerID, tenantID} = route.params;
+    console.log(userID);
+    console.log(ownerID);
+    console.log(tenantID);
+    console.log(ipAddress);
+    console.log(tenantID);
+
+
+    const [bugType, setBugType] = useState('');
+    const [bugDescription, setBugDescription] = useState('');
+
+    // Determine userType based on ownerID and tenantID
+    let userType = 'unknown';
+    if (ownerID !== 0) {
+        userType = 'owner';
+    } else if (tenantID !== 0) {
+        userType = 'tenant';
+    }
+console.log(userType);
+    const submitBugReport = async () => {
+        try {
+            const response = await axios.post(ipAddress + 'api/report-bug', {
+                userID: userID,
+                userType: userType,
+                bugType: bugType,
+                bugDescription: bugDescription,
+            });
+
+            if (response.data.success) {
+                // Handle success, e.g., show a confirmation message
+                console.log('Bug report submitted successfully');
+            }
+        } catch (error) {
+            console.error('Error submitting bug report:', error);
+        }
+    };
+
     return (
         <View style={styles.container}>
-            <Text style={styles.headerText}>Report a Bug </Text>
+            <Text style={styles.headerText}>Report a Bug</Text>
 
             <TextInput
                 style={styles.input}
                 placeholder="Type of Issue"
                 placeholderTextColor="#cdcdcd"
-                secureTextEntry={true}
+                onChangeText={text => setBugType(text)}
             />
             <TextInput
                 style={styles.inputDescribe}
                 placeholder="Describe your problem"
                 placeholderTextColor="#cdcdcd"
-                secureTextEntry={true}
+                multiline
+                numberOfLines={4}
+                onChangeText={text => setBugDescription(text)}
             />
             <View style={styles.buttonContainer}>
                 <View style={styles.space} />
-                <Pressable style={[styles.button, { width: 160 }]} >
+                <Pressable style={[styles.button, { width: 160 }]} onPress={submitBugReport}>
                     <Text style={styles.buttonText}>Submit</Text>
                 </Pressable>
             </View>

@@ -1,28 +1,90 @@
 import * as React from 'react';
-import {Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Alert, Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import axios from 'axios';
+import {useState} from "react";
+import {md5} from "js-md5";
 
-export default function ChangePassword({ navigation }) {
+
+export default function ChangePassword({ navigation, route }) {
+
+    const {userID, ownerID, tenantID} = route.params;
+    const ipAddress = route.params.ipAddress;
+    console.log(userID);
+    console.log(ownerID);
+    console.log(tenantID);
+    console.log(ipAddress);
+
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState('');
+
+    const handleChangePassword = async () => {
+        if (oldPassword === '') {
+            setError('Please enter your old password.');
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            setError('New password and confirm password do not match.');
+            return;
+        }
+
+        try {
+            const response = await axios.post(ipAddress + 'api/change-password', {
+                userID: userID,
+                oldPassword: md5(oldPassword),
+                newPassword: md5(newPassword),
+            });
+
+            if (response.data.success) {
+                // Password changed successfully, you can navigate to another screen or show a success message here.
+                // For example:
+                navigation.navigate('NotificationAlerts', {userID, ownerID, tenantID});
+            }
+        } catch (error) {
+            setError('Old Password Does not match');
+            console.error('Error during changing password:', error);
+        }
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.headerText}>Change Your {'\n'}  Password </Text>
 
             <TextInput
                 style={styles.input}
-                placeholder="Enter Password"
+                placeholder="Old Password"
                 placeholderTextColor="#cdcdcd"
                 secureTextEntry={true}
+                value={oldPassword}
+                onChangeText={(text) => setOldPassword(text)}
             />
             <TextInput
                 style={styles.input}
-                placeholder="Confirm Password"
+                placeholder="New Password"
                 placeholderTextColor="#cdcdcd"
                 secureTextEntry={true}
+                value={newPassword}
+                onChangeText={(text) => setNewPassword(text)}
             />
+            <TextInput
+                style={styles.input}
+                placeholder="Confirm New Password"
+                placeholderTextColor="#cdcdcd"
+                secureTextEntry={true}
+                value={confirmPassword}
+                onChangeText={(text) => setConfirmPassword(text)}
+            />
+
+
             <View style={styles.buttonContainer}>
                 <View style={styles.space} />
-                <Pressable style={[styles.button, { width: 160 }]} onPress={() => navigation.navigate('SetUp')}>
+                <Pressable style={[styles.button, { width: 160 }]} onPress={handleChangePassword}>
+
                     <Text style={styles.buttonText}>Change</Text>
                 </Pressable>
+
             </View>
         </View>
     );

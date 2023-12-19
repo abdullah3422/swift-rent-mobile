@@ -1,43 +1,97 @@
 import * as React from 'react';
-import {Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Alert, Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {useState} from "react";
+import axios from "axios";
 
-export default function PropertyInformation({ navigation }) {
+export default function AddProperties({ navigation, route }) {
 
+    const {userID, ownerID, tenantID} = route.params;
+    const ipAddress = route.params.ipAddress;
+
+    console.log(userID);
+    console.log(ownerID);
+    console.log(tenantID);
+
+    const [propertyAddress, setPropertyAddress] = useState('');
+    const [noOfRooms, setNoOfRooms] = useState('');
+    const [rentAmount, setRentAmount] = useState('');
+    const [error, setError] = useState('');
+
+    const handleAddProperty = async () => {
+        try {
+            const response = await axios.post(ipAddress + 'api/add-property', {
+                ownerID: ownerID,
+                rent: rentAmount,
+                propertyAddress: propertyAddress,
+
+            });
+
+            if (response.data.success) {
+                // Property added successfully, you can navigate to another screen or show a success message here.
+                Alert.alert('Property Successfully Added!')
+                navigation.navigate('MyProperties', {userID, ownerID, tenantID});
+            }
+        } catch (error) {
+            setError('Error adding property');
+            console.error('Error during adding property:', error);
+        }
+    };
 
     return (
+
         <View style={styles.container}>
 
             <Text style={styles.postHeader}>Add Property {'\n'}Information</Text>
 
             <View style={styles.input}>
-                <TextInput placeholder="Address" placeholderTextColor="#cdcdcd" style={styles.textInput} />
+                <TextInput
+                    placeholder="Address"
+                    placeholderTextColor="#cdcdcd"
+                    style={styles.textInput}
+                    value={propertyAddress}
+                    onChangeText={(text) => setPropertyAddress(text)}
+                />
                 <View style={styles.iconContainer}>
                     <Image source={require('../img/locationIcon.png')} style={styles.placeholderIcon} />
                 </View>
             </View>
             <View style={styles.input}>
-                <TextInput placeholder="No of Rooms" placeholderTextColor="#cdcdcd" style={styles.textInput} />
+                <TextInput
+                    placeholder="No of Rooms"
+                    placeholderTextColor="#cdcdcd"
+                    style={styles.textInput}
+                    value={noOfRooms}
+                    onChangeText={(text) => setNoOfRooms(text)}
+                />
                 <View style={styles.iconContainer}>
                     <Image source={require('../img/hashtag.png')} style={styles.placeholderIcon} />
                 </View>
             </View>
             <View style={styles.input}>
-                <TextInput placeholder="Rent Amount" placeholderTextColor="#cdcdcd" style={styles.textInput} />
+                <TextInput
+                    placeholder="Rent Amount"
+                    placeholderTextColor="#cdcdcd"
+                    style={styles.textInput}
+                    value={rentAmount}
+                    onChangeText={(text) => setRentAmount(text)}
+                />
                 <View style={styles.iconContainer}>
                     <Image source={require('../img/dollarIcon.png')} style={styles.placeholderIcon} />
                 </View>
             </View>
 
 
+
             <View style={styles.buttonContainer}>
-                <Pressable style={styles.button} onPress={() => navigation.navigate('AddProperty')}>
+                <Pressable style={styles.button} onPress={() => navigation.navigate('MyProperties')}>
                     <Text style={styles.buttonText}>Back</Text>
                 </Pressable>
 
                 <View style={styles.space} />
-                <Pressable style={styles.button} onPress={() => navigation.navigate('NotificationAlerts')}>
+                <Pressable style={styles.button} onPress={handleAddProperty}>
                     <Text style={styles.buttonText}>Next</Text>
                 </Pressable>
+
             </View>
         </View>
     );
