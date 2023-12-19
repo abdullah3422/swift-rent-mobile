@@ -1,17 +1,14 @@
 import * as React from 'react';
-import {Alert, Image, Pressable, StyleSheet, Text, TextInput, View, ScrollView, KeyboardAvoidingView, Platform} from 'react-native';
-import {useState} from "react";
-import axios from "axios";
+import {Alert, StyleSheet, Text, TextInput, View, Pressable} from 'react-native';
+import axios from 'axios';
+import {useState} from 'react';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
 
-export default function ReportBug({ navigation, route }) {
-
+export default function ReportBug({navigation, route}) {
     const ipAddress = route.params.ipAddress;
 
     const {userID, ownerID, tenantID} = route.params;
-    console.log(userID);
-    console.log(ownerID);
-    console.log(tenantID);
-    console.log(ipAddress);
 
     const [bugType, setBugType] = useState('');
     const [bugDescription, setBugDescription] = useState('');
@@ -23,14 +20,14 @@ export default function ReportBug({ navigation, route }) {
     } else if (tenantID !== undefined) {
         userType = 'T';
     }
-    console.log(userType);
-    const submitBugReport = async () => {
+
+    const submitBugReport = async (values) => {
         try {
             const response = await axios.post(ipAddress + 'api/report-bug', {
                 userID: userID,
                 userType: userType,
-                bugType: bugType,
-                bugDescription: bugDescription,
+                bugType: values.bugType,
+                bugDescription: values.bugDescription,
             });
 
             if (response.data.success) {
@@ -45,30 +42,55 @@ export default function ReportBug({ navigation, route }) {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.headerText}>Report a Bug</Text>
+        <Formik
+            initialValues={{bugType: '', bugDescription: ''}}
+            validationSchema={Yup.object().shape({
+                bugType: Yup.string()
+                    .max(30, 'Bug Type must be up to 30 characters')
+                    .required('Bug Type is required'),
+                bugDescription: Yup.string().required('Bug Description is required'),
+            })}
+            onSubmit={submitBugReport}
+        >
+            {({values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit}) => (
+                <View style={styles.container}>
+                    <Text style={styles.headerText}>Report a Bug</Text>
 
-            <TextInput
-                style={styles.input}
-                placeholder="Type of Issue"
-                placeholderTextColor="#cdcdcd"
-                onChangeText={text => setBugType(text)}
-            />
-            <TextInput
-                style={styles.inputDescribe}
-                placeholder="Describe your problem"
-                placeholderTextColor="#cdcdcd"
-                multiline
-                numberOfLines={4}
-                onChangeText={text => setBugDescription(text)}
-            />
-            <View style={styles.buttonContainer}>
-                <View style={styles.space} />
-                <Pressable style={[styles.button, { width: 160 }]} onPress={submitBugReport}>
-                    <Text style={styles.buttonText}>Submit</Text>
-                </Pressable>
-            </View>
-        </View>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Type of Issue"
+                        placeholderTextColor="#cdcdcd"
+                        onChangeText={handleChange('bugType')}
+                        onBlur={() => setFieldTouched('bugType')}
+                        value={values.bugType}
+                    />
+                    {touched.bugType && errors.bugType && (
+                        <Text style={styles.errorText}>{errors.bugType}</Text>
+                    )}
+
+                    <TextInput
+                        style={styles.inputDescribe}
+                        placeholder="Describe your problem"
+                        placeholderTextColor="#cdcdcd"
+                        multiline
+                        numberOfLines={4}
+                        onChangeText={handleChange('bugDescription')}
+                        onBlur={() => setFieldTouched('bugDescription')}
+                        value={values.bugDescription}
+                    />
+                    {touched.bugDescription && errors.bugDescription && (
+                        <Text style={styles.errorText}>{errors.bugDescription}</Text>
+                    )}
+
+                    <View style={styles.buttonContainer}>
+                        <View style={styles.space}/>
+                        <Pressable style={[styles.button, {width: 160}]} onPress={handleSubmit}>
+                            <Text style={styles.buttonText}>Submit</Text>
+                        </Pressable>
+                    </View>
+                </View>
+            )}
+        </Formik>
     );
 }
 
@@ -79,25 +101,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fff',
         marginTop: '-45%',
-
-    },
-
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: -180,
-        marginBottom: 10,
     },
 
     headerText: {
-        color: "black",
+        color: 'black',
         fontSize: 30,
         fontWeight: 'bold',
         marginBottom: '15%',
-        justifyContent: "center",
-        alignContent: "center",
-
-
+        justifyContent: 'center',
+        alignContent: 'center',
     },
     input: {
         width: '80%',
@@ -139,7 +151,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 20,
         padding: 10,
-        marginTop: '15%'
+        marginTop: '15%',
     },
     space: {
         width: 10,
@@ -147,5 +159,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'black',
     },
-
+    errorText: {
+        color: 'red',
+    },
 });
