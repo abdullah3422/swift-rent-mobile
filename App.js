@@ -26,7 +26,7 @@ import FAQs from "./Components/FAQs";
 const Stack = createNativeStackNavigator();
 
 // passing this ipAddress as a prop to other screens where needed, so it needs to be change only here
-const ipAddress = "http://192.168.1.10:3000/";
+const ipAddress = "http://192.168.18.59:3000/";
 
 const App = () => {
   return (
@@ -43,7 +43,7 @@ const App = () => {
         <Stack.Screen name="SetUp" component={SetUp} />
         <Stack.Screen name="NotificationAlerts" component={NotificationAlerts} />
           <Stack.Screen name="MyProperties" component={MyProperties} initialParams={{ ipAddress: ipAddress }}/>
-          <Stack.Screen name="AnalyticsOwner" component={AnalyticsOwner} />
+          <Stack.Screen name="AnalyticsOwner" component={AnalyticsOwner} initialParams={{ ipAddress: ipAddress }} />
 
           <Stack.Screen name="AddProperties" component={AddProperties} initialParams={{ ipAddress: ipAddress }} />
         <Stack.Screen name="UserProfile" component={UserProfile} initialParams={{ ipAddress: ipAddress }}/>

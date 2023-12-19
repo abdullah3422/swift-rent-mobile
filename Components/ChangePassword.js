@@ -6,13 +6,12 @@ import {md5} from "js-md5";
 
 
 export default function ChangePassword({ navigation, route }) {
-
     const {userID, ownerID, tenantID} = route.params;
     const ipAddress = route.params.ipAddress;
-    console.log(userID);
-    console.log(ownerID);
-    console.log(tenantID);
-    console.log(ipAddress);
+    // console.log(userID);
+    // console.log(ownerID);
+    // console.log(tenantID);
+    // console.log(ipAddress);
 
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -21,11 +20,13 @@ export default function ChangePassword({ navigation, route }) {
 
     const handleChangePassword = async () => {
         if (oldPassword === '') {
+            Alert.alert('Please enter your old password.');
             setError('Please enter your old password.');
             return;
         }
 
         if (newPassword !== confirmPassword) {
+            Alert.alert('New password and confirm password do not match.');
             setError('New password and confirm password do not match.');
             return;
         }
@@ -34,15 +35,15 @@ export default function ChangePassword({ navigation, route }) {
             const response = await axios.post(ipAddress + 'api/change-password', {
                 userID: userID,
                 oldPassword: md5(oldPassword),
-                newPassword: md5(newPassword),
+                newPassword: md5(newPassword)
             });
 
             if (response.data.success) {
-                // Password changed successfully, you can navigate to another screen or show a success message here.
-                // For example:
-                navigation.navigate('NotificationAlerts', {userID, ownerID, tenantID});
+                Alert.alert('Password Successfully Changed');
+                navigation.navigate('UserProfile', {userID, ownerID, tenantID});
             }
         } catch (error) {
+            Alert.alert('Old password does not match');
             setError('Old Password Does not match');
             console.error('Error during changing password:', error);
         }

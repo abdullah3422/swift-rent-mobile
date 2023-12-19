@@ -1,22 +1,50 @@
 import * as React from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import axios from "axios";
 export default function UserProfile({ navigation, route }) {
+    const {ipAddress, userID, ownerID, tenantID} = route.params;
+    const [ownerData, setOwnerData] = React.useState({
+        ownerName: '',
+        email: '',
+        phone: '',
+    });
+    console.log("userID: "+userID);
+    console.log("ownerID: "+ownerID);
+    console.log("tenantID: "+tenantID);
+    React.useEffect(() => {
+        const handleOwnerDetails = async () => {
+            try {
+                const response = await axios.post(ipAddress + 'api/owner-details', {
+                    ownerID: ownerID
+                });
 
-    const {userID, ownerID, tenantID} = route.params;
-    console.log(userID);
-    console.log(ownerID);
-    console.log(tenantID);
+                if (response.data.success) {
+                    // Update the state with the owner's data
+                    setOwnerData({
+                        ownerName: response.data.ownerName,
+                        email: response.data.email,
+                        phone: response.data.phone,
+                    });
+                }
+            } catch (error) {
+                console.error('Error during fetching owner details:', error);
+            }
+        };
+
+        handleOwnerDetails();
+    }, [ownerID]);
+
     return (
         <View style={styles.container}>
             <View style={styles.topContainer}>
 
-                    <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Owner's Name </Text>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
-                        <Text style={{ fontSize: 16, width: '50%'}}>phone number </Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 16, width: '50%' }}>name@email.com</Text>
-                    </View>
+                <Text style={{ fontSize: 30, fontWeight: 'bold' }}>{ownerData.ownerName}</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
+                    <Text style={{ fontSize: 16, width: '95%' }}>{ownerData.phone}</Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, width: '95%' }}>{ownerData.email}</Text>
+                </View>
 
             </View>
             <View style={styles.middleContainer}>
@@ -26,7 +54,7 @@ export default function UserProfile({ navigation, route }) {
                         <Image style={styles.Pics} source={require('../img/change.png') }/>
                     </View>
                 </Pressable>
-                <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('ReportBug', {userID, ownerID, tenantID})}>
+                <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('ReportBug', {userID, ownerID})}>
                     <Text style={styles.cardButtonsText}>Report a bug</Text>
                     <View style={{ flex: 1, alignItems: 'flex-end' }}>
                         <Image style={styles.Pics} source={require('../img/bug.png') }/>
@@ -53,28 +81,28 @@ export default function UserProfile({ navigation, route }) {
             {/*</Pressable>*/}
             <View style={styles.bottomContainer}>
                 <View style={styles.bottomNavRow}>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('MyProperties')}>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('MyProperties', {userID, ownerID, tenantID})}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/propertiesIcon.png')}
                         />
                         <Text style={styles.bottomContainerText}>Properties</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('AnalyticsOwner')}>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('AnalyticsOwner', {userID, ownerID, tenantID})}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/analyticIcon.png')}
                         />
                         <Text style={styles.bottomContainerText}>Analytics</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('NotificationAlerts')}>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('NotificationAlerts', {userID, ownerID, tenantID})}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/notification.png')}
                         />
                         <Text style={styles.bottomContainerText}>Alerts</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('UserProfile')}>
+                    <Pressable style={styles.bottomNavButton}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/profileFocused.png')}

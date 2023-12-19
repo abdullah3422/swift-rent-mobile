@@ -1,17 +1,54 @@
 import * as React from 'react';
 import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import axios from "axios";
 
-export default function AnalyticsOwner({ navigation }) {
+export default function AnalyticsOwner({ navigation, route }) {
+    const {ipAddress, userID, ownerID, tenantID} = route.params;
+    const [ownerData, setOwnerData] = React.useState({
+        currentMonth: '',
+        currentYear: '',
+        totalProfit: '',
+        totalProperty: '',
+        totalReceived: '',
+        pendingRent: '',
+    });
+    console.log("userID: "+userID);
+    console.log("ownerID: "+ownerID);
+    console.log("tenantID: "+tenantID);
+    React.useEffect(() => {
+        const handleOwnerMonthAnalytics = async () => {
+            try {
+                const response = await axios.post(ipAddress + 'api/month-analytics', {
+                    ownerID: ownerID
+                });
+                if (response.data.success) {
+                    console.log(response.data);
+                    // Update the state with the owner's data
+                    setOwnerData({
+                        currentMonth: response.data.currentMonth,
+                        currentYear: response.data.currentYear,
+                        totalProfit: response.data.totalProfit,
+                        totalProperty: response.data.totalProperty,
+                        totalReceived: response.data.totalReceived,
+                        pendingRent: response.data.pendingRent,
+                    });
+                }
+            } catch (error) {
+                console.error('Error during fetching owner month analytics:', error);
+            }
+        };
+        handleOwnerMonthAnalytics();
+    }, [ownerID]);
+
     const cardButtons = [
         { title: 'Sept', details: '27,000   2,000' },
         { title: 'Aug', details: '23,000    1,100' },
         { title: 'Jul', details: '13,000    300' },
         { title: 'Feb', details: '20,000    300' },
-
     ];
 
     const renderItem = ({ item }) => (
-        <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('WhoAreYou')}>
+        <Pressable style={styles.cardButtons}>
             <Text style={styles.cardButtonText}>{item.title}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
                 <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage} />
@@ -25,23 +62,23 @@ export default function AnalyticsOwner({ navigation }) {
         <View style={styles.container}>
             <View style={styles.topContainer}>
                 <View style={styles.topContainerText}>
-                    <Text style={{ fontSize: 30, fontWeight: 'bold' }}>October 2023</Text>
+                    <Text style={{ fontSize: 30, fontWeight: 'bold' }}>{ownerData.currentMonth}, {ownerData.currentYear}</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
                         <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage} />
-                        <Text style={{ fontSize: 20 }}> 17,000 {'\t\t\t\t\t\t\t'} 1,000</Text>
-                        <Image source={require('../img/outgoingArrow.png')} style={styles.arrowImage} />
+                        <Text style={{ fontSize: 20 }}>{ownerData.totalProfit}</Text>
+                        {/*<Image source={require('../img/outgoingArrow.png')} style={styles.arrowImage} />*/}
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
-                        <Text style={{ fontSize: 20, width: '50%' }}>Total Properties </Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>25</Text>
+                        <Text style={{ fontSize: 20, width: '60%' }}>Total Properties </Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{ownerData.totalProperty}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 20, width: '50%' }}>Rents Received </Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>15</Text>
+                        <Text style={{ fontSize: 20, width: '60%' }}>Rents Received </Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{ownerData.totalProfit}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 20, width: '50%' }}>Rents Pending </Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>10</Text>
+                        <Text style={{ fontSize: 20, width: '60%' }}>Rents Pending </Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{ownerData.pendingRent}</Text>
                     </View>
 
                 </View>
@@ -56,28 +93,28 @@ export default function AnalyticsOwner({ navigation }) {
             </View>
             <View style={styles.bottomContainer}>
                 <View style={styles.bottomNavRow}>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('MyProperties')}>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('MyProperties', {userID, ownerID, tenantID})}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/propertiesIcon.png')}
                         />
                         <Text style={styles.bottomContainerText}>Properties</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('AnalyticsOwner')}>
+                    <Pressable style={styles.bottomNavButton}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/analyticIcon.png')}
                         />
                         <Text style={styles.bottomContainerText}>Analytics</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('NotificationAlerts')}>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('NotificationAlerts', {userID, ownerID, tenantID})}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/notification.png')}
                         />
                         <Text style={styles.bottomContainerText}>Alerts</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('UserProfile')}>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('UserProfile', {userID, ownerID, tenantID})}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/profileFocused.png')}

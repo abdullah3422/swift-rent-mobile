@@ -1,30 +1,29 @@
 import * as React from 'react';
-import {Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Alert, Image, Pressable, StyleSheet, Text, TextInput, View, ScrollView, KeyboardAvoidingView, Platform} from 'react-native';
 import {useState} from "react";
 import axios from "axios";
 
 export default function ReportBug({ navigation, route }) {
 
     const ipAddress = route.params.ipAddress;
+
     const {userID, ownerID, tenantID} = route.params;
     console.log(userID);
     console.log(ownerID);
     console.log(tenantID);
     console.log(ipAddress);
-    console.log(tenantID);
-
 
     const [bugType, setBugType] = useState('');
     const [bugDescription, setBugDescription] = useState('');
 
     // Determine userType based on ownerID and tenantID
-    let userType = 'unknown';
-    if (ownerID !== 0) {
-        userType = 'owner';
-    } else if (tenantID !== 0) {
-        userType = 'tenant';
+    let userType = '';
+    if (ownerID !== undefined) {
+        userType = 'O';
+    } else if (tenantID !== undefined) {
+        userType = 'T';
     }
-console.log(userType);
+    console.log(userType);
     const submitBugReport = async () => {
         try {
             const response = await axios.post(ipAddress + 'api/report-bug', {
@@ -36,9 +35,11 @@ console.log(userType);
 
             if (response.data.success) {
                 // Handle success, e.g., show a confirmation message
+                Alert.alert('Bug report submitted successfully');
                 console.log('Bug report submitted successfully');
             }
         } catch (error) {
+            Alert.alert('Error Submitting Bug Report');
             console.error('Error submitting bug report:', error);
         }
     };

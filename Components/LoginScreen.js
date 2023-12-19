@@ -10,7 +10,6 @@ export default function LoginScreen({ navigation, route }) {
     const [password, setPassword] = useState('');
 
     const ipAddress = route.params.ipAddress;
-    console.log(ipAddress);
     const handleLogin = async () => {
         try {
             console.log(emailOrPhone);

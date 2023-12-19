@@ -2,39 +2,43 @@ import * as React from 'react';
 import {Alert, Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import {useState} from "react";
 import axios from "axios";
+import {goBack} from "@react-navigation/routers/src/CommonActions";
 
 export default function AddProperties({ navigation, route }) {
 
     const {userID, ownerID, tenantID} = route.params;
     const ipAddress = route.params.ipAddress;
-
-    console.log(userID);
-    console.log(ownerID);
-    console.log(tenantID);
+    console.log("userID: "+userID);
+    console.log("ownerID: "+ownerID);
+    console.log("tenantID: "+tenantID);
 
     const [propertyAddress, setPropertyAddress] = useState('');
-    const [noOfRooms, setNoOfRooms] = useState('');
+    const [dueDate, setDueDate] = useState('');
     const [rentAmount, setRentAmount] = useState('');
     const [error, setError] = useState('');
 
     const handleAddProperty = async () => {
-        try {
-            const response = await axios.post(ipAddress + 'api/add-property', {
-                ownerID: ownerID,
-                rent: rentAmount,
-                propertyAddress: propertyAddress,
 
-            });
 
-            if (response.data.success) {
-                // Property added successfully, you can navigate to another screen or show a success message here.
-                Alert.alert('Property Successfully Added!')
-                navigation.navigate('MyProperties', {userID, ownerID, tenantID});
-            }
-        } catch (error) {
-            setError('Error adding property');
-            console.error('Error during adding property:', error);
-        }
+
+        // ADD FORMIK FIRST || ADDRESS NOT EMPTY, DUE DATE 1 - 31 (NUMBERS), Rent Amount Numbers
+        // try {
+        //     const response = await axios.post(ipAddress + 'api/add-property', {
+        //         ownerID: ownerID,
+        //         rent: rentAmount,
+        //         dueDate: dueDate,
+        //         propertyAddress: propertyAddress
+        //     });
+        //
+        //     if (response.data.success) {
+        //         // Property added successfully, you can navigate to another screen or show a success message here.
+        //         Alert.alert('Property Successfully Added!')
+        //         navigation.navigate('MyProperties', {userID, ownerID, tenantID});
+        //     }
+        // } catch (error) {
+        //     setError('Error adding property');
+        //     console.error('Error during adding property:', error);
+        // }
     };
 
     return (
@@ -57,11 +61,12 @@ export default function AddProperties({ navigation, route }) {
             </View>
             <View style={styles.input}>
                 <TextInput
-                    placeholder="No of Rooms"
+                    placeholder="Due Date"
                     placeholderTextColor="#cdcdcd"
+                    keyboardType="numeric"
                     style={styles.textInput}
-                    value={noOfRooms}
-                    onChangeText={(text) => setNoOfRooms(text)}
+                    value={dueDate}
+                    onChangeText={(text) => setDueDate(text)}
                 />
                 <View style={styles.iconContainer}>
                     <Image source={require('../img/hashtag.png')} style={styles.placeholderIcon} />
@@ -71,6 +76,7 @@ export default function AddProperties({ navigation, route }) {
                 <TextInput
                     placeholder="Rent Amount"
                     placeholderTextColor="#cdcdcd"
+                    keyboardType="numeric"
                     style={styles.textInput}
                     value={rentAmount}
                     onChangeText={(text) => setRentAmount(text)}
@@ -80,10 +86,8 @@ export default function AddProperties({ navigation, route }) {
                 </View>
             </View>
 
-
-
             <View style={styles.buttonContainer}>
-                <Pressable style={styles.button} onPress={() => navigation.navigate('MyProperties')}>
+                <Pressable style={styles.button} onPress={() => navigation.navigate('MyProperties', {userID, ownerID, tenantID})}>
                     <Text style={styles.buttonText}>Back</Text>
                 </Pressable>
 

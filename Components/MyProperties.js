@@ -1,37 +1,47 @@
-import * as React from 'react';
-import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-
-
-
-
-const Tab = createBottomTabNavigator();
+import React, { useState, useEffect } from 'react';
+import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import axios from 'axios'; // Ensure axios is installed or use fetch API
 
 export default function MyProperties({ navigation, route }) {
-
-    const {userID, ownerID, tenantID} = route.params;
+    const { userID, ownerID, tenantID } = route.params;
     const ipAddress = route.params.ipAddress;
-    console.log(userID);
-    console.log(ownerID);
-    console.log(tenantID);
 
+    // State for storing properties data
+    const [propertiesData, setPropertiesData] = useState([]);
 
-    const cardButtons = [
-        { title: '#1', details: '27,000    2,000' },
-        { title: '#2', details: '23,000    1,100' },
-        { title: '#3', details: '13,000    300' },
-        { title: '#3', details: '13,000    300' },
-        { title: '#3', details: '13,000    300' },
+    useEffect(() => {
+        // Function to fetch properties
+        const fetchProperties = async () => {
+            try {
+                console.log("OWNERID:"+ownerID);
+                console.log("IP:"+ipAddress);
+                const response = await axios.post(ipAddress + 'api/property-list', {
+                    ownerID: ownerID,
+                });
+                if(response.data && response.data.success) {
+                    // Transform data to match your frontend structure
+                    const transformedData = response.data.propertyList.map(property => ({
+                        title: property.propertyAddress,
+                        details: `${property.totalProfit}  ${property.status}`
+                    }));
+                    setPropertiesData(transformedData);
+                }
+            } catch (error) {
+                console.error("Error fetching properties:", error);
+            }
+        };
 
-    ];
+        fetchProperties();
+    }, [ownerID, ipAddress]); // Dependencies array
+    console.log(propertiesData);
 
     const renderItem = ({ item }) => (
-        <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('WhoAreYou')}>
+        <Pressable style={styles.cardButtons}>
             <Text style={styles.cardButtonText}>{item.title}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
                 <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage} />
                 <Text style={{ fontSize: 20 }}> {item.details}</Text>
-                <Image source={require('../img/outgoingArrow.png')} style={styles.arrowImage} />
+                {/*<Image source={require('../img/outgoingArrow.png')} style={styles.arrowImage} />*/}
             </View>
         </Pressable>
     );
@@ -52,7 +62,7 @@ export default function MyProperties({ navigation, route }) {
             <View style={styles.middleContainer}>
                 <Text style={styles.middleContainerText}>My Properties</Text>
                 <FlatList
-                    data={cardButtons}
+                    data={propertiesData}
                     renderItem={renderItem}
                     keyExtractor={(item, index) => index.toString()}
                 />
@@ -62,28 +72,28 @@ export default function MyProperties({ navigation, route }) {
 
                 <View style={styles.bottomNavRow}>
 
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('MyProperties')}>
+                    <Pressable style={styles.bottomNavButton}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/propertiesIcon.png')}
                         />
                         <Text style={styles.bottomContainerText}>Properties</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('AnalyticsOwner')}>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('AnalyticsOwner', {userID, ownerID, tenantID})}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/analyticIcon.png')}
                         />
                         <Text style={styles.bottomContainerText}>Analytics</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('NotificationAlerts')}>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('NotificationAlerts', {userID, ownerID, tenantID})}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/notification.png')}
                         />
                         <Text style={styles.bottomContainerText}>Alerts</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('UserProfile')}>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('UserProfile', {userID, ownerID, tenantID})}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/profileFocused.png')}
@@ -182,9 +192,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderColor: '#cdcdcd',
         borderWidth: 2,
-        flexDirection: 'row',
-        alignItems: 'center',
-
+        alignItems: 'left',
     },
 
     cardButtonText: {

@@ -4,9 +4,9 @@ import {Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native
 export default function NotificationAlerts({navigation, route}) {
 
     const {userID, ownerID, tenantID} = route.params;
-    console.log(userID);
-    console.log(ownerID);
-    console.log(tenantID);
+    console.log("userID: "+userID);
+    console.log("ownerID: "+ownerID);
+    console.log("tenantID: "+tenantID);
     const cardButtons = [
         {title: 'Sept', details: '27,000   2,000'},
         {title: 'Aug', details: '23,000    1,100'},
@@ -85,8 +85,7 @@ export default function NotificationAlerts({navigation, route}) {
                         />
                         <Text style={styles.bottomContainerText}>Analytics</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton}
-                               onPress={() => navigation.navigate('NotificationAlerts', {userID, ownerID, tenantID})}>
+                    <Pressable style={styles.bottomNavButton}>
                         <Image
                             style={{width: 40, height: 40}}
                             source={require('../img/notification.png')}
