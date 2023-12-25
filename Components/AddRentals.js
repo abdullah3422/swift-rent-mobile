@@ -5,12 +5,12 @@ import axios from "axios";
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 
-export default function AddProperties({navigation, route}) {
+export default function AddRentals({navigation, route}) {
 
-    const {userID, ownerID } = route.params;
+    const {userID, tenantID } = route.params;
     const ipAddress = route.params.ipAddress;
     console.log("userID: " + userID);
-    console.log("ownerID: " + ownerID);
+    console.log("tenantID: " + tenantID);
 
     const [propertyAddress, setPropertyAddress] = useState('');
     const [dueDate, setDueDate] = useState('');
@@ -45,7 +45,7 @@ export default function AddProperties({navigation, route}) {
 
             if (response.data.success) {
                 Alert.alert('Property Successfully Added!')
-                navigation.navigate('MyProperties', {userID, ownerID });
+                navigation.navigate('MyProperties', {userID, tenantID });
             }
         } catch (error) {
             console.error('Error during adding property:', error);
@@ -116,7 +116,7 @@ export default function AddProperties({navigation, route}) {
 
                     <View style={styles.buttonContainer}>
                         <Pressable style={styles.button}
-                                   onPress={() => navigation.navigate('MyProperties', {userID, ownerID })}>
+                                   onPress={() => navigation.navigate('MyRentals', {userID, tenantID })}>
                             <Text style={styles.buttonText}>Back</Text>
                         </Pressable>
 

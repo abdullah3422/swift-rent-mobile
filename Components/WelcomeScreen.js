@@ -15,7 +15,7 @@ export default function WelcomeScreen({navigation}) {
             <Text style={styles.welcomeText}>Welcome to {'\n'}Swift Rent</Text>
             <Pressable style={styles.button}
                        onPress={() => navigation.navigate('WhoAreYou')}>
-                <Text style={styles.buttonText}>Get Started</Text>
+                <Text style={styles.buttonText}>Sign-up</Text>
             </Pressable>
             <Pressable style={styles.loginText} onPress={() => navigation.navigate('LoginScreen')}>
                 <Text style={{fontSize: 16}}>Already have an account? </Text>
@@ -23,15 +23,15 @@ export default function WelcomeScreen({navigation}) {
             </Pressable>
 
 
-            <View style={styles.footerContainer}>
-                <View style={styles.centeredContent}>
-                    <Image source={require('../img/langIcon.png')} style={styles.earthImage} />
-                    <Text style={styles.selectLanguageText}>Select Language</Text>
-                    <TouchableOpacity onPress={() => console.log('Dropdown Arrow Pressed')}>
-                        <Image source={require('../img/dropDownArrow.png')} style={styles.dropdownArrow} />
-                    </TouchableOpacity>
-                </View>
-            </View>
+            {/*<View style={styles.footerContainer}>*/}
+            {/*    <View style={styles.centeredContent}>*/}
+            {/*        <Image source={require('../img/langIcon.png')} style={styles.earthImage} />*/}
+            {/*        <Text style={styles.selectLanguageText}>Select Language</Text>*/}
+            {/*        <TouchableOpacity onPress={() => console.log('Dropdown Arrow Pressed')}>*/}
+            {/*            <Image source={require('../img/dropDownArrow.png')} style={styles.dropdownArrow} />*/}
+            {/*        </TouchableOpacity>*/}
+            {/*    </View>*/}
+            {/*</View>*/}
 
         </View>
 

@@ -56,7 +56,7 @@ export default function ChangePassword({ navigation, route }) {
 
                     if (response.data.success) {
                         Alert.alert('Password Successfully Changed');
-                        navigation.navigate('UserProfile', { userID, ownerID, tenantID });
+                        navigation.navigate('OwnerProfile', { userID, ownerID, tenantID });
                     }
                 } catch (error) {
                     Alert.alert('Old password does not match');

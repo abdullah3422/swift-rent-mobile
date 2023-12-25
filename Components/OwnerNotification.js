@@ -1,17 +1,11 @@
 import * as React from 'react';
 import {Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 
-export default function NotificationAlerts({navigation, route}) {
+export default function OwnerNotification({navigation, route}) {
 
-    const {userID, ownerID, tenantID} = route.params;
-    console.log("userID: "+userID);
-    console.log("ownerID: "+ownerID);
-    console.log("tenantID: "+tenantID);
-    const cardButtons = [
-        {title: 'Sept', details: '27,000   2,000'},
-        {title: 'Aug', details: '23,000    1,100'},
-        {title: 'Jul', details: '13,000    300'},
-    ];
+    const {userID, ownerID } = route.params;
+    console.log("userID: " + userID);
+    console.log("ownerID: " + ownerID);
 
     const renderItem = ({item}) => (
         <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('WhoAreYou')}>
@@ -70,20 +64,12 @@ export default function NotificationAlerts({navigation, route}) {
             <View style={styles.bottomContainer}>
                 <View style={styles.bottomNavRow}>
                     <Pressable style={styles.bottomNavButton}
-                               onPress={() => navigation.navigate('MyProperties', {userID, ownerID, tenantID})}>
+                               onPress={() => navigation.navigate('Rentals', {userID, ownerID })}>
                         <Image
                             style={{width: 40, height: 40}}
                             source={require('../img/propertiesIcon.png')}
                         />
                         <Text style={styles.bottomContainerText}>Properties</Text>
-                    </Pressable>
-                    <Pressable style={styles.bottomNavButton}
-                               onPress={() => navigation.navigate('AnalyticsOwner', {userID, ownerID, tenantID})}>
-                        <Image
-                            style={{width: 40, height: 40}}
-                            source={require('../img/analyticIcon.png')}
-                        />
-                        <Text style={styles.bottomContainerText}>Analytics</Text>
                     </Pressable>
                     <Pressable style={styles.bottomNavButton}>
                         <Image
@@ -93,7 +79,7 @@ export default function NotificationAlerts({navigation, route}) {
                         <Text style={styles.bottomContainerText}>Alerts</Text>
                     </Pressable>
                     <Pressable style={styles.bottomNavButton}
-                               onPress={() => navigation.navigate('UserProfile', {userID, ownerID, tenantID})}>
+                               onPress={() => navigation.navigate('OwnerProfile', {userID, ownerID })}>
                         <Image
                             style={{width: 40, height: 40}}
                             source={require('../img/profileFocused.png')}

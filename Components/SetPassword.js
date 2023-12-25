@@ -41,10 +41,10 @@ export default function SetPassword({ navigation, route }) {
                 // Extracting ownerId and tenantId from the response
                 const { userID, ownerID, tenantID } = response.data;
                 if (userType === 'owner') {
-                    navigation.navigate('NotificationAlerts', { userID, ownerID});
+                    navigation.navigate('AnalyticsOwner', { userID, ownerID });
                 } else if (userType === 'tenant') {
                     Alert.alert("Not Developed Yet :(");
-                    //navigation.navigate('NotificationAlerts', { userID, tenantID });
+                    //navigation.navigate('OwnerNotification', { userID, tenantID });
                 }
             } else {
                 console.error('Registration failed', response.data.error);

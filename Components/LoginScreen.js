@@ -29,10 +29,10 @@ export default function LoginScreen({ navigation, route }) {
                 if (ownerID !== 0 && tenantID !== 0) {
                     navigation.navigate('LoginAs', { userID ,ownerID, tenantID });
                 } else if (ownerID !== 0) {
-                    navigation.navigate('NotificationAlerts', { userID, ownerID, tenantID});
+                    navigation.navigate('AnalyticsOwner', { userID, ownerID });
                 } else if (tenantID !== 0) {
                     Alert.alert("Not Developed Yet :(");
-                    //navigation.navigate('NotificationAlerts', { userID, tenantID });
+                    //navigation.navigate('OwnerNotification', { userID, tenantID });
                 }
 
             } else {

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import axios from "axios";
-export default function UserProfile({ navigation, route }) {
-    const {ipAddress, userID, ownerID, tenantID} = route.params;
+export default function OwnerProfile({ navigation, route }) {
+    const {ipAddress, userID, ownerID } = route.params;
     const [ownerData, setOwnerData] = React.useState({
         ownerName: '',
         email: '',
@@ -10,7 +10,6 @@ export default function UserProfile({ navigation, route }) {
     });
     console.log("userID: "+userID);
     console.log("ownerID: "+ownerID);
-    console.log("tenantID: "+tenantID);
     React.useEffect(() => {
         const handleOwnerDetails = async () => {
             try {
@@ -48,14 +47,14 @@ export default function UserProfile({ navigation, route }) {
 
             </View>
             <View style={styles.middleContainer}>
-                <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('ChangePassword', {userID, ownerID, tenantID})}>
+                <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('ChangePassword', {userID, ownerID })}>
                     <Text style={styles.cardButtonsText}>Change Password</Text>
                     <View style={{ flex: 1, alignItems: 'flex-end' }}>
                         <Image style={styles.Pics} source={require('../img/change.png') }/>
                     </View>
                 </Pressable>
                 <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('ReportBug', {userID, ownerID})}>
-                    <Text style={styles.cardButtonsText}>Report a bug</Text>
+                    <Text style={styles.cardButtonsText}>Register a Complaint</Text>
                     <View style={{ flex: 1, alignItems: 'flex-end' }}>
                         <Image style={styles.Pics} source={require('../img/bug.png') }/>
                     </View>
@@ -81,21 +80,21 @@ export default function UserProfile({ navigation, route }) {
             {/*</Pressable>*/}
             <View style={styles.bottomContainer}>
                 <View style={styles.bottomNavRow}>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('MyProperties', {userID, ownerID, tenantID})}>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('MyProperties', {userID, ownerID })}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/propertiesIcon.png')}
                         />
                         <Text style={styles.bottomContainerText}>Properties</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('AnalyticsOwner', {userID, ownerID, tenantID})}>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('AnalyticsOwner', {userID, ownerID })}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/analyticIcon.png')}
                         />
                         <Text style={styles.bottomContainerText}>Analytics</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('NotificationAlerts', {userID, ownerID, tenantID})}>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('OwnerNotification', {userID, ownerID })}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/notification.png')}

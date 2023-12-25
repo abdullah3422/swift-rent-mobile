@@ -3,7 +3,7 @@ import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import axios from "axios";
 
 export default function AnalyticsOwner({ navigation, route }) {
-    const {ipAddress, userID, ownerID, tenantID} = route.params;
+    const {ipAddress, userID, ownerID } = route.params;
     const [ownerData, setOwnerData] = React.useState({
         currentMonth: '',
         currentYear: '',
@@ -14,7 +14,6 @@ export default function AnalyticsOwner({ navigation, route }) {
     });
     console.log("userID: "+userID);
     console.log("ownerID: "+ownerID);
-    console.log("tenantID: "+tenantID);
     React.useEffect(() => {
         const handleOwnerMonthAnalytics = async () => {
             try {
@@ -93,7 +92,7 @@ export default function AnalyticsOwner({ navigation, route }) {
             </View>
             <View style={styles.bottomContainer}>
                 <View style={styles.bottomNavRow}>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('MyProperties', {userID, ownerID, tenantID})}>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('MyProperties', {userID, ownerID })}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/propertiesIcon.png')}
@@ -107,14 +106,14 @@ export default function AnalyticsOwner({ navigation, route }) {
                         />
                         <Text style={styles.bottomContainerText}>Analytics</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('NotificationAlerts', {userID, ownerID, tenantID})}>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('OwnerNotification', {userID, ownerID })}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/notification.png')}
                         />
                         <Text style={styles.bottomContainerText}>Alerts</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('UserProfile', {userID, ownerID, tenantID})}>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('OwnerProfile', {userID, ownerID })}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/profileFocused.png')}

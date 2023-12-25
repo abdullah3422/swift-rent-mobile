@@ -6,7 +6,7 @@ export default function LoginAs({ navigation, route }) {
 console.log(userID);
     const handleOwnerPress = () => {
         if (ownerID !== 0) {
-            navigation.navigate('AnalyticsOwner', { userID, ownerID, tenantID });
+            navigation.navigate('AnalyticsOwner', { userID, ownerID });
         } else {
             // Handle the case when ownerId is 0
             Alert.alert("Not Registered as an Owner!");
@@ -16,7 +16,7 @@ console.log(userID);
     const handleTenantPress = () => {
         if (tenantID !== 0) {
             Alert.alert("Not Developed Yet :(");
-            // navigation.navigate('NotificationAlerts', { userID, tenantID });
+            // navigation.navigate('OwnerNotification', { userID, tenantID });
         } else {
             // Handle the case when tenantId is 0
             Alert.alert("Not Registered as a Tenant!");
