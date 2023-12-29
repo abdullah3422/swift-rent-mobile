@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "app2",
-    "slug": "app2",
+    "name": "Swift Rent",
+    "slug": "SwiftRent",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

@@ -31,8 +31,8 @@ export default function LoginScreen({ navigation, route }) {
                 } else if (ownerID !== 0) {
                     navigation.navigate('AnalyticsOwner', { userID, ownerID });
                 } else if (tenantID !== 0) {
-                    Alert.alert("Not Developed Yet :(");
-                    //navigation.navigate('OwnerNotification', { userID, tenantID });
+                    //Alert.alert("Not Developed Yet :(");
+                    navigation.navigate('TenantNotification', { userID, tenantID });
                 }
 
             } else {

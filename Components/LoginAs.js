@@ -15,8 +15,8 @@ console.log(userID);
 
     const handleTenantPress = () => {
         if (tenantID !== 0) {
-            Alert.alert("Not Developed Yet :(");
-            // navigation.navigate('OwnerNotification', { userID, tenantID });
+            //Alert.alert("Not Developed Yet :(");
+            navigation.navigate('TenantNotification', { userID, tenantID });
         } else {
             // Handle the case when tenantId is 0
             Alert.alert("Not Registered as a Tenant!");

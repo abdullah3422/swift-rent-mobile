@@ -5,7 +5,7 @@ import {useState} from "react";
 export default function TenantProfile({ navigation, route }) {
     const {ipAddress, userID,  tenantID } = route.params;
     const [ownerData, setOwnerData] = React.useState({
-        ownerName: '',
+        tenantName: '',
         email: '',
         phone: '',
     });
@@ -17,13 +17,13 @@ export default function TenantProfile({ navigation, route }) {
         const handleOwnerDetails = async () => {
             try {
                 const response = await axios.post(ipAddress + 'api/tenant-details', {
-                    tenantID: 1
+                    tenantID: tenantID
                 });
 
                 if (response.data.success) {
                     // Update the state with the owner's data
                     setOwnerData({
-                        ownerName: response.data.tenantName,
+                        tenantName: response.data.tenantName,
                         email: response.data.email,
                         phone: response.data.phone,
                     });
@@ -40,7 +40,7 @@ export default function TenantProfile({ navigation, route }) {
         <View style={styles.container}>
             <View style={styles.topContainer}>
 
-                <Text style={{ fontSize: 30, fontWeight: 'bold' }}>{ownerData.ownerName}</Text>
+                <Text style={{ fontSize: 30, fontWeight: 'bold' }}>{ownerData.tenantName}</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
                     <Text style={{ fontSize: 16, width: '95%' }}>{ownerData.phone}</Text>
                 </View>

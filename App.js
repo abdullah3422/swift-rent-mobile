@@ -2,6 +2,7 @@ import "react-native-gesture-handler";
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 import WelcomeScreen from "./Components/WelcomeScreen";
 import SplashScreen from "./Components/SplashScreen";
 import LoginScreen from "./Components/LoginScreen";
@@ -11,14 +12,17 @@ import GetToKnow from "./Components/GetToKnow";
 import ContactInfo from "./Components/ContactInfo";
 import SetPassword from "./Components/SetPassword";
 import SetUp from "./Components/SetUp";
+
 import AnalyticsOwner from "./Components/AnalyticsOwner";
 import MyProperties from "./Components/MyProperties";
 import AddProperties from "./Components/AddProperties";
-import ChangePassword from "./Components/ChangePassword";
 import OwnerNotification from "./Components/OwnerNotification";
 import OwnerProfile from "./Components/OwnerProfile";
+
+import ChangePassword from "./Components/ChangePassword";
 import ReportBug from "./Components/ReportBug";
 import FAQs from "./Components/FAQs";
+
 import TenantProfile from "./Components/TenantProfile";
 import TenantNotification from "./Components/TenantNotification";
 import MyRentals from "./Components/MyRentals";
@@ -34,7 +38,8 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="TenantNotification" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="SplashScreen" screenOptions={{ headerShown: false }}>
+
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} initialParams={{ ipAddress: ipAddress }} />
@@ -44,15 +49,17 @@ const App = () => {
         <Stack.Screen name="ContactInfo" component={ContactInfo} initialParams={{ ipAddress: ipAddress }} />
         <Stack.Screen name="SetPassword" component={SetPassword} initialParams={{ ipAddress: ipAddress }} />
         <Stack.Screen name="SetUp" component={SetUp} />
+        {/*Owner Screens*/}
         <Stack.Screen name="OwnerNotification" component={OwnerNotification} />
-          <Stack.Screen name="MyProperties" component={MyProperties} initialParams={{ ipAddress: ipAddress }}/>
-          <Stack.Screen name="AnalyticsOwner" component={AnalyticsOwner} initialParams={{ ipAddress: ipAddress }} />
-
-          <Stack.Screen name="AddProperties" component={AddProperties} initialParams={{ ipAddress: ipAddress }} />
+        <Stack.Screen name="MyProperties" component={MyProperties} initialParams={{ ipAddress: ipAddress }}/>
+        <Stack.Screen name="AnalyticsOwner" component={AnalyticsOwner} initialParams={{ ipAddress: ipAddress }} />
+        <Stack.Screen name="AddProperties" component={AddProperties} initialParams={{ ipAddress: ipAddress }} />
         <Stack.Screen name="OwnerProfile" component={OwnerProfile} initialParams={{ ipAddress: ipAddress }}/>
+        {/*Common Functionality*/}
         <Stack.Screen name="ChangePassword" component={ChangePassword} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="ReportBug" component={ReportBug} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="FAQs" component={FAQs} initialParams={{ ipAddress: ipAddress }}/>
+        {/*Tenant Screens*/}
         <Stack.Screen name="TenantProfile" component={TenantProfile} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="TenantNotification" component={TenantNotification} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="MyRentals" component={MyRentals} initialParams={{ ipAddress: ipAddress }}/>

@@ -43,8 +43,8 @@ export default function SetPassword({ navigation, route }) {
                 if (userType === 'owner') {
                     navigation.navigate('AnalyticsOwner', { userID, ownerID });
                 } else if (userType === 'tenant') {
-                    Alert.alert("Not Developed Yet :(");
-                    //navigation.navigate('OwnerNotification', { userID, tenantID });
+                    //Alert.alert("Not Developed Yet :(");
+                    navigation.navigate('TenantNotification', { userID, tenantID });
                 }
             } else {
                 console.error('Registration failed', response.data.error);

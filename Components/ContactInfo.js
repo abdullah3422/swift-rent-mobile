@@ -37,7 +37,7 @@ export default function LoginScreen({ navigation, route }) {
             }
 
         } catch (error) {
-            console.error('Network Error:', error);
+            console.log('Network Error:', error);
             const lastThreeNumbers = String(error).match(/\d{3}$/);
             if (String(lastThreeNumbers) === "420"){
                 Alert.alert("Credentials are not unique");
