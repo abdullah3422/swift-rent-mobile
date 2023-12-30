@@ -40,7 +40,7 @@ export default function MyProperties({ navigation, route }) {
             <Text style={styles.cardButtonText}>{item.title}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
                 <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage} />
-                <Text style={{ fontSize: 20 }}> {item.details}</Text>
+                <Text style={{ fontSize: 20 }}>PKR {item.details}</Text>
                 {/*<Image source={require('../img/outgoingArrow.png')} style={styles.arrowImage} />*/}
             </View>
         </Pressable>

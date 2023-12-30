@@ -7,7 +7,7 @@ import { md5 } from 'js-md5';
 
 export default function WhoAreYou({navigation, route}) {
     // console.log(md5("Anas@2001"));
-
+    let flag = 1;
     const ipAddressContainer = route.params.ipAddress;
         const handleRole = async (role) => {
         // Save the role into the userType state
@@ -36,7 +36,7 @@ export default function WhoAreYou({navigation, route}) {
             <Pressable style={styles.button} onPress={() => handleRole('tenant')}>
                 <Text style={styles.buttonText}>Tenant</Text>
             </Pressable>
-            <Pressable onPress={() => navigation.navigate('LoginScreen')}>
+            <Pressable onPress={() => navigation.navigate('LoginScreen', { flag })}>
                 <Text style={styles.newRoleText}>Create new role on existing credentials?</Text>
             </Pressable>
         </View>

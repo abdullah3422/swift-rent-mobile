@@ -27,6 +27,14 @@ import TenantProfile from "./Components/TenantProfile";
 import TenantNotification from "./Components/TenantNotification";
 import MyRentals from "./Components/MyRentals";
 import AddRentals from "./Components/AddRentals";
+import ResetPassword from "./Components/ResetPassword"
+import DigiCode from "./Components/DigiCode";
+import EditAccount from "./Components/EditAccount";
+import EditProperty from "./Components/EditProperty";
+import PropertyMenu from "./Components/PropertyMenu";
+import RegisterTenant from "./Components/RegisterTenant";
+import ReceiveRent from "./Components/ReceiveRent";
+import RentalMenu from "./Components/RentalMenu";
 //instantiating Drawer and Stack component
 
 const Stack = createNativeStackNavigator();
@@ -38,7 +46,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SplashScreen" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="RentalMenu" screenOptions={{ headerShown: false }}>
 
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
@@ -64,7 +72,14 @@ const App = () => {
         <Stack.Screen name="TenantNotification" component={TenantNotification} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="MyRentals" component={MyRentals} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="AddRentals" component={AddRentals} initialParams={{ ipAddress: ipAddress }}/>
-
+        <Stack.Screen name="ResetPassword" component={ResetPassword} initialParams={{ ipAddress: ipAddress }}/>
+        <Stack.Screen name="DigiCode" component={DigiCode} initialParams={{ ipAddress: ipAddress }}/>
+        <Stack.Screen name="EditAccount" component={EditAccount} initialParams={{ ipAddress: ipAddress }}/>
+        <Stack.Screen name="EditProperty" component={EditProperty} initialParams={{ ipAddress: ipAddress }}/>
+        <Stack.Screen name="PropertyMenu" component={PropertyMenu} initialParams={{ ipAddress: ipAddress }}/>
+        <Stack.Screen name="RegisterTenant" component={RegisterTenant} initialParams={{ ipAddress: ipAddress }}/>
+        <Stack.Screen name="ReceiveRent" component={ReceiveRent} initialParams={{ ipAddress: ipAddress }}/>
+        <Stack.Screen name="RentalMenu" component={RentalMenu} initialParams={{ ipAddress: ipAddress }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

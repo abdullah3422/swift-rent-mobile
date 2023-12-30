@@ -10,31 +10,6 @@ export default function MyRentals({ navigation, route }) {
     // State for storing properties data
     const [propertiesData, setPropertiesData] = useState([]);
 
-    // useEffect(() => {
-    //     // Function to fetch properties
-    //     const fetchProperties = async () => {
-    //         try {
-    //             console.log("userID:" + userID);
-    //             console.log("tenantID:" + tenantID);
-    //             const response = await axios.post(ipAddress + 'api/property-list', {
-    //                 ownerID: ownerID,
-    //             });
-    //             if(response.data && response.data.success) {
-    //                 // Transform data to match your frontend structure
-    //                 const transformedData = response.data.propertyList.map(property => ({
-    //                     title: property.propertyAddress,
-    //                     details: `${property.totalProfit}  ${property.status}`
-    //                 }));
-    //                 setPropertiesData(transformedData);
-    //             }
-    //         } catch (error) {
-    //             console.error("Error fetching properties:", error);
-    //         }
-    //     };
-    //
-    //     fetchProperties();
-    // }, [ownerID, ipAddress]); // Dependencies array
-    // console.log(propertiesData);
 
     const renderItem = ({ item }) => (
         <Pressable style={styles.cardButtons}>
@@ -42,7 +17,6 @@ export default function MyRentals({ navigation, route }) {
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
                 <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage} />
                 <Text style={{ fontSize: 20 }}> {item.details}</Text>
-                {/*<Image source={require('../img/outgoingArrow.png')} style={styles.arrowImage} />*/}
             </View>
         </Pressable>
     );
@@ -50,16 +24,6 @@ export default function MyRentals({ navigation, route }) {
     return (
 
         <View style={styles.container}>
-            <View style={styles.topContainer}>
-                <Pressable onPress={() => navigation.navigate('AddRentals', {userID, tenantID })}>
-                    <View style={styles.topContainerText}>
-                        <Text style={{ fontSize: 35}}>+ Add a Rental</Text>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-                        </View>
-                    </View>
-                </Pressable>
-
-            </View>
             <View style={styles.middleContainer}>
                 <Text style={styles.middleContainerText}>My Rentals</Text>
                 <FlatList
@@ -152,13 +116,12 @@ const styles = StyleSheet.create({
     },
     middleContainer: {
         flex: 0.7,
-        backgroundColor: '#47b5ff',
         marginTop: 15,
         width: '100%',
 
     },
     middleContainerText: {
-        color: "#fff",
+        color: "black",
         fontSize: 25,
         fontWeight: 'bold',
         marginTop: 10,

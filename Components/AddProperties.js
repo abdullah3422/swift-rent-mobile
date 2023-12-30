@@ -45,7 +45,7 @@ export default function AddProperties({navigation, route}) {
 
             if (response.data.success) {
                 Alert.alert('Property Successfully Added!')
-                navigation.navigate('MyProperties', {userID, ownerID });
+                navigation.navigate('AnalyticsOwner', {userID, ownerID });
             }
         } catch (error) {
             console.error('Error during adding property:', error);

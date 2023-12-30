@@ -64,12 +64,19 @@ export default function OwnerNotification({navigation, route}) {
             <View style={styles.bottomContainer}>
                 <View style={styles.bottomNavRow}>
                     <Pressable style={styles.bottomNavButton}
-                               onPress={() => navigation.navigate('Rentals', {userID, ownerID })}>
+                               onPress={() => navigation.navigate('MyProperties', {userID, ownerID })}>
                         <Image
                             style={{width: 40, height: 40}}
                             source={require('../img/propertiesIcon.png')}
                         />
                         <Text style={styles.bottomContainerText}>Properties</Text>
+                    </Pressable>
+                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('AnalyticsOwner', {userID, ownerID })}>
+                        <Image
+                            style={{ width: 40, height: 40 }}
+                            source={require('../img/analyticIcon.png')}
+                        />
+                        <Text style={styles.bottomContainerText}>Analytics</Text>
                     </Pressable>
                     <Pressable style={styles.bottomNavButton}>
                         <Image

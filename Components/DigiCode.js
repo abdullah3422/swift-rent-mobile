@@ -2,36 +2,19 @@ import * as React from 'react';
 import {Image, Pressable, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 
-export default function WelcomeScreen({navigation}) {
+export default function DigiScreen({navigation}) {
     let flag = 0;
     // let [fontsLoad] = useFonts({OpenSans_Bold});
     return (
         <View style={styles.container}>
 
-            <View style={styles.header}>
-                <Image source={require('../img/logoColored.png')} style={styles.logo} />
-            </View>
-
-            <Text style={styles.welcomeText}>Welcome to {'\n'}Swift Rent</Text>
+            <Text style={styles.digitCodeText}>Your 16 Digit {'\n'}Recovery Code</Text>
+            <Text style={styles.recoveryText}>Save this code to {'\n'}recover your password</Text>
+            <Text style={styles.digiCode}>16sas78W912345y6</Text>
             <Pressable style={styles.button}
                        onPress={() => navigation.navigate('WhoAreYou')}>
-                <Text style={styles.buttonText}>Sign-up</Text>
+                <Text style={styles.buttonText}>Continue to {'\n'} Dashboard</Text>
             </Pressable>
-            <Pressable style={styles.loginText} onPress={() => navigation.navigate('LoginScreen', { flag })}>
-                <Text style={{fontSize: 16}}>Already have an account? </Text>
-                <Text style={{color:"#47b5ff", fontWeight: "bold", fontSize: 16}}>LogIn</Text>
-            </Pressable>
-
-
-            {/*<View style={styles.footerContainer}>*/}
-            {/*    <View style={styles.centeredContent}>*/}
-            {/*        <Image source={require('../img/langIcon.png')} style={styles.earthImage} />*/}
-            {/*        <Text style={styles.selectLanguageText}>Select Language</Text>*/}
-            {/*        <TouchableOpacity onPress={() => console.log('Dropdown Arrow Pressed')}>*/}
-            {/*            <Image source={require('../img/dropDownArrow.png')} style={styles.dropdownArrow} />*/}
-            {/*        </TouchableOpacity>*/}
-            {/*    </View>*/}
-            {/*</View>*/}
 
         </View>
 
@@ -52,19 +35,19 @@ const styles = StyleSheet.create({
     },
     header: {
         flexDirection: 'row',
-        alignItems:'center',
+        alignItems: 'center',
 
     },
 
-    headerText:{
+    headerText: {
         fontSize: 50,
         paddingTop: 15,
         color: "#1363DF",
         fontWeight: 'bold'
     },
-    welcomeText: {
+    digitCodeText: {
 
-        marginTop: 20,
+        marginTop: 0,
         fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 20,
@@ -73,8 +56,9 @@ const styles = StyleSheet.create({
 
     },
     button: {
-        width: '60%',
+        width: '40%',
         paddingVertical: 2,
+
         backgroundColor: '#e5e5e5',
         marginTop: 150,
         borderRadius: 100,
@@ -86,14 +70,14 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#06283d',
         textAlign: 'center',
-        fontSize: 25,
+        fontSize: 18,
 
     },
-    loginText: {
-
-      paddingTop: 5,
+    recoveryText: {
+        paddingTop: 5,
+        margin: 20,
         flexDirection: "row",
-
+        fontSize: 16, textAlign: 'center'
     },
     footerContainer: {
         position: 'absolute',
@@ -136,5 +120,19 @@ const styles = StyleSheet.create({
         marginRight: 24,
         marginLeft: 24,
 
-    }
+    },
+    digiCode: {
+        width: '75%',
+        height: 50,
+        borderColor: '#06283d',
+        borderWidth: 2,
+        borderRadius: 20,
+        padding: 5,
+        marginTop: 80,
+        marginBottom: 10,
+        backgroundColor: '#fff',
+        fontWeight: 'bold',
+        flexDirection: "row",
+        fontSize: 26, textAlign: 'center'
+    },
 });

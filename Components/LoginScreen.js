@@ -10,6 +10,8 @@ export default function LoginScreen({ navigation, route }) {
     const [password, setPassword] = useState('');
 
     const ipAddress = route.params.ipAddress;
+    const { flag } = route.params;
+
     const handleLogin = async () => {
         try {
             console.log(emailOrPhone);
@@ -24,17 +26,35 @@ export default function LoginScreen({ navigation, route }) {
                 Alert.alert('Login Successful!');
 
                 // Extracting ownerId and tenantId from the response
-                const { userID, ownerID, tenantID } = response.data;
-
-                if (ownerID !== 0 && tenantID !== 0) {
-                    navigation.navigate('LoginAs', { userID ,ownerID, tenantID });
-                } else if (ownerID !== 0) {
-                    navigation.navigate('AnalyticsOwner', { userID, ownerID });
-                } else if (tenantID !== 0) {
-                    //Alert.alert("Not Developed Yet :(");
-                    navigation.navigate('TenantNotification', { userID, tenantID });
+                var {userID, ownerID, tenantID} = response.data;
+                if (flag){
+                    if (ownerID !== 0 && tenantID !== 0) {
+                        Alert.alert("All roles already created!");
+                    } else if (ownerID !== 0) {
+                        const tenantResponse = await axios.post(ipAddress + 'api/new-role-registration', {
+                            userID: userID,
+                            userType: "tenant"
+                        });
+                        tenantID = tenantResponse.data.tenantID;
+                        navigation.navigate('TenantNotification', { userID, tenantID });
+                    } else if (tenantID !== 0) {
+                        const ownerResponse = await axios.post(ipAddress + 'api/new-role-registration', {
+                            userID: userID,
+                            userType: "owner"
+                        });
+                        ownerID = ownerResponse.data.ownerID;
+                        navigation.navigate('AnalyticsOwner', { userID, ownerID });
+                    }
+                } else{
+                    if (ownerID !== 0 && tenantID !== 0) {
+                        navigation.navigate('LoginAs', { userID ,ownerID, tenantID });
+                    } else if (ownerID !== 0) {
+                        navigation.navigate('AnalyticsOwner', { userID, ownerID });
+                    } else if (tenantID !== 0) {
+                        //Alert.alert("Not Developed Yet :(");
+                        navigation.navigate('TenantNotification', { userID, tenantID });
+                    }
                 }
-
             } else {
                 console.log('Login Failed:', response.data.error);
                 Alert.alert('Login Failed', response.data.error);
@@ -74,10 +94,15 @@ export default function LoginScreen({ navigation, route }) {
                     value={password}
                     onChangeText={setPassword}
                 />
+
                 <View style={styles.iconContainer}>
                     <Image source={require('../assets/eye.png')} style={styles.placeholderIcon} />
                 </View>
+
             </View>
+            <Pressable  onPress={() => navigation.navigate('ResetPassword')}>
+                <Text>Forgot Password?</Text>
+            </Pressable>
 
             <View style={styles.buttonContainer}>
                 <Pressable style={styles.button} onPress={handleLogin}>
