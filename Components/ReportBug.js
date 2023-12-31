@@ -54,7 +54,7 @@ export default function ReportBug({navigation, route}) {
         >
             {({values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit}) => (
                 <View style={styles.container}>
-                    <Text style={styles.headerText}>Report a Bug</Text>
+                    <Text style={styles.headerText}>Register a Complaint</Text>
 
                     <TextInput
                         style={styles.input}

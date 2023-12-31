@@ -9,8 +9,92 @@ import * as Yup from 'yup';
 export default function EditAccount({navigation, route}) {
     const {userID, ownerID, tenantID} = route.params;
     const ipAddress = route.params.ipAddress;
+    const [data, setData] = React.useState({
+        Name: '',
+        email: '',
+        phone: '',
+        Year: '',
+        Month: '',
+        Day: '',
+    });
+    React.useEffect(() => {
+    const handleInitialData = async () => {
+        if (ownerID !== undefined) {
+            try {
+                const response = await axios.post(ipAddress + 'api/owner-details', {
+                    ownerID: ownerID
+                });
+                console.log(response.data.DOB);
+                if (response.data.success) {
+                    // Update the state with the owner's data
+                    setData({
+                        Name: response.data.ownerName,
+                        email: response.data.email,
+                        phone: response.data.phone,
+                        Year: response.data.DOB.slice(0, 4),
+                        Month: response.data.DOB.slice(5, 7),
+                        Day: response.data.DOB.slice(8, 10),
+                    });
+                }
+            } catch (error) {
+                console.log('Error during fetching owner details:', error);
+            }
+        } else if (tenantID !== undefined) {
+            try {
+                const response = await axios.post(ipAddress + 'api/tenant-details', {
+                    tenantID: tenantID
+                });
 
-    const [error, setError] = useState('');
+                if (response.data.success) {
+                    // Update the state with the owner's data
+                    setData({
+                        Name: response.data.tenantName,
+                        email: response.data.email,
+                        phone: response.data.phone,
+                        Year: response.data.DOB.slice(0, 4),
+                        Month: response.data.DOB.slice(5, 7),
+                        Day: response.data.DOB.slice(8, 10),
+                    });
+                }
+            } catch (error) {
+                console.log('Error during fetching owner details:', error);
+            }
+        }
+    };
+    handleInitialData();
+    }, [ownerID, tenantID, userID]);
+    async function HandleChange() {
+        try {
+            const verificationResponse = await axios.post(ipAddress + 'api/signup-contact', {
+                userID: userID,
+                email: data.email,
+                phone: data.phone,
+            });
+            if(verificationResponse.data.success){
+                const editUserResponse = await axios.put(ipAddress + 'api/admin/edit-user', {
+                    userID: userID,
+                    userName: data.Name,
+                    email: data.email,
+                    phone: data.phone,
+                    DOB: String(data.Year + "-" + data.Month + "-" + data.Day)
+                });
+                if(editUserResponse.data.success){
+                    Alert.alert('Data Successfully Updated');
+                    if (ownerID !== undefined) {
+                        navigation.navigate('OwnerProfile', { userID, ownerID });
+                    } else if (tenantID !== undefined) {
+                        navigation.navigate('TenantProfile', { userID, tenantID });
+                    }
+                }
+            }
+        } catch (error) {
+            console.log('Error during updating data:', error);
+            const lastThreeNumbers = String(error).match(/\d{3}$/);
+            if (String(lastThreeNumbers) === "420"){
+                Alert.alert("Credential(s) not unique");
+            }
+        }
+    }
 
     return (
 
@@ -19,60 +103,47 @@ export default function EditAccount({navigation, route}) {
 
             <TextInput
                 style={styles.input}
-                placeholder="John"
-                placeholderTextColor="#cdcdcd"
-                secureTextEntry={true}
+                defaultValue={data.Name}
+                onChangeText={(text) => setData({ ...data, Name: text })}
             />
 
             <TextInput
                 style={styles.input}
-                placeholder="Doe"
-                placeholderTextColor="#cdcdcd"
-                secureTextEntry={true}
+                defaultValue={data.email}
+                onChangeText={(text) => setData({ ...data, email: text })}
             />
 
             <TextInput
                 style={styles.input}
-                placeholder="0312121212"
-                placeholderTextColor="#cdcdcd"
-
-            />
-
-            <TextInput
-                style={styles.input}
-                placeholder="j@email.com"
-                placeholderTextColor="#cdcdcd"
+                defaultValue={data.phone}
+                onChangeText={(text) => setData({ ...data, phone: text })}
             />
             <View style={styles.dateInputContainer}>
                 <TextInput
-                    placeholder="Year"
-                    //style={styles.dateInput}
-                    placeholderTextColor="#888"
+                    defaultValue={data.Year}
                     style={styles.dateInput}
                     keyboardType="number-pad"
-
+                    onChangeText={(text) => setData({ ...data, Year: text })}
                 />
+
                 <TextInput
-                    placeholder="Month"
-                    //style={styles.dateInput}
-                    placeholderTextColor="#888"
+                    defaultValue={data.Month}
                     style={styles.dateInput}
                     keyboardType="number-pad"
-
+                    onChangeText={(text) => setData({ ...data, Month: text })}
                 />
+
                 <TextInput
-                    placeholder="Day"
-                    //style={styles.dateInput}
-                    placeholderTextColor="#888"
+                    defaultValue={data.Day}
                     style={styles.dateInput}
                     keyboardType="number-pad"
-
+                    onChangeText={(text) => setData({ ...data, Day: text })}
                 />
             </View>
 
             <View style={styles.buttonContainer}>
                 <View style={styles.space}/>
-                <Pressable style={[styles.button, {width: 160}]}>
+                <Pressable style={[styles.button, {width: 160}]} onPress={HandleChange}>
                     <Text style={styles.buttonText}>Change</Text>
                 </Pressable>
             </View>

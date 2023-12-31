@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import axios from "axios";
 import {useState} from "react";
+import {useFocusEffect} from "@react-navigation/native";
 export default function TenantProfile({ navigation, route }) {
     const handleLogout = () => {
         Alert.alert(
@@ -27,51 +28,58 @@ export default function TenantProfile({ navigation, route }) {
         );
     };
     const {ipAddress, userID,  tenantID } = route.params;
-    const [ownerData, setOwnerData] = React.useState({
+    const [tenantData, setTenantData] = React.useState({
         tenantName: '',
         email: '',
         phone: '',
+        DOB: '',
     });
     const [activePage, setActivePage] = useState('TenantProfile'); // Set the default active page
 
-    console.log("userID: "+userID);
-    console.log("tenantID: "+tenantID);
-    React.useEffect(() => {
-        const handleOwnerDetails = async () => {
-            try {
-                const response = await axios.post(ipAddress + 'api/tenant-details', {
-                    tenantID: tenantID
+    console.log("userID: " + userID);
+    console.log("tenantID: " + tenantID);
+    const handleTenantDetails = async () => {
+        try {
+            const response = await axios.post(ipAddress + 'api/tenant-details', {
+                tenantID: tenantID
+            });
+
+            if (response.data.success) {
+                setTenantData({
+                    tenantName: response.data.tenantName,
+                    email: response.data.email,
+                    phone: response.data.phone,
+                    DOB: response.data.DOB.slice(0, 10),
                 });
-
-                if (response.data.success) {
-                    // Update the state with the owner's data
-                    setOwnerData({
-                        tenantName: response.data.tenantName,
-                        email: response.data.email,
-                        phone: response.data.phone,
-                    });
-                }
-            } catch (error) {
-                console.error('Error during fetching owner details:', error);
             }
-        };
+        } catch (error) {
+            console.error('Error during fetching tenant details:', error);
+        }
+    };
 
-        handleOwnerDetails();
-    }, [tenantID]);
+    useFocusEffect(
+        React.useCallback(() => {
+            handleTenantDetails();
+        }, [])
+    );
 
     return (
         <View style={styles.container}>
-            <View style={styles.topContainer}>
-
-                <Text style={{ fontSize: 30, fontWeight: 'bold' }}>{ownerData.tenantName}</Text>
+            <Pressable style={styles.topContainer} onPress={() => navigation.navigate('EditAccount', {userID, tenantID })}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 30, fontWeight: 'bold' }}>{tenantData.tenantName}</Text>
+                    <Image style={styles.profileImage} source={require('../img/edit.png')} />
+                </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
-                    <Text style={{ fontSize: 16, width: '95%' }}>{ownerData.phone}</Text>
+                    <Text style={{ fontSize: 16, width: '95%' }}>{tenantData.phone}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 16, width: '95%' }}>{ownerData.email}</Text>
+                    <Text style={{ fontSize: 16, width: '95%' }}>{tenantData.email}</Text>
                 </View>
-
-            </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, width: '95%' }}>{tenantData.DOB}</Text>
+                </View>
+            </Pressable>
             <View style={styles.middleContainer}>
                 <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('ChangePassword', {userID, tenantID })}>
                     <Text style={styles.cardButtonsText}>Change Password</Text>
@@ -153,7 +161,7 @@ const styles = StyleSheet.create({
 
     },
     topContainer: {
-        width: '80%',
+        width: '90%',
         paddingVertical: 15,
         padding: 20,
         backgroundColor: '#fff',
@@ -167,6 +175,11 @@ const styles = StyleSheet.create({
         color: '#06283d',
         textAlign: 'center',
         fontSize: 25,
+    },
+    profileImage: {
+        width: 30,
+        height: 30,
+        resizeMode: 'contain',
     },
     arrowImage: {
         width: 20,

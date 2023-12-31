@@ -16,31 +16,33 @@ export default function LoginScreen({ navigation, route }) {
         try {
             console.log(values.email);
             console.log(values.phoneNumber);
-            const response = await axios.post(ipAddress + 'api/signup-contact', {
-                email: values.email,
-                phone: values.phoneNumber,
-            });
-            // Check the response for success or error
-            if (response.data.success) {
-                // Navigate to the next screen or perform other actions
-                const { userType, firstName, lastName, DOB } = route.params;
-                let email = values.email, phone = values.phoneNumber;
-                console.log(userType);
-                console.log(firstName);
-                console.log(lastName);
-                console.log(DOB);
-                console.log(phone);
-                navigation.navigate('SetPassword', { userType, firstName, lastName, DOB, email, phone});
-            } else {
-                // Handle errors, show appropriate messages to the user
-                console.error('API Error:', response.data.error, response.statusText);
+            if ( values.email !== '' || values.phoneNumber !== '' ){
+                const response = await axios.post(ipAddress + 'api/signup-contact', {
+                    email: values.email,
+                    phone: values.phoneNumber,
+                });
+                if (response.data.success) {
+                    // Navigate to the next screen or perform other actions
+                    const { userType, firstName, lastName, DOB } = route.params;
+                    let email = values.email, phone = values.phoneNumber;
+                    console.log(userType);
+                    console.log(firstName);
+                    console.log(lastName);
+                    console.log(DOB);
+                    console.log(phone);
+                    navigation.navigate('SetPassword', { userType, firstName, lastName, DOB, email, phone});
+                } else {
+                    // Handle errors, show appropriate messages to the user
+                    console.error('API Error:', response.data.error, response.statusText);
+                }
+            }else {
+                Alert.alert('Fields Cannot be Empty','Please make sure that either email or phone is entered.')
             }
-
         } catch (error) {
             console.log('Network Error:', error);
             const lastThreeNumbers = String(error).match(/\d{3}$/);
             if (String(lastThreeNumbers) === "420"){
-                Alert.alert("Credentials are not unique");
+                Alert.alert("Credential(s) not unique");
             }
             // Handle network errors, show appropriate messages to the user
         }

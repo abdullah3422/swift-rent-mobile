@@ -1,6 +1,10 @@
 import * as React from 'react';
-import {Image, Pressable, StyleSheet, Text, View, Alert} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View, Alert, useState } from 'react-native';
 import axios from "axios";
+import { useFocusEffect } from '@react-navigation/native';
+
+
+
 export default function OwnerProfile({ navigation, route }) {
     const handleLogout = () => {
         Alert.alert(
@@ -30,45 +34,52 @@ export default function OwnerProfile({ navigation, route }) {
         ownerName: '',
         email: '',
         phone: '',
+        DOB: '',
     });
     console.log("userID: "+userID);
     console.log("ownerID: "+ownerID);
-    React.useEffect(() => {
-        const handleOwnerDetails = async () => {
-            try {
-                const response = await axios.post(ipAddress + 'api/owner-details', {
-                    ownerID: ownerID
+    const handleOwnerDetails = async () => {
+        try {
+            const response = await axios.post(ipAddress + 'api/owner-details', {
+                ownerID: ownerID
+            });
+
+            if (response.data.success) {
+                setOwnerData({
+                    ownerName: response.data.ownerName,
+                    email: response.data.email,
+                    phone: response.data.phone,
+                    DOB: response.data.DOB.slice(0, 10),
                 });
-
-                if (response.data.success) {
-                    // Update the state with the owner's data
-                    setOwnerData({
-                        ownerName: response.data.ownerName,
-                        email: response.data.email,
-                        phone: response.data.phone,
-                    });
-                }
-            } catch (error) {
-                console.error('Error during fetching owner details:', error);
             }
-        };
+        } catch (error) {
+            console.error('Error during fetching owner details:', error);
+        }
+    };
 
-        handleOwnerDetails();
-    }, [ownerID]);
+    useFocusEffect(
+        React.useCallback(() => {
+            handleOwnerDetails();
+        }, [])
+    );
 
     return (
         <View style={styles.container}>
-            <View style={styles.topContainer}>
-
-                <Text style={{ fontSize: 30, fontWeight: 'bold' }}>{ownerData.ownerName}</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
-                    <Text style={{ fontSize: 16, width: '95%' }}>{ownerData.phone}</Text>
-                </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 16, width: '95%' }}>{ownerData.email}</Text>
-                </View>
-
-            </View>
+                <Pressable style={styles.topContainer} onPress={() => navigation.navigate('EditAccount', {userID, ownerID })}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Text style={{ fontSize: 30, fontWeight: 'bold' }}>{ownerData.ownerName}</Text>
+                        <Image style={styles.profileImage} source={require('../img/edit.png')} />
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
+                        <Text style={{ fontSize: 16, width: '95%' }}>{ownerData.phone}</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{ fontSize: 16, width: '95%' }}>{ownerData.email}</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{ fontSize: 16, width: '95%' }}>{ownerData.DOB}</Text>
+                    </View>
+                </Pressable>
             <View style={styles.middleContainer}>
                 <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('ChangePassword', {userID, ownerID })}>
                     <Text style={styles.cardButtonsText}>Change Password</Text>
@@ -98,9 +109,6 @@ export default function OwnerProfile({ navigation, route }) {
                 </Pressable>
 
             </View>
-            {/*<Pressable onPress={() => navigation.navigate('AddProperty')}>*/}
-            {/*    <Text style={{paddingTop: 15}}>Next</Text>*/}
-            {/*</Pressable>*/}
             <View style={styles.bottomContainer}>
                 <View style={styles.bottomNavRow}>
                     <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('MyProperties', {userID, ownerID })}>
@@ -147,7 +155,7 @@ const styles = StyleSheet.create({
 
     },
     topContainer: {
-        width: '80%',
+        width: '90%',
         paddingVertical: 15,
         padding: 20,
         backgroundColor: '#fff',
@@ -203,6 +211,11 @@ const styles = StyleSheet.create({
 
     bottomContainer: {
         marginBottom: -40
+    },
+    profileImage: {
+        width: 30,
+        height: 30,
+        resizeMode: 'contain',
     },
     bottomNavRow: {
         flexDirection: 'row',
