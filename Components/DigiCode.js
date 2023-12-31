@@ -1,18 +1,17 @@
 import * as React from 'react';
-import {Image, Pressable, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
 
-export default function DigiScreen({navigation}) {
-    let flag = 0;
-    // let [fontsLoad] = useFonts({OpenSans_Bold});
+
+export default function DigiCode({navigation, route}) {
+    const { userType, userID, ownerID, tenantID, digiCode } = route.params;
     return (
         <View style={styles.container}>
 
             <Text style={styles.digitCodeText}>Your 16 Digit {'\n'}Recovery Code</Text>
             <Text style={styles.recoveryText}>Save this code to {'\n'}recover your password</Text>
-            <Text style={styles.digiCode}>16sas78W912345y6</Text>
-            <Pressable style={styles.button}
-                       onPress={() => navigation.navigate('WhoAreYou')}>
+            <Text style={styles.digiCode} selectable={true}>{digiCode}</Text>
+            <Pressable style={styles.button} onPress={() => navigation.navigate('SetUp', { userType, userID, ownerID, tenantID } )}>
                 <Text style={styles.buttonText}>Continue to {'\n'} Dashboard</Text>
             </Pressable>
 

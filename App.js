@@ -11,6 +11,7 @@ import WhoAreYou from "./Components/WhoAreYou";
 import GetToKnow from "./Components/GetToKnow";
 import ContactInfo from "./Components/ContactInfo";
 import SetPassword from "./Components/SetPassword";
+import DigiCode from "./Components/DigiCode";
 import SetUp from "./Components/SetUp";
 
 import AnalyticsOwner from "./Components/AnalyticsOwner";
@@ -28,7 +29,7 @@ import TenantNotification from "./Components/TenantNotification";
 import MyRentals from "./Components/MyRentals";
 import AddRentals from "./Components/AddRentals";
 import ResetPassword from "./Components/ResetPassword"
-import DigiCode from "./Components/DigiCode";
+
 import EditAccount from "./Components/EditAccount";
 import EditProperty from "./Components/EditProperty";
 import PropertyMenu from "./Components/PropertyMenu";
@@ -46,7 +47,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="RentalMenu" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="SplashScreen" screenOptions={{ headerShown: false }}>
 
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />

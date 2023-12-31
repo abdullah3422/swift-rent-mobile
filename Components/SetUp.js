@@ -3,11 +3,16 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {useEffect} from "react";
 
 
-export default function SplashScreen({navigation}) {
+export default function SplashScreen({navigation, route}) {
     useEffect(() => {
         const timeout = setTimeout(() => {
-            navigation.replace('LoginAs');
-        }, 1500);
+            const { userType, userID, ownerID, tenantID } = route.params;
+            if (userType === 'owner') {
+                navigation.navigate('AnalyticsOwner', { userID, ownerID });
+            } else if (userType === 'tenant') {
+                navigation.navigate('TenantNotification', { userID, tenantID });
+            }
+        }, 2000);
 
         // Clear the timeout to prevent memory leaks
         return () => clearTimeout(timeout);

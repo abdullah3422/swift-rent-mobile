@@ -17,7 +17,7 @@ export default function ResetPassword({ navigation, route }) {
             initialValues={{ digiCode: '', newPassword: '', confirmPassword: '' }}
             validationSchema={Yup.object().shape({
                 digiCode: Yup.string()
-                    .required('Please enter your old password.')
+                    .required('Please enter your 16 Digit Code.')
                     .matches(/^[0-9a-zA-Z]{16}$/, 'Must be a 16-digit alphanumeric code.'),
                 newPassword: Yup.string()
                     .required('Please enter your new password.')
@@ -64,7 +64,11 @@ export default function ResetPassword({ navigation, route }) {
             {({ values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit}) => (
                 <View style={styles.container}>
                     <Text style={styles.headerText}>Reset Your {'\n'}  Password </Text>
-
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Email or Phone"
+                        placeholderTextColor="#cdcdcd"
+                    />
                     <TextInput
                         style={styles.input}
                         placeholder="16 Digit Code"

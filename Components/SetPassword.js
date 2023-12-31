@@ -37,15 +37,14 @@ export default function SetPassword({ navigation, route }) {
 
             if (response.data.success) {
                 console.log('Registration successful', response.data);
-
-                // Extracting ownerId and tenantId from the response
-                const { userID, ownerID, tenantID } = response.data;
-                if (userType === 'owner') {
-                    navigation.navigate('AnalyticsOwner', { userID, ownerID });
-                } else if (userType === 'tenant') {
-                    //Alert.alert("Not Developed Yet :(");
-                    navigation.navigate('TenantNotification', { userID, tenantID });
-                }
+                const { userID, ownerID, tenantID, digiCode } = response.data;
+                navigation.navigate('DigiCode', { userType, userID, ownerID, tenantID, digiCode });
+                // if (userType === 'owner') {
+                //     navigation.navigate('AnalyticsOwner', { userID, ownerID });
+                // } else if (userType === 'tenant') {
+                //     //Alert.alert("Not Developed Yet :(");
+                //     navigation.navigate('TenantNotification', { userID, tenantID });
+                // }
             } else {
                 console.error('Registration failed', response.data.error);
             }
