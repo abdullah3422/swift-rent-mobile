@@ -27,7 +27,7 @@ export default function MyProperties({ navigation, route }) {
                     setPropertiesData(transformedData);
                 }
             } catch (error) {
-                console.error("Error fetching properties:", error);
+                console.log("Error fetching properties:", error);
             }
         };
 

@@ -1,7 +1,30 @@
 import * as React from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View, Alert} from 'react-native';
 import axios from "axios";
 export default function OwnerProfile({ navigation, route }) {
+    const handleLogout = () => {
+        Alert.alert(
+            'Confirm Logout',
+            'Are you sure you want to logout?',
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => null,
+                    style: 'cancel',
+                },
+                {
+                    text: 'Logout',
+                    onPress: () => {
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'WelcomeScreen' }],
+                        });
+                    },
+                },
+            ],
+            { cancelable: false }
+        );
+    };
     const {ipAddress, userID, ownerID } = route.params;
     const [ownerData, setOwnerData] = React.useState({
         ownerName: '',
@@ -65,7 +88,7 @@ export default function OwnerProfile({ navigation, route }) {
                         <Image style={styles.Pics} source={require('../img/faqs.png') }/>
                     </View>
                 </Pressable>
-                <Pressable onPress={() => navigation.navigate('WelcomeScreen')}>
+                <Pressable onPress={handleLogout}>
                     <View style={styles.cardButtons}>
                         <Text style={styles.cardButtonsText}>Logout</Text>
                         <View style={{ flex: 1, alignItems: 'flex-end' }}>

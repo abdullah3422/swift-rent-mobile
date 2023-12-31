@@ -1,8 +1,41 @@
 import * as React from 'react';
-import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Image, Pressable, StyleSheet, Text, View,BackHandler, Alert} from 'react-native';
 import axios from "axios";
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function AnalyticsOwner({ navigation, route }) {
+    useFocusEffect(
+        React.useCallback(() => {
+            const backAction = () => {
+                Alert.alert(
+                    'Confirm Exit',
+                    'Are you sure you want to exit the app?',
+                    [
+                        {
+                            text: 'Cancel',
+                            onPress: () => null,
+                            style: 'cancel',
+                        },
+                        {
+                            text: 'Exit',
+                            onPress: () => BackHandler.exitApp(),
+                        },
+                    ],
+                    { cancelable: false }
+                );
+                return true; // Return true to prevent the default behavior (closing the app)
+            };
+
+            const backHandler = BackHandler.addEventListener(
+                'hardwareBackPress',
+                backAction
+            );
+
+            return () => backHandler.remove(); // Clean up the event listener when the component unmounts
+        }, [])
+    );
+
+
     const {ipAddress, userID, ownerID } = route.params;
     const [ownerData, setOwnerData] = React.useState({
         currentMonth: '',

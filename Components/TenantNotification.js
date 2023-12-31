@@ -1,9 +1,39 @@
 import * as React from 'react';
-import {Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Alert, BackHandler, Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {useState} from "react";
+import {useFocusEffect} from "@react-navigation/native";
 
 export default function TenantNotification({navigation, route}) {
+    useFocusEffect(
+        React.useCallback(() => {
+            const backAction = () => {
+                Alert.alert(
+                    'Confirm Exit',
+                    'Are you sure you want to exit the app?',
+                    [
+                        {
+                            text: 'Cancel',
+                            onPress: () => null,
+                            style: 'cancel',
+                        },
+                        {
+                            text: 'Exit',
+                            onPress: () => BackHandler.exitApp(),
+                        },
+                    ],
+                    { cancelable: false }
+                );
+                return true; // Return true to prevent the default behavior (closing the app)
+            };
 
+            const backHandler = BackHandler.addEventListener(
+                'hardwareBackPress',
+                backAction
+            );
+
+            return () => backHandler.remove(); // Clean up the event listener when the component unmounts
+        }, [])
+    );
     const {userID, tenantID } = route.params;
     console.log("userID: " + userID);
     console.log("tenantID: " + tenantID);

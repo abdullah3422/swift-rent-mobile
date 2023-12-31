@@ -8,9 +8,15 @@ export default function SplashScreen({navigation, route}) {
         const timeout = setTimeout(() => {
             const { userType, userID, ownerID, tenantID } = route.params;
             if (userType === 'owner') {
-                navigation.navigate('AnalyticsOwner', { userID, ownerID });
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'AnalyticsOwner', params: { userID, ownerID } }],
+                });
             } else if (userType === 'tenant') {
-                navigation.navigate('TenantNotification', { userID, tenantID });
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'TenantNotification', params: { userID, tenantID } }],
+                });
             }
         }, 2000);
 

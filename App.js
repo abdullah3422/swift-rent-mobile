@@ -70,17 +70,17 @@ const App = () => {
         <Stack.Screen name="EditProperty" component={EditProperty} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="RegisterTenant" component={RegisterTenant} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="ReceiveRent" component={ReceiveRent} initialParams={{ ipAddress: ipAddress }}/>
-        {/*Common Functionality*/}
-        <Stack.Screen name="ChangePassword" component={ChangePassword} initialParams={{ ipAddress: ipAddress }}/>
-        <Stack.Screen name="ReportBug" component={ReportBug} initialParams={{ ipAddress: ipAddress }}/>
-        <Stack.Screen name="FAQs" component={FAQs} initialParams={{ ipAddress: ipAddress }}/>
-        <Stack.Screen name="EditAccount" component={EditAccount} initialParams={{ ipAddress: ipAddress }}/>
         {/*Tenant Screens*/}
         <Stack.Screen name="TenantProfile" component={TenantProfile} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="TenantNotification" component={TenantNotification} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="MyRentals" component={MyRentals} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="AddRentals" component={AddRentals} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="RentalMenu" component={RentalMenu} initialParams={{ ipAddress: ipAddress }}/>
+        {/*Common Functionality between Owner and Tenant*/}
+        <Stack.Screen name="ChangePassword" component={ChangePassword} initialParams={{ ipAddress: ipAddress }}/>
+        <Stack.Screen name="ReportBug" component={ReportBug} initialParams={{ ipAddress: ipAddress }}/>
+        <Stack.Screen name="FAQs" component={FAQs} initialParams={{ ipAddress: ipAddress }}/>
+        <Stack.Screen name="EditAccount" component={EditAccount} initialParams={{ ipAddress: ipAddress }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

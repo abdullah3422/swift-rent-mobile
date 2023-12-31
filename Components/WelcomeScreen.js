@@ -1,8 +1,36 @@
 import * as React from 'react';
-import {Image, Pressable, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, BackHandler, Image, Pressable, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useFocusEffect} from "@react-navigation/native";
 
 
 export default function WelcomeScreen({navigation}) {
+    useFocusEffect(
+        React.useCallback(() => {
+            const backAction = () => {
+                Alert.alert(
+                    'Confirm Exit',
+                    'Are you sure you want to exit the app?',
+                    [
+                        {
+                            text: 'Cancel',
+                            onPress: () => null,
+                            style: 'cancel',
+                        },
+                        {
+                            text: 'Exit',
+                            onPress: () => BackHandler.exitApp(),
+                        },
+                    ],
+                    { cancelable: false }
+                );
+                return true; // Return true to prevent the default behavior (closing the app)
+            };
+
+            const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+
+            return () => backHandler.remove(); // Clean up the event listener when the component unmounts
+        }, [])
+    );
     let flag = 0;
     // let [fontsLoad] = useFonts({OpenSans_Bold});
     return (

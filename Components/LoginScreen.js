@@ -49,10 +49,15 @@ export default function LoginScreen({ navigation, route }) {
                     if (ownerID !== 0 && tenantID !== 0) {
                         navigation.navigate('LoginAs', { userID ,ownerID, tenantID });
                     } else if (ownerID !== 0) {
-                        navigation.navigate('AnalyticsOwner', { userID, ownerID });
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'AnalyticsOwner', params: { userID, ownerID } }],
+                        });
                     } else if (tenantID !== 0) {
-                        //Alert.alert("Not Developed Yet :(");
-                        navigation.navigate('TenantNotification', { userID, tenantID });
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'TenantNotification', params: { userID, tenantID } }],
+                        });
                     }
                 }
             } else {
@@ -60,7 +65,7 @@ export default function LoginScreen({ navigation, route }) {
                 Alert.alert('Login Failed', response.data.error);
             }
         } catch (error) {
-            console.error('Login Error:', error);
+            console.log('Login Error:', error);
             Alert.alert('Login Error', 'Email or Password Invalid!');
         }
     };
