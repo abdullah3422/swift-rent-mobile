@@ -55,13 +55,15 @@ export default function ChangePassword({ navigation, route }) {
                     });
 
                     if (response.data.success) {
-                        Alert.alert('Password Successfully Changed');
+                        const { digiCode } = response.data;
+                        console.log(digiCode);
+                        Alert.alert('Password Successfully Changed', `New 16 digit code: ${digiCode}`);
                         navigation.navigate('OwnerProfile', { userID, ownerID, tenantID });
                     }
                 } catch (error) {
                     Alert.alert('Old password does not match');
                     setFieldError('oldPassword', 'Old Password Does not match');
-                    console.error('Error during changing password:', error);
+                    console.log('Error during changing password:', error);
                 }
             }}
         >

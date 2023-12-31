@@ -39,12 +39,6 @@ export default function SetPassword({ navigation, route }) {
                 console.log('Registration successful', response.data);
                 const { userID, ownerID, tenantID, digiCode } = response.data;
                 navigation.navigate('DigiCode', { userType, userID, ownerID, tenantID, digiCode });
-                // if (userType === 'owner') {
-                //     navigation.navigate('AnalyticsOwner', { userID, ownerID });
-                // } else if (userType === 'tenant') {
-                //     //Alert.alert("Not Developed Yet :(");
-                //     navigation.navigate('TenantNotification', { userID, tenantID });
-                // }
             } else {
                 console.error('Registration failed', response.data.error);
             }

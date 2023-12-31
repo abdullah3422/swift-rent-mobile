@@ -1,22 +1,23 @@
+// noinspection JSValidateTypes
+
 import React from 'react';
 import { Alert, Text, TextInput, View, StyleSheet, Pressable } from 'react-native';
 import axios from 'axios';
-import { useState } from 'react';
 import { md5 } from 'js-md5';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 export default function ResetPassword({ navigation, route }) {
-    const { userID, ownerID, tenantID } = route.params;
     const ipAddress = route.params.ipAddress;
-
-    const [error, setError] = useState('');
-
+    //Give me variables (emailOrPhone, digiCode, newPassword, confirmPassword) here to use for my api calls
+    //const handleSubmit
     return (
         <Formik
-            initialValues={{ digiCode: '', newPassword: '', confirmPassword: '' }}
+            initialValues={{ emailOrPhone: '', currentDigiCode: '', newPassword: '', confirmPassword: '' }}
             validationSchema={Yup.object().shape({
-                digiCode: Yup.string()
+                emailOrPhone: Yup.string()
+                    .required('Please enter your email or phone.'),
+                currentDigiCode: Yup.string()
                     .required('Please enter your 16 Digit Code.')
                     .matches(/^[0-9a-zA-Z]{16}$/, 'Must be a 16-digit alphanumeric code.'),
                 newPassword: Yup.string()
@@ -31,12 +32,6 @@ export default function ResetPassword({ navigation, route }) {
                     .oneOf([Yup.ref('newPassword'), null], 'New password and confirm password do not match.'),
             })}
             onSubmit={async (values, { setFieldError }) => {
-                if (values.digiCode === '') {
-                    Alert.alert('Please enter your old password.');
-                    setFieldError('digiCode', 'Please enter your old password.');
-                    return;
-                }
-
                 if (values.newPassword !== values.confirmPassword) {
                     Alert.alert('New password and confirm password do not match.');
                     setFieldError('confirmPassword', 'New password and confirm password do not match.');
@@ -44,19 +39,20 @@ export default function ResetPassword({ navigation, route }) {
                 }
 
                 try {
-                    const response = await axios.post(ipAddress + 'api/change-password', {
-                        userID: userID,
-                        digiCode: md5(values.digiCode),
+                    const response = await axios.post(ipAddress + 'api/reset-password', {
+                        emailOrPhone : values.emailOrPhone,
+                        currentDigiCode: values.currentDigiCode,
                         newPassword: md5(values.newPassword),
                     });
 
                     if (response.data.success) {
-                        Alert.alert('Password Successfully Changed');
+                        const { digiCode } = response.data;
+                        Alert.alert('Password Successfully Reset', `New 16 digit code: ${digiCode}`);
                         navigation.navigate('LoginScreen');
                     }
                 } catch (error) {
                     Alert.alert('Old password does not match');
-                    setFieldError('digiCode', 'Old Password Does not match');
+                    setFieldError('currentDigiCode', 'Old Password Does not match');
                     console.error('Error during changing password:', error);
                 }
             }}
@@ -68,18 +64,24 @@ export default function ResetPassword({ navigation, route }) {
                         style={styles.input}
                         placeholder="Email or Phone"
                         placeholderTextColor="#cdcdcd"
+                        onChangeText={handleChange('emailOrPhone')}
+                        onBlur={() => setFieldTouched('emailOrPhone')}
+                        value={values.emailOrPhone}
                     />
+                    {touched.emailOrPhone && errors.emailOrPhone && (
+                        <Text style={styles.errorText}>{errors.emailOrPhone}</Text>
+                    )}
                     <TextInput
                         style={styles.input}
                         placeholder="16 Digit Code"
                         placeholderTextColor="#cdcdcd"
                         secureTextEntry={false}
-                        onChangeText={handleChange('digiCode')}
-                        onBlur={() => setFieldTouched('digiCode')}
-                        value={values.digiCode}
+                        onChangeText={handleChange('currentDigiCode')}
+                        onBlur={() => setFieldTouched('currentDigiCode')}
+                        value={values.currentDigiCode}
                     />
-                    {touched.digiCode && errors.digiCode && (
-                        <Text style={styles.errorText}>{errors.digiCode}</Text>
+                    {touched.currentDigiCode && errors.currentDigiCode && (
+                        <Text style={styles.errorText}>{errors.currentDigiCode}</Text>
                     )}
 
                     <TextInput

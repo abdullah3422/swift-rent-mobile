@@ -52,34 +52,34 @@ const App = () => {
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} initialParams={{ ipAddress: ipAddress }} />
+        <Stack.Screen name="ResetPassword" component={ResetPassword} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="LoginAs" component={LoginAs} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="WhoAreYou" component={WhoAreYou} initialParams={{ ipAddress: ipAddress }} />
         <Stack.Screen name="GetToKnow" component={GetToKnow} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="ContactInfo" component={ContactInfo} initialParams={{ ipAddress: ipAddress }} />
         <Stack.Screen name="SetPassword" component={SetPassword} initialParams={{ ipAddress: ipAddress }} />
+        <Stack.Screen name="DigiCode" component={DigiCode} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="SetUp" component={SetUp} />
         {/*Owner Screens*/}
-        <Stack.Screen name="OwnerNotification" component={OwnerNotification} />
-        <Stack.Screen name="MyProperties" component={MyProperties} initialParams={{ ipAddress: ipAddress }}/>
-        <Stack.Screen name="AnalyticsOwner" component={AnalyticsOwner} initialParams={{ ipAddress: ipAddress }} />
-        <Stack.Screen name="AddProperties" component={AddProperties} initialParams={{ ipAddress: ipAddress }} />
         <Stack.Screen name="OwnerProfile" component={OwnerProfile} initialParams={{ ipAddress: ipAddress }}/>
+        <Stack.Screen name="OwnerNotification" component={OwnerNotification} />
+        <Stack.Screen name="AnalyticsOwner" component={AnalyticsOwner} initialParams={{ ipAddress: ipAddress }} />
+        <Stack.Screen name="MyProperties" component={MyProperties} initialParams={{ ipAddress: ipAddress }}/>
+        <Stack.Screen name="AddProperties" component={AddProperties} initialParams={{ ipAddress: ipAddress }} />
+        <Stack.Screen name="PropertyMenu" component={PropertyMenu} initialParams={{ ipAddress: ipAddress }}/>
+        <Stack.Screen name="EditProperty" component={EditProperty} initialParams={{ ipAddress: ipAddress }}/>
+        <Stack.Screen name="RegisterTenant" component={RegisterTenant} initialParams={{ ipAddress: ipAddress }}/>
+        <Stack.Screen name="ReceiveRent" component={ReceiveRent} initialParams={{ ipAddress: ipAddress }}/>
         {/*Common Functionality*/}
         <Stack.Screen name="ChangePassword" component={ChangePassword} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="ReportBug" component={ReportBug} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="FAQs" component={FAQs} initialParams={{ ipAddress: ipAddress }}/>
+        <Stack.Screen name="EditAccount" component={EditAccount} initialParams={{ ipAddress: ipAddress }}/>
         {/*Tenant Screens*/}
         <Stack.Screen name="TenantProfile" component={TenantProfile} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="TenantNotification" component={TenantNotification} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="MyRentals" component={MyRentals} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="AddRentals" component={AddRentals} initialParams={{ ipAddress: ipAddress }}/>
-        <Stack.Screen name="ResetPassword" component={ResetPassword} initialParams={{ ipAddress: ipAddress }}/>
-        <Stack.Screen name="DigiCode" component={DigiCode} initialParams={{ ipAddress: ipAddress }}/>
-        <Stack.Screen name="EditAccount" component={EditAccount} initialParams={{ ipAddress: ipAddress }}/>
-        <Stack.Screen name="EditProperty" component={EditProperty} initialParams={{ ipAddress: ipAddress }}/>
-        <Stack.Screen name="PropertyMenu" component={PropertyMenu} initialParams={{ ipAddress: ipAddress }}/>
-        <Stack.Screen name="RegisterTenant" component={RegisterTenant} initialParams={{ ipAddress: ipAddress }}/>
-        <Stack.Screen name="ReceiveRent" component={ReceiveRent} initialParams={{ ipAddress: ipAddress }}/>
         <Stack.Screen name="RentalMenu" component={RentalMenu} initialParams={{ ipAddress: ipAddress }}/>
       </Stack.Navigator>
     </NavigationContainer>
