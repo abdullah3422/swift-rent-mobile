@@ -33,10 +33,9 @@ export default function MyProperties({ navigation, route }) {
 
         fetchProperties();
     }, [ownerID, ipAddress]); // Dependencies array
-    // console.log(propertiesData);
 
     const renderItem = ({ item }) => (
-        <Pressable style={styles.cardButtons}>
+        <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('PropertyMenu', {userID, ownerID })}>
             <Text style={styles.cardButtonText}>{item.title}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
                 <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage} />

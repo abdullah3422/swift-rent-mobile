@@ -2,8 +2,12 @@ import * as React from 'react';
 import {FlatList, Image, Pressable, StyleSheet, Text, View,BackHandler, Alert} from 'react-native';
 import axios from "axios";
 import { useFocusEffect } from '@react-navigation/native';
+import {useState} from "react";
 
 export default function AnalyticsOwner({ navigation, route }) {
+    const [monthlyAnalyticsDataList, setmonthlyAnalyticsDataList] = useState([]);
+
+    //Prevent Going Back to log in screen
     useFocusEffect(
         React.useCallback(() => {
             const backAction = () => {
@@ -47,45 +51,75 @@ export default function AnalyticsOwner({ navigation, route }) {
     });
     console.log("userID: "+userID);
     console.log("ownerID: "+ownerID);
-    React.useEffect(() => {
-        const handleOwnerMonthAnalytics = async () => {
-            try {
-                const response = await axios.post(ipAddress + 'api/month-analytics', {
-                    ownerID: ownerID
-                });
-                if (response.data.success) {
-                    console.log(response.data);
-                    // Update the state with the owner's data
-                    setOwnerData({
-                        currentMonth: response.data.currentMonth,
-                        currentYear: response.data.currentYear,
-                        totalProfit: response.data.totalProfit,
-                        totalProperty: response.data.totalProperty,
-                        totalReceived: response.data.totalReceived,
-                        pendingRent: response.data.pendingRent,
-                    });
-                }
-            } catch (error) {
-                console.error('Error during fetching owner month analytics:', error);
-            }
-        };
-        handleOwnerMonthAnalytics();
-    }, [ownerID]);
 
-    const cardButtons = [
-        { title: 'Sept', details: '27,000   2,000' },
-        { title: 'Aug', details: '23,000    1,100' },
-        { title: 'Jul', details: '13,000    300' },
-        { title: 'Feb', details: '20,000    300' },
-    ];
+
+    useFocusEffect(
+        React.useCallback(() => {
+            const fetchData = async () => {
+                try {
+                    // Fetch owner month analytics
+                    const ownerMonthAnalyticsResponse = await axios.post(ipAddress + 'api/month-analytics', {
+                        ownerID: ownerID
+                    });
+
+                    if (ownerMonthAnalyticsResponse.data.success) {
+                        setOwnerData({
+                            currentMonth: ownerMonthAnalyticsResponse.data.currentMonth,
+                            currentYear: ownerMonthAnalyticsResponse.data.currentYear,
+                            totalProfit: ownerMonthAnalyticsResponse.data.totalProfit,
+                            totalProperty: ownerMonthAnalyticsResponse.data.totalProperty,
+                            totalReceived: ownerMonthAnalyticsResponse.data.totalReceived,
+                            pendingRent: ownerMonthAnalyticsResponse.data.pendingRent,
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error during fetching owner month analytics:', error);
+                }
+
+                try {
+                    // Fetch monthly analytics
+                    const monthlyAnalyticsResponse = await axios.post(ipAddress + 'api/monthly-analytics', {
+                        ownerID: ownerID,
+                    });
+
+                    if (monthlyAnalyticsResponse.data && monthlyAnalyticsResponse.data.success) {
+                        // Transform data to match your frontend structure
+                        const transformedData = monthlyAnalyticsResponse.data.monthlyData.map(Analytics => ({
+                            month: Analytics.month,
+                            year: Analytics.year,
+                            profit: Analytics.profit
+                        }));
+                        setmonthlyAnalyticsDataList(transformedData);
+                    }
+                } catch (error) {
+                    console.log("Error fetching monthly analytics:", error);
+                }
+            };
+
+            fetchData(); // Execute the fetch when the screen gains focus
+
+            return () => {
+                // Cleanup function when the component unmounts or loses focus
+                // (if needed, such as clearing timers, subscriptions, etc.)
+            };
+        }, [ownerID]) // Run whenever ownerID changes
+    );
+
+    // const monthlyAnalyticsDataList = [
+    //     { month: 'December', year: '2023', profit: '200000' },
+    //     { month: 'November', year: '2023', profit: '400000' },
+    //     { month: 'October', year: '2023', profit: '500000' },
+    //     { month: 'September', year: '2023', profit: '100000' },
+    // ];
 
     const renderItem = ({ item }) => (
         <Pressable style={styles.cardButtons}>
-            <Text style={styles.cardButtonText}>{item.title}</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-                <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage} />
-                <Text style={{ fontSize: 20 }}> {item.details}</Text>
-                <Image source={require('../img/outgoingArrow.png')} style={styles.arrowImage} />
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between',}}>
+                <Text style={styles.cardButtonText}>{item.month} {item.year}</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', flex: 1 }}>
+                    <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage} />
+                    <Text style={{ fontSize: 20 }}>{item.profit} PKR</Text>
+                </View>
             </View>
         </Pressable>
     );
@@ -97,7 +131,7 @@ export default function AnalyticsOwner({ navigation, route }) {
                     <Text style={{ fontSize: 30, fontWeight: 'bold' }}>{ownerData.currentMonth}, {ownerData.currentYear}</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
                         <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage} />
-                        <Text style={{ fontSize: 20 }}>{ownerData.totalProfit}</Text>
+                        <Text style={{ fontSize: 20 }}>PKR {ownerData.totalProfit}</Text>
                         {/*<Image source={require('../img/outgoingArrow.png')} style={styles.arrowImage} />*/}
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
@@ -106,7 +140,7 @@ export default function AnalyticsOwner({ navigation, route }) {
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={{ fontSize: 20, width: '60%' }}>Rents Received </Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{ownerData.totalProfit}</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{ownerData.totalReceived}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={{ fontSize: 20, width: '60%' }}>Rents Pending </Text>
@@ -118,7 +152,7 @@ export default function AnalyticsOwner({ navigation, route }) {
             <View style={styles.middleContainer}>
                 <Text style={styles.middleContainerText}>Monthly</Text>
                 <FlatList
-                    data={cardButtons}
+                    data={monthlyAnalyticsDataList}
                     renderItem={renderItem}
                     keyExtractor={(item, index) => index.toString()}
                 />
@@ -177,7 +211,7 @@ const styles = StyleSheet.create({
     },
 
     topContainer: {
-        width: '80%',
+        width: '90%',
         paddingVertical: 15,
         padding: 20,
         backgroundColor: '#fff',
