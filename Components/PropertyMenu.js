@@ -2,22 +2,41 @@ import * as React from 'react';
 import { Alert, Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
 export default function PropertyMenu({ navigation, route }) {
-    const { userID, ownerID, tenantID } = route.params;
-    console.log(userID);
+    const { tenantID, propertyID, propertyAddress } = route.params;
+
+    //Logic for register/unregister tenant and showing receive rent:
+    let registrationPlaceholder = tenantID ? 'Un-register' : 'Register';
+
+    console.log("Property Menu:");
+    console.log(route.params);
+
+
+
+    function handleUnregister() {
+        //API to Un-register tenant
+    }
 
     return (
         <View style={styles.container}>
-
-            <Text style={styles.LoginAs}>Sign-in As</Text>
-            <Pressable style={styles.button} >
+            <Text style={styles.PropertyAddress}>{propertyAddress}</Text>
+            <Pressable style={styles.button} onPress={() => navigation.navigate('EditProperty', { propertyID })}>
                 <Text style={styles.buttonText}>Edit Property</Text>
             </Pressable>
-            <Pressable style={styles.button} >
-                <Text style={styles.buttonText}>Register Tenant</Text>
-            </Pressable>
-            <Pressable style={styles.button} >
-                <Text style={styles.buttonText}>Recieve Rent</Text>
-            </Pressable>
+            {!tenantID && (
+                <Pressable style={styles.button} onPress={() => navigation.navigate('RegisterTenant', { propertyID })}>
+                    <Text style={styles.buttonText}>Register</Text>
+                </Pressable>
+            )}
+            {tenantID !== undefined && tenantID !== 0 && (
+                <Pressable style={styles.button} onPress={handleUnregister}>
+                    <Text style={styles.buttonText}>Un-Register</Text>
+                </Pressable>
+            )}
+            {tenantID !== undefined && tenantID !== 0 && (
+                <Pressable style={styles.button} onPress={() => navigation.navigate('ReceiveRent', { propertyID })}>
+                    <Text style={styles.buttonText}>Receive Rent</Text>
+                </Pressable>
+            )}
         </View>
     );
 }
@@ -41,8 +60,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    LoginAs: {
+    PropertyAddress: {
         marginTop: windowHeight * 0.025,
+        width: "90%",
+        textAlign: "center",
         marginBottom: windowHeight * 0.2,
         fontSize: windowWidth * 0.08,
         fontWeight: 'bold',

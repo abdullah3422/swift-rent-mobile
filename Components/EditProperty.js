@@ -1,52 +1,64 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Alert, Text, TextInput, View, StyleSheet, Pressable } from 'react-native';
-import axios from 'axios';
-import { useState } from 'react';
-import { md5 } from 'js-md5';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
+import { useFocusEffect } from '@react-navigation/native';
+import axios from "axios";
 
 export default function EditProperty({ navigation, route }) {
-    const { userID, ownerID, tenantID } = route.params;
+    const { propertyID } = route.params;
     const ipAddress = route.params.ipAddress;
 
-    const [error, setError] = useState('');
+    const [data, setData] = React.useState({
+        propertyAddress: 'default',
+        dueDate: 'default',
+        rent: 'default',
+    });
+
+    useFocusEffect(
+        React.useCallback(() => {
+            const handleInitialData = async () => {
+                // Fetch Property Data here
+
+            };
+            handleInitialData();
+        }, [propertyID])
+    );
+
+    function handlePropertyEdit() {
+
+    }
 
     return (
-
         <View style={styles.container}>
             <Text style={styles.headerText}>Edit Property {'\n'} Information</Text>
 
+            <Text style={styles.fieldHeading}>  Property Address</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Islamabad"
-                placeholderTextColor="#cdcdcd"
-                secureTextEntry={true}
-            />
-
-            <TextInput
-                style={styles.input}
-                placeholder="5"
-                placeholderTextColor="#cdcdcd"
-
-            />
-
-            <TextInput
-                style={styles.input}
-                placeholder="12000"
+                defaultValue={String(data.propertyAddress)}
                 placeholderTextColor="#cdcdcd"
             />
 
+            <Text style={styles.fieldHeading}>  Due Date</Text>
+            <TextInput
+                style={styles.input}
+                defaultValue={String(data.dueDate)}
+                placeholderTextColor="#cdcdcd"
+            />
+
+            <Text style={styles.fieldHeading}>  Rent</Text>
+            <TextInput
+                style={styles.input}
+                defaultValue={String(data.rent)}
+                placeholderTextColor="#cdcdcd"
+            />
 
             <View style={styles.buttonContainer}>
                 <View style={styles.space} />
-                <Pressable style={[styles.button, { width: 160 }]} >
+                <Pressable style={[styles.button, { width: 160 }]} onPress={handlePropertyEdit}>
                     <Text style={styles.buttonText}>Change</Text>
                 </Pressable>
             </View>
         </View>
-
-
     );
 }
 
@@ -58,7 +70,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         marginTop: '-50%',
     },
-
+    fieldHeading: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginTop: 0,
+        color: 'grey',
+        textAlign: 'left', // Aligning text to the left
+        alignSelf: 'flex-start', // Move text to the start of the container
+        width: '75%', // Adjust width to limit heading width
+        marginLeft: '12%', // Add left margin for better alignment
+        marginBottom: 5, // Adjust as needed
+    },
     headerText: {
         color: 'black',
         fontSize: 30,
@@ -75,7 +97,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         padding: 10,
         marginTop: 3,
-        marginBottom: 10,
+        marginBottom: 5,
         backgroundColor: '#fff',
         fontWeight: 'bold',
     },

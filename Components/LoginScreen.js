@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import {Image, Pressable, StyleSheet, Text, TextInput, View, Alert, Dimensions} from 'react-native';
+import React, { useState , useRef } from 'react';
+import {Image, Pressable, StyleSheet, Text, TextInput, View, Alert, Dimensions, Keyboard} from 'react-native';
 import axios from 'axios';
 import { md5 } from 'js-md5';
 
 
 export default function LoginScreen({ navigation, route }) {
+    const emailRef = useRef(null);
+    const passwordRef = useRef(null);
+
 
     const [emailOrPhone, setEmailOrPhone] = useState('');
     const [password, setPassword] = useState('');
@@ -17,8 +20,10 @@ export default function LoginScreen({ navigation, route }) {
             console.log(emailOrPhone);
             console.log(password);
             const response = await axios.post(ipAddress + 'api/login', {
-                emailOrPhone: emailOrPhone,
-                password: md5(password)
+                // emailOrPhone: emailOrPhone,
+                // password: md5(password)
+                emailOrPhone: "anas@gmail.com",
+                password: md5("Anas@2001")
             });
 
             if (response.data.success) {
@@ -80,30 +85,30 @@ export default function LoginScreen({ navigation, route }) {
 
             <View style={styles.input}>
                 <TextInput
+                    ref={emailRef}
                     placeholder="Email or Number"
-                    placeholderTextColor="#cdcdcd"
-                    style={styles.textInput}
                     value={emailOrPhone}
                     onChangeText={setEmailOrPhone}
+                    placeholderTextColor="#cdcdcd"
+                    style={styles.textInput}
+                    onSubmitEditing={() => {
+                        if (passwordRef.current) {
+                            passwordRef.current.focus();
+                        }
+                    }}
                 />
-                <View style={styles.iconContainer}>
-                    <Image source={require('../assets/userIcon.png')} style={styles.placeholderIcon} />
-                </View>
             </View>
             <View style={styles.input}>
                 <TextInput
+                    ref={passwordRef}
                     placeholder="Password"
+                    value={password}
+                    onChangeText={setPassword}
                     placeholderTextColor="#cdcdcd"
                     style={styles.textInput}
                     secureTextEntry={true}
-                    value={password}
-                    onChangeText={setPassword}
+                    onSubmitEditing={handleLogin} // Or any other action after password input
                 />
-
-                <View style={styles.iconContainer}>
-                    <Image source={require('../assets/eye.png')} style={styles.placeholderIcon} />
-                </View>
-
             </View>
             <Pressable  onPress={() => navigation.navigate('ResetPassword')}>
                 <Text>Forgot Password?</Text>

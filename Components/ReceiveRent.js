@@ -7,10 +7,8 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 export default function ReceiveRent({ navigation, route }) {
-    const { userID, ownerID, tenantID } = route.params;
+    const { propertyID } = route.params;
     const ipAddress = route.params.ipAddress;
-
-    const [error, setError] = useState('');
 
     return (
 
@@ -21,7 +19,6 @@ export default function ReceiveRent({ navigation, route }) {
                 style={styles.input}
                 placeholder="Rent Amount"
                 placeholderTextColor="#cdcdcd"
-                secureTextEntry={true}
             />
 
             <View style={styles.buttonContainer}>

@@ -21,6 +21,8 @@ export default function MyProperties({ navigation, route }) {
                 if(response.data && response.data.success) {
                     // Transform data to match your frontend structure
                     const transformedData = response.data.propertyList.map(property => ({
+                        propertyID: property.propertyID,
+                        tenantID: property.tenantID,
                         title: property.propertyAddress,
                         details: `${property.totalProfit}  ${property.status}`
                     }));
@@ -35,12 +37,19 @@ export default function MyProperties({ navigation, route }) {
     }, [ownerID, ipAddress]); // Dependencies array
 
     const renderItem = ({ item }) => (
-        <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('PropertyMenu', {userID, ownerID })}>
+        <Pressable style={styles.cardButtons}
+           onPress={() => navigation.navigate('PropertyMenu', {
+                tenantID: item.tenantID,
+                propertyID: item.propertyID,
+                propertyAddress: item.title
+            })}>
             <Text style={styles.cardButtonText}>{item.title}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
                 <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage} />
                 <Text style={{ fontSize: 20 }}>PKR {item.details}</Text>
-                {/*<Image source={require('../img/outgoingArrow.png')} style={styles.arrowImage} />*/}
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={{ fontSize: 20 }}>  Pending/Collect/Collected</Text>
             </View>
         </Pressable>
     );
@@ -123,7 +132,7 @@ const styles = StyleSheet.create({
     },
 
     topContainer: {
-        width: '80%',
+        width: '90%',
         paddingVertical: 15,
         padding: 20,
         backgroundColor: '#fff',
@@ -131,8 +140,6 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderColor: '#1463df',
         borderWidth: 4,
-
-        // borderRadius: "5"
     },
     topContainerText: {
         color: '#06283d',
