@@ -50,9 +50,9 @@ export default function SetPassword({ navigation, route }) {
 
     const passwordValidationSchema = Yup.object().shape({
         password: Yup.string()
-            .min(8, 'Password too Short!')
-            .matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, 'Must contain 8 characters, at least one uppercase and one lowercase, and a number!')
-            .required('Cant leave empty'),
+            .required('Cant leave empty.')
+            .min(8, 'Password should be at least 8 characters long.'),
+
         confirmPassword: Yup.string()
             .oneOf([Yup.ref('password'), 'Your Passwords dont match!'], 'Passwords must match!')
             .required('Confirm password is needed')

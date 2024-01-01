@@ -18,18 +18,10 @@ export default function ChangePassword({ navigation, route }) {
             validationSchema={Yup.object().shape({
                 oldPassword: Yup.string()
                     .required('Please enter your old password.')
-                    .min(8, 'Password too Short!')
-                    .matches(
-                        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-                        'Must contain 8 characters, at least one uppercase and one lowercase, and a number!'
-                    ),
+                    .min(8, 'Password should be at least 8 characters long.'),
                 newPassword: Yup.string()
                     .required('Please enter your new password.')
-                    .min(8, 'Password too Short!')
-                    .matches(
-                        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-                        'Must contain 8 characters, at least one uppercase and one lowercase, and a number!'
-                    ),
+                    .min(8, 'Password should be at least 8 characters long.'),
                 confirmPassword: Yup.string()
                     .required('Please confirm your new password.')
                     .oneOf([Yup.ref('newPassword'), null], 'New password and confirm password do not match.'),

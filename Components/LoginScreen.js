@@ -20,10 +20,10 @@ export default function LoginScreen({ navigation, route }) {
             console.log(emailOrPhone);
             console.log(password);
             const response = await axios.post(ipAddress + 'api/login', {
-                // emailOrPhone: emailOrPhone,
-                // password: md5(password)
-                emailOrPhone: "anas@gmail.com",
-                password: md5("Anas@2001")
+                emailOrPhone: emailOrPhone,
+                password: md5(password)
+                // emailOrPhone: "anas@gmail.com",
+                // password: md5("Anas@2001")
             });
 
             if (response.data.success) {
