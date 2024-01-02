@@ -4,51 +4,81 @@ import { useFocusEffect } from '@react-navigation/native';
 import axios from "axios";
 
 export default function EditProperty({ navigation, route }) {
-    const { propertyID } = route.params;
+    const { userID, ownerID, propertyID } = route.params;
     const ipAddress = route.params.ipAddress;
+    console.log(route.params);
 
     const [data, setData] = React.useState({
-        propertyAddress: 'default',
-        dueDate: 'default',
-        rent: 'default',
+        propertyAddress: '',
+        dueDate: '',
+        rent: '',
     });
 
     useFocusEffect(
         React.useCallback(() => {
             const handleInitialData = async () => {
-                // Fetch Property Data here
-
+                try {
+                    const response = await axios.post(ipAddress + 'api/fetch-property', {
+                        propertyID: propertyID,
+                    });
+                    if (response.data.success) {
+                        setData({
+                            propertyAddress: String(response.data.propertyAddress),
+                            dueDate: String(response.data.dueDate),
+                            rent: String(response.data.rent),
+                        });
+                    }
+                } catch (error) {
+                    console.log("Error fetching property data:", error);
+                }
             };
             handleInitialData();
         }, [propertyID])
     );
 
-    function handlePropertyEdit() {
-
+    async function handlePropertyEdit() {
+        try {
+            const response = await axios.post(ipAddress + 'api/edit-property', {
+                propertyID: propertyID,
+                propertyAddress: data.propertyAddress,
+                dueDate: data.dueDate,
+                rent: data.rent,
+            });
+            if (response.data.success) {
+                Alert.alert('Success', 'Property data successfully updated')
+                navigation.navigate('MyProperties', { userID, ownerID });
+            }
+        } catch (error) {
+            console.log("Error updating property data:", error);
+            Alert.alert("Error updating property data:");
+        }
     }
 
     return (
         <View style={styles.container}>
             <Text style={styles.headerText}>Edit Property {'\n'} Information</Text>
 
-            <Text style={styles.fieldHeading}>  Property Address</Text>
+            <Text style={styles.fieldHeading}> Property Address</Text>
             <TextInput
                 style={styles.input}
                 defaultValue={String(data.propertyAddress)}
+                onChangeText={(text) => setData({ ...data, propertyAddress: text })}
                 placeholderTextColor="#cdcdcd"
             />
 
-            <Text style={styles.fieldHeading}>  Due Date</Text>
+            <Text style={styles.fieldHeading}> Due Date</Text>
             <TextInput
                 style={styles.input}
                 defaultValue={String(data.dueDate)}
+                onChangeText={(text) => setData({ ...data, dueDate: text })}
                 placeholderTextColor="#cdcdcd"
             />
 
-            <Text style={styles.fieldHeading}>  Rent</Text>
+            <Text style={styles.fieldHeading}> Rent</Text>
             <TextInput
                 style={styles.input}
                 defaultValue={String(data.rent)}
+                onChangeText={(text) => setData({ ...data, rent: text })}
                 placeholderTextColor="#cdcdcd"
             />
 
@@ -73,7 +103,7 @@ const styles = StyleSheet.create({
     fieldHeading: {
         fontSize: 18,
         fontWeight: 'bold',
-        marginTop: 0,
+        marginTop: 5,
         color: 'grey',
         textAlign: 'left', // Aligning text to the left
         alignSelf: 'flex-start', // Move text to the start of the container

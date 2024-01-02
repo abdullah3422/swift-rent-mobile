@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import axios from 'axios'; // Ensure axios is installed or use fetch API
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function MyProperties({ navigation, route }) {
     const { userID, ownerID } = route.params;
@@ -9,48 +10,58 @@ export default function MyProperties({ navigation, route }) {
     // State for storing properties data
     const [propertiesData, setPropertiesData] = useState([]);
 
-    useEffect(() => {
-        // Function to fetch properties
-        const fetchProperties = async () => {
-            try {
-                console.log("userID:" + userID);
-                console.log("ownerID:" + ownerID);
-                const response = await axios.post(ipAddress + 'api/property-list', {
-                    ownerID: ownerID,
-                });
-                if(response.data && response.data.success) {
-                    // Transform data to match your frontend structure
-                    const transformedData = response.data.propertyList.map(property => ({
-                        propertyID: property.propertyID,
-                        tenantID: property.tenantID,
-                        title: property.propertyAddress,
-                        details: `${property.totalProfit}  ${property.status}`
-                    }));
-                    setPropertiesData(transformedData);
+    useFocusEffect(
+        React.useCallback(() => {
+            const fetchProperties = async () => {
+                try {
+                    const response = await axios.post(ipAddress + 'api/property-list', {
+                        ownerID: ownerID,
+                    });
+                    if (response.data && response.data.success) {
+                        const transformedData = response.data.propertyList.map(property => ({
+                            propertyID: property.propertyID,
+                            tenantID: property.tenantID,
+                            tenantName: property.tenantName,
+                            rentStatus: property.rentStatus,
+                            title: property.propertyAddress,
+                            details: `${property.totalProfit}  ${property.status}`,
+                        }));
+                        setPropertiesData(transformedData);
+                    }
+                } catch (error) {
+                    console.log("Error fetching properties:", error);
                 }
-            } catch (error) {
-                console.log("Error fetching properties:", error);
-            }
-        };
+            };
 
-        fetchProperties();
-    }, [ownerID, ipAddress]); // Dependencies array
+            fetchProperties();
+        }, [ownerID, ipAddress])
+    );
 
     const renderItem = ({ item }) => (
         <Pressable style={styles.cardButtons}
            onPress={() => navigation.navigate('PropertyMenu', {
+                userID,
+                ownerID,
                 tenantID: item.tenantID,
                 propertyID: item.propertyID,
-                propertyAddress: item.title
+                propertyAddress: item.title,
+                rentStatus: item.rentStatus
             })}>
             <Text style={styles.cardButtonText}>{item.title}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
                 <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage} />
                 <Text style={{ fontSize: 20 }}>PKR {item.details}</Text>
             </View>
+            {item.tenantID !== undefined && item.tenantID !== 0 && (
             <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={{ fontSize: 20 }}>  Pending/Collect/Collected</Text>
+                <Text style={{ fontSize: 20 }}>  Rented to: {item.tenantName}</Text>
             </View>
+            )}
+            {item.tenantID !== undefined && item.tenantID !== 0 && (
+            <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={{ fontSize: 20 }}>  Rent Status: {item.rentStatus}{/*Pending/Collect/Collected*/}</Text>
+            </View>
+            )}
         </Pressable>
     );
 
@@ -204,7 +215,7 @@ const styles = StyleSheet.create({
     cardButtonText: {
         color: '#06283d',
         textAlign: 'left',
-        fontSize: 28,
+        fontSize: 22,
         fontWeight: "bold"
     },
 

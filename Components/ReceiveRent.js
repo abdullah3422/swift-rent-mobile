@@ -7,7 +7,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 export default function ReceiveRent({ navigation, route }) {
-    const { propertyID } = route.params;
+    const { userID, ownerID, propertyID } = route.params;
     const ipAddress = route.params.ipAddress;
 
     return (

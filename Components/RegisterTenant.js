@@ -1,17 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Alert, Text, TextInput, View, StyleSheet, Pressable } from 'react-native';
 import axios from 'axios';
-import { useState } from 'react';
-import { md5 } from 'js-md5';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
 
 export default function RegisterTenant({ navigation, route }) {
-    const { propertyID } = route.params;
+    const { userID, ownerID, propertyID } = route.params;
     const ipAddress = route.params.ipAddress;
 
-    return (
+    const [tenantInfo, setTenantInfo] = useState({
+        emailOrPhone: '', // Initialize state for email/phone input
+    });
 
+    // Function to handle registration
+    const handleRegister = async () => {
+        const { emailOrPhone } = tenantInfo;
+        try {
+            const response = await axios.post(ipAddress + 'api/register-tenant', {
+                propertyID: String(propertyID),
+                tenantEmailorPhone: emailOrPhone,
+            });
+            if (response.data.success) {
+                Alert.alert('Success', 'Tenant successfully registered')
+                navigation.navigate('MyProperties', { userID, ownerID });
+            }
+        } catch (error) {
+            console.log("Error updating property data:", error);
+            Alert.alert("Error","Tenant does not exist");
+        }
+    };
+
+    return (
         <View style={styles.container}>
             <Text style={styles.headerText}>Register a{'\n'}Tenant</Text>
 
@@ -19,17 +36,17 @@ export default function RegisterTenant({ navigation, route }) {
                 style={styles.input}
                 placeholder="Tenant email or phone"
                 placeholderTextColor="#cdcdcd"
+                value={tenantInfo.emailOrPhone}
+                onChangeText={(text) => setTenantInfo({ ...tenantInfo, emailOrPhone: text })}
             />
 
             <View style={styles.buttonContainer}>
                 <View style={styles.space} />
-                <Pressable style={[styles.button, { width: 160 }]} >
+                <Pressable style={[styles.button, { width: 160 }]} onPress={handleRegister}>
                     <Text style={styles.buttonText}>Register</Text>
                 </Pressable>
             </View>
         </View>
-
-
     );
 }
 
