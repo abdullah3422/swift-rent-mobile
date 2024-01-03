@@ -50,7 +50,11 @@ export default function ChangePassword({ navigation, route }) {
                         const { digiCode } = response.data;
                         console.log(digiCode);
                         Alert.alert('Password Successfully Changed', `New 16 digit code: ${digiCode}`);
-                        navigation.navigate('OwnerProfile', { userID, ownerID, tenantID });
+                        if (ownerID !== undefined) {
+                            navigation.navigate('OwnerProfile', { userID, ownerID });
+                        } else if (tenantID !== undefined) {
+                            navigation.navigate('TenantProfile', { userID, tenantID });
+                        }
                     }
                 } catch (error) {
                     Alert.alert('Old password does not match');

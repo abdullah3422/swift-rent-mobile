@@ -33,7 +33,14 @@ export default function ReportBug({navigation, route}) {
             if (response.data.success) {
                 // Handle success, e.g., show a confirmation message
                 Alert.alert('Bug report submitted successfully');
+
                 console.log('Bug report submitted successfully');
+
+                if (ownerID !== undefined) {
+                    navigation.navigate('OwnerProfile', { userID, ownerID });
+                } else if (tenantID !== undefined) {
+                    navigation.navigate('TenantProfile', { userID, tenantID });
+                }
             }
         } catch (error) {
             Alert.alert('Error Submitting Bug Report');

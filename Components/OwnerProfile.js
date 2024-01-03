@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     },
 
     bottomContainer: {
-        marginBottom: -40
+        marginBottom: -60
     },
     profileImage: {
         width: 30,

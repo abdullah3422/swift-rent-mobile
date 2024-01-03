@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import axios from 'axios'; // Ensure axios is installed or use fetch API
+import axios from 'axios';
+import {useFocusEffect} from "@react-navigation/native"; // Ensure axios is installed or use fetch API
 
 export default function MyRentals({ navigation, route }) {
     const { userID, tenantID } = route.params;
@@ -8,15 +9,53 @@ export default function MyRentals({ navigation, route }) {
     const [activePage, setActivePage] = useState('MyRentals'); // Set the default active page
 
     // State for storing properties data
-    const [propertiesData, setPropertiesData] = useState([]);
+    const [rentalsData, setRentalsData] = useState([]);
 
+    useFocusEffect(
+        React.useCallback(() => {
+            const fetchProperties = async () => {
+                try {
+                    const response = await axios.post(ipAddress + 'api/rental-list', {
+                        tenantID: tenantID,
+                    });
+                    if (response.data && response.data.success) {
+                        const transformedData = response.data.rentalList.map(rental => ({
+                            rentStatus: rental.rentstatus,
+                            ownerID: rental.ownerid,
+                            propertyID: rental.propertyid,
+                            dueDate: rental.duedate,
+                            rent: rental.rent,
+                            title: rental.propertyaddress,
+                        }));
+                        setRentalsData(transformedData);
+                    }
+                } catch (error) {
+                    console.log("Error fetching rentals:", error);
+                }
+            };
+
+            fetchProperties();
+        }, [tenantID, ipAddress])
+    );
 
     const renderItem = ({ item }) => (
-        <Pressable style={styles.cardButtons}>
+        <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('RentalMenu', {
+            ownerID: item.ownerID,
+            tenantID,
+            userID,
+            propertyID: item.propertyID,
+            propertyAddress: item.title,
+            status: item.rentStatus,
+        })}>
             <Text style={styles.cardButtonText}>{item.title}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-                <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage} />
-                <Text style={{ fontSize: 20 }}> {item.details}</Text>
+                <Text style={{ fontSize: 20 }}>Rent: {item.rent}</Text>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 0 }}>
+                <Text style={{ fontSize: 20 }}>Due Date: {item.dueDate}</Text>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 0 }}>
+                <Text style={{ fontSize: 20 }}>Rent Status: {item.rentStatus}</Text>
             </View>
         </Pressable>
     );
@@ -27,7 +66,7 @@ export default function MyRentals({ navigation, route }) {
             <View style={styles.middleContainer}>
                 <Text style={styles.middleContainerText}>My Rentals</Text>
                 <FlatList
-                    data={propertiesData}
+                    data={rentalsData}
                     renderItem={renderItem}
                     keyExtractor={(item, index) => index.toString()}
                 />
@@ -37,16 +76,7 @@ export default function MyRentals({ navigation, route }) {
 
                 <View style={styles.bottomNavRow}>
 
-                    <Pressable
-                        style={[
-                            styles.bottomNavButton,
-                            activePage === 'MyRentals' && styles.activeBottomNavButton,
-                        ]}
-                        onPress={() => {
-                            navigation.navigate('MyRentals', { userID, tenantID });
-                            setActivePage('MyRentals'); // Set the active page when pressed
-                        }}
-                    >
+                    <Pressable style={[styles.bottomNavButton]}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/propertiesIcon.png')}
@@ -130,7 +160,7 @@ const styles = StyleSheet.create({
     },
     bottomContainer: {
         flex: 0.025,
-        marginBottom: -30
+        marginBottom: -80
 
     },
     bottomNavRow: {

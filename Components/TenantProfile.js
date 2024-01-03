@@ -130,15 +130,7 @@ export default function TenantProfile({ navigation, route }) {
                         <Text style={styles.bottomContainerText}>Alerts</Text>
                     </Pressable>
                     <Pressable
-                        style={[
-                            styles.bottomNavButton,
-                            activePage === 'TenantProfile' && styles.activeBottomNavButton,
-                        ]}
-                        onPress={() => {
-                            navigation.navigate('TenantProfile', { userID, tenantID });
-                            setActivePage('TenantProfile'); // Set the active page when pressed
-                        }}
-                    >
+                        style={[styles.bottomNavButton]}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/profileFocused.png')}
@@ -221,7 +213,7 @@ const styles = StyleSheet.create({
     },
 
     bottomContainer: {
-        marginBottom: -40
+        marginBottom: -50
     },
     bottomNavRow: {
         flexDirection: 'row',

@@ -103,16 +103,7 @@ export default function TenantNotification({navigation, route}) {
                         />
                         <Text style={styles.bottomContainerText}>Rentals</Text>
                     </Pressable>
-                    <Pressable
-                        style={[
-                            styles.bottomNavButton,
-                            activePage === 'TenantNotification' && styles.activeBottomNavButton,
-                        ]}
-                        onPress={() => {
-                            navigation.navigate('TenantNotification', { userID, tenantID });
-                            setActivePage('TenantNotification'); // Set the active page when pressed
-                        }}
-                    >
+                    <Pressable style={[styles.bottomNavButton]}>
                         <Image
                             style={{ width: 40, height: 40 }}
                             source={require('../img/notification.png')}
@@ -188,7 +179,7 @@ const styles = StyleSheet.create({
     },
     bottomContainer: {
         flex: 0.025,
-        marginBottom: -5
+        marginBottom: -40
 
     },
     bottomNavRow: {

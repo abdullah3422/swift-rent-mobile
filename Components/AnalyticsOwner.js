@@ -278,8 +278,7 @@ const styles = StyleSheet.create({
 
     bottomContainer: {
         flex: 0.025,
-        marginBottom: -15
-
+        marginBottom: -35
     },
     bottomNavRow: {
         flexDirection: 'row',
