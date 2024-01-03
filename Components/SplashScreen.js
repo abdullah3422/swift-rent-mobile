@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     splashText: {
         paddingTop: 20,
         fontSize: 50,
-        color: "#1363DF",
+        color: "#000",
         fontWeight: 'bold',
     }
 });

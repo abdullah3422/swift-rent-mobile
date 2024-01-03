@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
     },
     middleContainer: {
         flex: 0.6,
+
         backgroundColor: '#47b5ff',
         marginTop: '5%',
         paddingBottom:290,
@@ -213,7 +214,7 @@ const styles = StyleSheet.create({
     },
 
     bottomContainer: {
-        marginBottom: -50
+        marginBottom: -35
     },
     bottomNavRow: {
         flexDirection: 'row',

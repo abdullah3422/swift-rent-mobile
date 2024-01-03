@@ -22,11 +22,7 @@ export default function ResetPassword({ navigation, route }) {
                     .matches(/^[0-9a-zA-Z]{16}$/, 'Must be a 16-digit alphanumeric code.'),
                 newPassword: Yup.string()
                     .required('Please enter your new password.')
-                    .min(8, 'Password too Short!')
-                    .matches(
-                        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-                        'Must contain 8 characters, at least one uppercase and one lowercase, and a number!'
-                    ),
+                    .min(8, 'Password should be at least 8 characters long.'),
                 confirmPassword: Yup.string()
                     .required('Please confirm your new password.')
                     .oneOf([Yup.ref('newPassword'), null], 'New password and confirm password do not match.'),
