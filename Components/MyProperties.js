@@ -94,7 +94,7 @@ export default function MyProperties({ navigation, route }) {
                     <Pressable style={styles.bottomNavButton}>
                         <Image
                             style={{ width: 40, height: 40 }}
-                            source={require('../img/propertiesIcon.png')}
+                            source={require('../img/propertiesIconFocused.png')}
                         />
                         <Text style={styles.bottomContainerText}>Properties</Text>
                     </Pressable>
@@ -115,7 +115,7 @@ export default function MyProperties({ navigation, route }) {
                     <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('OwnerProfile', {userID, ownerID })}>
                         <Image
                             style={{ width: 40, height: 40 }}
-                            source={require('../img/profileFocused.png')}
+                            source={require('../img/profile.png')}
                         />
                         <Text style={styles.bottomContainerText}>Profile</Text>
                     </Pressable>
@@ -181,14 +181,12 @@ const styles = StyleSheet.create({
     bottomContainer: {
         flex: 0.025,
         marginBottom: -45,
-
     },
     bottomNavRow: {
         flexDirection: 'row',
         justifyContent: 'space-between', // Add spacing between Pressables
         alignItems: 'center',
         paddingHorizontal: 20, // Adjust the horizontal padding for spacing
-
     },
     bottomNavButton: {
         marginHorizontal: 20, // Adjust the margin for spacing

@@ -81,7 +81,7 @@ export default function OwnerNotification({navigation, route}) {
                     <Pressable style={styles.bottomNavButton}>
                         <Image
                             style={{width: 40, height: 40}}
-                            source={require('../img/notification.png')}
+                            source={require('../img/notificationFocused.png')}
                         />
                         <Text style={styles.bottomContainerText}>Alerts</Text>
                     </Pressable>
@@ -89,7 +89,7 @@ export default function OwnerNotification({navigation, route}) {
                                onPress={() => navigation.navigate('OwnerProfile', {userID, ownerID })}>
                         <Image
                             style={{width: 40, height: 40}}
-                            source={require('../img/profileFocused.png')}
+                            source={require('../img/profile.png')}
                         />
                         <Text style={styles.bottomContainerText}>Profile</Text>
                     </Pressable>

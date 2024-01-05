@@ -169,7 +169,7 @@ export default function AnalyticsOwner({ navigation, route }) {
                     <Pressable style={styles.bottomNavButton}>
                         <Image
                             style={{ width: 40, height: 40 }}
-                            source={require('../img/analyticIcon.png')}
+                            source={require('../img/analyticIconFocused.png')}
                         />
                         <Text style={styles.bottomContainerText}>Analytics</Text>
                     </Pressable>
@@ -183,7 +183,7 @@ export default function AnalyticsOwner({ navigation, route }) {
                     <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('OwnerProfile', {userID, ownerID })}>
                         <Image
                             style={{ width: 40, height: 40 }}
-                            source={require('../img/profileFocused.png')}
+                            source={require('../img/profile.png')}
                         />
                         <Text style={styles.bottomContainerText}>Profile</Text>
                     </Pressable>
