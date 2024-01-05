@@ -27,19 +27,35 @@ export default function PropertyMenu({ navigation, route }) {
     }
 
     async function handleDelete() {
-        //API to delete property handle admin side deleted properties check for owner as well
-        try {
-            const response = await axios.post(ipAddress + 'api/delete-property', {
-                propertyID: String(propertyID),
-            });
-            if (response.data.success) {
-                Alert.alert('Success', 'Tenant successfully un-registered')
-                navigation.navigate('MyProperties', {userID, ownerID});
-            }
-        } catch (error) {
-            console.log("Error updating property data:", error);
-            Alert.alert("Error un-registering tenant");
-        }
+        // Display a confirmation alert
+        Alert.alert(
+            "Confirm Delete",
+            "Are you sure you want to delete this property? This action cannot be undone.",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel",
+                },
+                {
+                    text: "Delete",
+                    onPress: async () => {
+                        try {
+                            const response = await axios.post(ipAddress + 'api/delete-property', {
+                                propertyID: String(propertyID),
+                            });
+                            if (response.data.success) {
+                                Alert.alert('Success', 'Property has been deleted successfully');
+                                navigation.navigate('MyProperties', { userID, ownerID });
+                            }
+                        } catch (error) {
+                            console.log("Error deleting property:", error);
+                            Alert.alert("Error deleting property");
+                        }
+                    },
+                    style: "destructive", // This makes the button appear in red to indicate it's destructive
+                },
+            ]
+        );
     }
 
     return (
