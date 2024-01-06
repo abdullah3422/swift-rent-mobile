@@ -107,7 +107,7 @@ export default function AddProperties({navigation, route}) {
                             value={values.rentAmount}
                         />
                         <View style={styles.iconContainer}>
-                            <Image source={require('../img/dollarIcon.png')} style={styles.placeholderIcon}/>
+                            <Image source={require('../img/rupeeIcon.png')} style={styles.placeholderIcon}/>
                         </View>
                     </View>
                     {touched.rentAmount && errors.rentAmount &&
