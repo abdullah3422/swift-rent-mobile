@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Alert, Text, TextInput, View, StyleSheet, Pressable } from 'react-native';
 import axios from 'axios';
+import * as Yup from "yup";
+import {Formik} from "formik";
 
 export default function RegisterTenant({ navigation, route }) {
     const { userID, ownerID, propertyID } = route.params;
@@ -28,25 +30,46 @@ export default function RegisterTenant({ navigation, route }) {
         }
     };
 
+    const registerTenantSchema = Yup.object().shape({
+        emailOrPhone: Yup.string()
+            .required('Email or Phone is required.')
+            .max(30, 'Invalid Email or Phone'),
+
+    });
     return (
-        <View style={styles.container}>
-            <Text style={styles.headerText}>Register a{'\n'}Tenant</Text>
+        // ...
 
-            <TextInput
-                style={styles.input}
-                placeholder="Tenant email or phone"
-                placeholderTextColor="#cdcdcd"
-                value={tenantInfo.emailOrPhone}
-                onChangeText={(text) => setTenantInfo({ ...tenantInfo, emailOrPhone: text })}
-            />
+        <Formik
+            initialValues={{ emailOrPhone: '' }}
+            validationSchema={registerTenantSchema}
+            onSubmit={(values) => handleRegister(values)}
+        >
+            {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+                <View style={styles.container}>
+                    <Text style={styles.headerText}>Register a{'\n'}Tenant</Text>
 
-            <View style={styles.buttonContainer}>
-                <View style={styles.space} />
-                <Pressable style={[styles.button, { width: 160 }]} onPress={handleRegister}>
-                    <Text style={styles.buttonText}>Register</Text>
-                </Pressable>
-            </View>
-        </View>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Tenant email or phone"
+                        placeholderTextColor="#cdcdcd"
+                        value={values.emailOrPhone}
+                        onChangeText={handleChange('emailOrPhone')}
+                        onBlur={handleBlur('emailOrPhone')}
+                    />
+                    {touched.emailOrPhone && errors.emailOrPhone && (
+                        <Text style={{ color: 'red' }}>{errors.emailOrPhone}</Text>
+                    )}
+
+                    <View style={styles.buttonContainer}>
+                        <View style={styles.space} />
+                        <Pressable style={[styles.button, { width: 160 }]} onPress={handleSubmit}>
+                            <Text style={styles.buttonText}>Register</Text>
+                        </Pressable>
+                    </View>
+                </View>
+            )}
+        </Formik>
+
     );
 }
 
