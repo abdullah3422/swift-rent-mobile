@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Alert, BackHandler, Image, Pressable, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, BackHandler, Dimensions, Image, Pressable, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useFocusEffect} from "@react-navigation/native";
 
 
@@ -34,8 +34,8 @@ export default function WelcomeScreen({navigation}) {
     let flag = 0;
     // let [fontsLoad] = useFonts({OpenSans_Bold});
     return (
-        <View style={styles.container}>
 
+        <View style={styles.container}>
             <View style={styles.header}>
                 <Image source={require('../img/logoColored.png')} style={styles.logo} />
             </View>
@@ -66,6 +66,9 @@ export default function WelcomeScreen({navigation}) {
     );
 };
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -75,27 +78,20 @@ const styles = StyleSheet.create({
         marginTop: "auto"
     },
     logo: {
-        width: 100,
-        height: 100,
+        width: windowWidth * 0.25,
+        height: windowWidth * 0.25,
     },
     header: {
         flexDirection: 'row',
         alignItems:'center',
 
     },
-
-    headerText:{
-        fontSize: 50,
-        paddingTop: 15,
-        color: "#1363DF",
-        fontWeight: 'bold'
-    },
     welcomeText: {
 
-        marginTop: 20,
-        fontSize: 30,
+        marginTop: windowHeight * 0.03,     // = 20
+        fontSize: windowWidth * 0.07,
         fontWeight: 'bold',
-        marginBottom: 20,
+        marginBottom: windowHeight * 0.03,
         color: "#47b5ff",
         textAlign: "center"
 
@@ -104,11 +100,11 @@ const styles = StyleSheet.create({
         width: '60%',
         paddingVertical: 2,
         backgroundColor: '#e5e5e5',
-        marginTop: 150,
+        marginTop: windowWidth * 0.38,
         borderRadius: 100,
         borderColor: '#cdcdcd',
         borderWidth: 1.5,
-        marginBottom: 10
+        marginBottom: windowHeight * 0.013
 
     },
     buttonText: {

@@ -33,9 +33,9 @@ export default function GetToKnow({ navigation, route }) {
             .min(2, 'Too Short!')
             .max(50, 'Too Long!')
             .required('Required'),
-        year: Yup.number().min(1900, 'Invalid year').max(2100, 'Invalid year').required('Required'),
-        month: Yup.number().min(1, 'Invalid month').max(12, 'Invalid month').required('Required'),
-        day: Yup.number().min(1, 'Invalid day').max(31, 'Invalid day').required('Required')
+        year: Yup.number().min(1900, 'Invalid year').max(2013, 'Invalid year').required('Year Required'),
+        month: Yup.number().min(1, 'Invalid month').max(12, 'Invalid month').required('Month Required'),
+        day: Yup.number().min(1, 'Invalid day').max(31, 'Invalid day').required(' Day Required')
     });
 
     return (

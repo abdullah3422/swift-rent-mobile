@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { Alert, Text, TextInput, View, StyleSheet, Pressable } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import axios from "axios";
+import * as Yup from "yup";
+import {Formik} from "formik";
 
 export default function EditProperty({ navigation, route }) {
     const { userID, ownerID, propertyID } = route.params;
@@ -54,41 +56,78 @@ export default function EditProperty({ navigation, route }) {
         }
     }
 
+    const editPropertiesSchema = Yup.object().shape({
+        propertyAddress: Yup.string()
+            .min(5, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        dueDate: Yup.number()
+            .integer('Due Date must be an integer')
+            .min(1, 'Due Date must be between 1 and 31')
+            .max(31, 'Due Date must be between 1 and 31')
+            .required('Required'),
+        rent: Yup.number()
+            .min(1, 'Rent Amount must be at least 1')
+            // .max(1000000, 'Rent Amount must be less than 1,000,000')
+            .required('Required'),
+    });
+
     return (
-        <View style={styles.container}>
-            <Text style={styles.headerText}>Edit Property {'\n'} Information</Text>
+        <Formik
+            initialValues={{ propertyAddress: '', dueDate: '', rent: '' }}
+            validationSchema={editPropertiesSchema}
+            onSubmit={handlePropertyEdit}
+        >
+            {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
 
-            <Text style={styles.fieldHeading}> Property Address</Text>
-            <TextInput
-                style={styles.input}
-                defaultValue={String(data.propertyAddress)}
-                onChangeText={(text) => setData({ ...data, propertyAddress: text })}
-                placeholderTextColor="#cdcdcd"
-            />
+                <View style={styles.container}>
+                    <Text style={styles.headerText}>Edit Property {'\n'} Information</Text>
 
-            <Text style={styles.fieldHeading}> Due Date</Text>
-            <TextInput
-                style={styles.input}
-                defaultValue={String(data.dueDate)}
-                onChangeText={(text) => setData({ ...data, dueDate: text })}
-                placeholderTextColor="#cdcdcd"
-            />
+                    <Text style={styles.fieldHeading}> Property Address</Text>
+                    <TextInput
+                        style={styles.input}
+                        defaultValue={String(data.propertyAddress)}
+                        //onChangeText={(text) => setData({ ...data, propertyAddress: text })}
+                        onChangeText={handleChange('propertyAddress')}
+                        onBlur={handleBlur('propertyAddress')}
+                        placeholderTextColor="#cdcdcd"
+                    />
+                    {touched.propertyAddress && errors.propertyAddress && (
+                        <Text style={styles.errorText}>{errors.propertyAddress}</Text>
+                    )}
 
-            <Text style={styles.fieldHeading}> Rent</Text>
-            <TextInput
-                style={styles.input}
-                defaultValue={String(data.rent)}
-                onChangeText={(text) => setData({ ...data, rent: text })}
-                placeholderTextColor="#cdcdcd"
-            />
+                    <Text style={styles.fieldHeading}> Due Date</Text>
+                    <TextInput
+                        style={styles.input}
+                        defaultValue={String(data.dueDate)}
+                        //onChangeText={(text) => setData({ ...data, dueDate: text })}
+                        onChangeText={handleChange('dueDate')}
+                        onBlur={handleBlur('dueDate')}
+                        placeholderTextColor="#cdcdcd"
+                    />
+                    {touched.dueDate && errors.dueDate && <Text style={styles.errorText}>{errors.dueDate}</Text>}
+                    <Text style={styles.fieldHeading}> Rent</Text>
+                    <TextInput
+                        style={styles.input}
+                        defaultValue={String(data.rent)}
+                        //onChangeText={(text) => setData({ ...data, rent: text })}
+                        onChangeText={handleChange('rent')}
+                        onBlur={handleBlur('rent')}
+                        placeholderTextColor="#cdcdcd"
+                    />
+                    {touched.rent && errors.rent && <Text style={styles.errorText}>{errors.rent}</Text>}
 
-            <View style={styles.buttonContainer}>
-                <View style={styles.space} />
-                <Pressable style={[styles.button, { width: 160 }]} onPress={handlePropertyEdit}>
-                    <Text style={styles.buttonText}>Change</Text>
-                </Pressable>
-            </View>
-        </View>
+                    <View style={styles.buttonContainer}>
+                        <View style={styles.space} />
+                        <Pressable style={[styles.button, { width: 160 }]} onPress={handlePropertyEdit}>
+                            <Text style={styles.buttonText}>Change</Text>
+                        </Pressable>
+                    </View>
+                </View>
+
+            )}
+        </Formik>
+
     );
 }
 
@@ -155,6 +194,8 @@ const styles = StyleSheet.create({
         color: 'black',
     },
     errorText: {
-        color: 'red',
+        // fontSize: 12,
+        color: '#FF0D10',
+
     },
 });

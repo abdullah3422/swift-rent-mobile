@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        marginTop: -windowHeight * 0.11,
+        marginTop: -windowHeight * 0.19,
     },
     logo: {
         width: windowWidth * 0.25,
