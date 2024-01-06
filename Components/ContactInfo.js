@@ -51,9 +51,11 @@ export default function LoginScreen({ navigation, route }) {
     const loginSchema = Yup.object().shape({
         email: Yup.string()
             .email('Invalid email address')
-            .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Invalid email address'),
+            .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Invalid email address')
+        .required('Required'),
         phoneNumber: Yup.string()
-            .matches(/^\d{11}$/, 'Invalid phone number'),
+            .matches(/^\d{11}$/, 'Invalid phone number')
+        .required('Required'),
     });
 
     return (

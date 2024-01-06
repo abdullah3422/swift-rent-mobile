@@ -63,6 +63,7 @@ export default function EditAccount({navigation, route}) {
     };
     handleInitialData();
     }, [ownerID, tenantID, userID]);
+
     async function HandleChange() {
         try {
             const verificationResponse = await axios.post(ipAddress + 'api/signup-contact', {
@@ -96,60 +97,104 @@ export default function EditAccount({navigation, route}) {
         }
     }
 
+        const editAccountSchema = Yup.object().shape({
+            Name: Yup.string()
+                .matches(/^[a-zA-Z.\s]+$/, 'Only letters are allowed')
+                .min(2, 'Too Short!')
+                .max(100, 'Too Long!')
+                .required('Required'),
+            email: Yup.string()
+                .email('Invalid email address')
+                .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Invalid email address')
+            .required('Required'),
+            phone: Yup.string()
+                .matches(/^\d{11}$/, 'Invalid phone number')
+                .required('Required'),
+            Year: Yup.number().min(1900, 'Invalid year').max(2013, 'Invalid year').required('Year Required'),
+            Month: Yup.number().min(1, 'Invalid month').max(12, 'Invalid month').required('Month Required'),
+            Day: Yup.number().min(1, 'Invalid day').max(31, 'Invalid day').required(' Day Required')
+        });
+
+
     return (
 
-        <View style={styles.container}>
-            <Text style={styles.headerText}>Edit Account {'\n'} Information </Text>
+        <Formik
+            initialValues={{
+                Name: '',
+                email:'',
+                phone:'',
+                Year: '',
+                Month: '',
+                Day: ''
+            }}
+            validationSchema={editAccountSchema}
+            onSubmit={HandleChange}
+        >
+            {({ values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit, handleBlur }) => (
 
-            <TextInput
-                style={styles.input}
-                defaultValue={data.Name}
-                onChangeText={(text) => setData({ ...data, Name: text })}
-            />
+                <View style={styles.container}>
+                    <Text style={styles.headerText}>Edit Account {'\n'} Information </Text>
 
-            <TextInput
-                style={styles.input}
-                defaultValue={data.email}
-                onChangeText={(text) => setData({ ...data, email: text })}
-            />
+                    <TextInput
+                        style={styles.input}
+                        defaultValue={data.Name}
+                        onChangeText={handleChange('Name')}
+                        onBlur={handleBlur('Name')}
+                    />
+                    {touched.Name && errors.Name && <Text style={styles.errorText}>{errors.Name}</Text>}
+                    <TextInput
+                        style={styles.input}
+                        defaultValue={data.email}
+                        onChangeText={handleChange('email')}
+                        onBlur={handleBlur('email')}
+                    />
+                    {touched.email && errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+                    <TextInput
+                        style={styles.input}
+                        defaultValue={data.phone}
+                        onChangeText={handleChange('phone')}
+                        onBlur={handleBlur('phone')}
+                    />
+                    {touched.phone && errors.phone && <Text style={styles.errorText}>{errors.phone}</Text>}
+                    <View style={styles.dateInputContainer}>
+                        <TextInput
+                            defaultValue={data.Year}
+                            style={styles.dateInput}
+                            keyboardType="number-pad"
+                            onChangeText={handleChange('Year')}
+                            onBlur={handleBlur('Year')}
+                        />
 
-            <TextInput
-                style={styles.input}
-                defaultValue={data.phone}
-                onChangeText={(text) => setData({ ...data, phone: text })}
-            />
-            <View style={styles.dateInputContainer}>
-                <TextInput
-                    defaultValue={data.Year}
-                    style={styles.dateInput}
-                    keyboardType="number-pad"
-                    onChangeText={(text) => setData({ ...data, Year: text })}
-                />
+                        <TextInput
+                            defaultValue={data.Month}
+                            style={styles.dateInput}
+                            keyboardType="number-pad"
+                            onChangeText={handleChange('Month')}
+                            onBlur={handleBlur('Month')}
+                        />
 
-                <TextInput
-                    defaultValue={data.Month}
-                    style={styles.dateInput}
-                    keyboardType="number-pad"
-                    onChangeText={(text) => setData({ ...data, Month: text })}
-                />
+                        <TextInput
+                            defaultValue={data.Day}
+                            style={styles.dateInput}
+                            keyboardType="number-pad"
+                            onChangeText={handleChange('Day')}
+                            onBlur={handleBlur('Day')}
+                        />
 
-                <TextInput
-                    defaultValue={data.Day}
-                    style={styles.dateInput}
-                    keyboardType="number-pad"
-                    onChangeText={(text) => setData({ ...data, Day: text })}
-                />
-            </View>
+                    </View>
+                    {touched.Year && errors.Year && <Text style={styles.errorText}>{errors.Year}</Text>}
+                    {touched.Month && errors.Month && <Text style={styles.errorText}>{errors.Month}</Text>}
+                    {touched.Day && errors.Day && <Text style={styles.errorText}>{errors.Day}</Text>}
+                    <View style={styles.buttonContainer}>
+                        <View style={styles.space}/>
+                        <Pressable style={[styles.button, {width: 160}]} onPress={handleChange}>
+                            <Text style={styles.buttonText}>Change</Text>
+                        </Pressable>
+                    </View>
+                </View>
 
-            <View style={styles.buttonContainer}>
-                <View style={styles.space}/>
-                <Pressable style={[styles.button, {width: 160}]} onPress={HandleChange}>
-                    <Text style={styles.buttonText}>Change</Text>
-                </Pressable>
-            </View>
-        </View>
-
-
+            )}
+        </Formik>
     );
 }
 
@@ -207,9 +252,6 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'black',
     },
-    errorText: {
-        color: 'red',
-    },
     dateInputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -227,5 +269,9 @@ const styles = StyleSheet.create({
         textAlign: "center",
         margin: 3,
         marginTop: 0
+    },
+    errorText: {
+        fontSize: windowWidth * 0.03,
+        color: '#FF0D10',
     },
 });
