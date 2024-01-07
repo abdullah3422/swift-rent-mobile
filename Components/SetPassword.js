@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Dimensions, Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Alert, Dimensions, Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import axios from "axios";
@@ -39,18 +39,22 @@ export default function SetPassword({navigation, route}) {
                 const {userID, ownerID, tenantID, digiCode} = response.data;
                 navigation.navigate('DigiCode', {userType, userID, ownerID, tenantID, digiCode});
             } else {
-                console.error('Registration failed', response.data.error);
+                console.log('Registration failed', response.data.error);
             }
         } catch (error) {
-            console.error('Error during registration:', error);
+            console.log('Error during registration:', error);
+            const lastThreeNumbers = String(error).match(/\d{3}$/);
+            if (String(lastThreeNumbers) === "500") {
+                Alert.alert("Something went wrong","We apologize for the inconvenience Contact us: swiftrent2023@gmail.com");
+            }
         }
     };
 
 
     const passwordValidationSchema = Yup.object().shape({
         password: Yup.string()
-            .required('Cant leave empty.')
-            .min(8, 'Password should be at least 8 characters long.'),
+            .required('Cant leave empty')
+            .min(8, 'Too Short'),
 
         confirmPassword: Yup.string()
             .oneOf([Yup.ref('password'), 'Your Passwords dont match!'], 'Passwords must match!')
@@ -81,9 +85,7 @@ export default function SetPassword({navigation, route}) {
                         onChangeText={handleChange('password')}
                         onBlur={() => setFieldTouched('password')}
                     />
-                    {touched.password && errors.password && (
-                        <Text style={styles.errorTxt}>{errors.password}</Text>
-                    )}
+
                     <TextInput
                         style={styles.input}
                         placeholder="Confirm Password"
@@ -93,9 +95,15 @@ export default function SetPassword({navigation, route}) {
                         onChangeText={handleChange('confirmPassword')}
                         onBlur={() => setFieldTouched('confirmPassword')}
                     />
-                    {touched.confirmPassword && errors.confirmPassword && (
+                    <View style={{flexDirection: "row", height: 20}} >
+                        {touched.password && errors.password && (
+                            <Text style={styles.errorTxt}>{errors.password}</Text>
+                        )}
+                        {touched.confirmPassword && errors.confirmPassword && (
                         <Text style={styles.errorTxt}>{errors.confirmPassword}</Text>
-                    )}
+                        )}
+                    </View>
+
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity style={[styles.button, {width: 160}]} onPress={() => navigation.goBack()}>
                             <Text style={styles.buttonText}>Back</Text>
@@ -116,15 +124,16 @@ const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        marginTop: -windowHeight * 0.025,
+        width: '100%',
+        height: 800,
     },
     logo: {
         width: windowWidth * 0.25,
         height: windowWidth * 0.25,
+        marginTop: -108,
     },
     header: {
         flexDirection: 'row',
@@ -142,6 +151,8 @@ const styles = StyleSheet.create({
         fontSize: windowWidth * 0.08,
         fontWeight: 'bold',
         marginBottom: windowHeight * 0.02,
+        textAlign: 'center', // Center the text horizontally
+        alignSelf: 'center', // Center the text within its container
     },
     input: {
         flexDirection: 'row',
@@ -183,5 +194,6 @@ const styles = StyleSheet.create({
     errorTxt: {
         fontSize: windowWidth * 0.03,
         color: '#FF0D10',
+        marginHorizontal: 5,
     },
 });

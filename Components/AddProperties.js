@@ -21,16 +21,16 @@ export default function AddProperties({navigation, route}) {
     const addPropertiesSchema = Yup.object().shape({
         propertyAddress: Yup.string()
             .min(5, 'Too Short!')
-            .required('Required'),
+            .required('Address Required'),
         dueDate: Yup.number()
             .integer('Due Date must be an integer')
-            .min(1, 'Due Date must be between 1 and 20')
-            .max(20, 'Due Date must be between 1 and 20')
-            .required('Required'),
+            .min(1, 'Date between 1-20')
+            .max(20, 'Date between 1-20')
+            .required('Date Required'),
         rentAmount: Yup.number()
-            .min(1, 'Rent Amount must be at least 1')
+            .min(1, 'Invalid Rent')
             // .max(1000000, 'Rent Amount must be less than 1,000,000')
-            .required('Required'),
+            .required('Rent Required'),
     });
 
     const handleAddProperty = async (values) => {
@@ -47,7 +47,7 @@ export default function AddProperties({navigation, route}) {
                 navigation.navigate('AnalyticsOwner', {userID, ownerID});
             }
         } catch (error) {
-            console.error('Error during adding property:', error);
+            console.log('Error during adding property:', error);
         }
     };
 
@@ -76,9 +76,7 @@ export default function AddProperties({navigation, route}) {
                             <Image source={require('../img/locationIcon.png')} style={styles.placeholderIcon}/>
                         </View>
                     </View>
-                    {touched.propertyAddress && errors.propertyAddress &&
-                        <Text style={styles.errorText}>{errors.propertyAddress}</Text>
-                    }
+
                     <View style={styles.input}>
                         <TextInput
                             placeholder="Due Date"
@@ -92,9 +90,7 @@ export default function AddProperties({navigation, route}) {
                             <Image source={require('../img/hashtag.png')} style={styles.placeholderIcon}/>
                         </View>
                     </View>
-                    {touched.dueDate && errors.dueDate &&
-                        <Text style={styles.errorText}>{errors.dueDate}</Text>
-                    }
+
 
                     <View style={styles.input}>
                         <TextInput
@@ -109,9 +105,20 @@ export default function AddProperties({navigation, route}) {
                             <Image source={require('../img/rupeeIcon.png')} style={styles.placeholderIcon}/>
                         </View>
                     </View>
-                    {touched.rentAmount && errors.rentAmount &&
-                        <Text style={styles.errorText}>{errors.rentAmount}</Text>
-                    }
+
+                    <View style={{flexDirection: "row", height: 20}} >
+                        {touched.propertyAddress && errors.propertyAddress &&
+                            <Text style={styles.errorText}>{errors.propertyAddress}</Text>
+                        }
+                        {touched.dueDate && errors.dueDate &&
+                            <Text style={styles.errorText}>{errors.dueDate}</Text>
+                        }
+                        {touched.rentAmount && errors.rentAmount &&
+                            <Text style={styles.errorText}>{errors.rentAmount}</Text>
+                        }
+                    </View>
+
+
 
                     <View style={styles.buttonContainer}>
                         <Pressable style={styles.button}
@@ -134,12 +141,11 @@ export default function AddProperties({navigation, route}) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        marginTop: -200,
-        marginBottom: 30
+        width: '100%',
+        height: 800,
     },
 
     headerText: {
@@ -209,8 +215,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     postHeader: {
-
-        marginTop: 20,
+        marginTop: -260,
         fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 20,
@@ -221,6 +226,6 @@ const styles = StyleSheet.create({
     errorText: {
         fontSize: 12,
         color: '#FF0D10',
-
+        marginHorizontal: 5,
     },
 });

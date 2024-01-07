@@ -15,7 +15,7 @@ export default function SetUp({navigation, route}) {
             } else if (userType === 'tenant') {
                 navigation.reset({
                     index: 0,
-                    routes: [{name: 'TenantNotification', params: {userID, tenantID}}],
+                    routes: [{name: 'MyRentals', params: {userID, tenantID}}],
                 });
             }
         }, 2000);

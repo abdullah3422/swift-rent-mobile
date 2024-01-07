@@ -44,7 +44,7 @@ export default function ReportBug({navigation, route}) {
             }
         } catch (error) {
             Alert.alert('Error Submitting Complaint');
-            console.error('Error submitting Complaint:', error);
+            console.log('Error submitting Complaint:', error);
         }
     };
 
@@ -53,9 +53,9 @@ export default function ReportBug({navigation, route}) {
             initialValues={{bugType: '', bugDescription: ''}}
             validationSchema={Yup.object().shape({
                 bugType: Yup.string()
-                    .max(30, 'Bug Type must be up to 30 characters')
-                    .required('Bug Type is required'),
-                bugDescription: Yup.string().required('Bug Description is required'),
+                    .max(30, 'Too long')
+                    .required('Issue required'),
+                bugDescription: Yup.string().required('Description required'),
             })}
             onSubmit={submitBugReport}
         >
@@ -71,10 +71,6 @@ export default function ReportBug({navigation, route}) {
                         onBlur={() => setFieldTouched('bugType')}
                         value={values.bugType}
                     />
-                    {touched.bugType && errors.bugType && (
-                        <Text style={styles.errorText}>{errors.bugType}</Text>
-                    )}
-
                     <TextInput
                         style={styles.inputDescribe}
                         placeholder="Describe your problem"
@@ -84,10 +80,17 @@ export default function ReportBug({navigation, route}) {
                         onChangeText={handleChange('bugDescription')}
                         onBlur={() => setFieldTouched('bugDescription')}
                         value={values.bugDescription}
+                        textAlignVertical="top"
                     />
-                    {touched.bugDescription && errors.bugDescription && (
-                        <Text style={styles.errorText}>{errors.bugDescription}</Text>
-                    )}
+                    <View style={{flexDirection: "row", height: 20}} >
+                        {touched.bugType && errors.bugType && (
+                            <Text style={styles.errorText}>{errors.bugType}</Text>
+                        )}
+                        {touched.bugDescription && errors.bugDescription && (
+                            <Text style={styles.errorText}>{errors.bugDescription}</Text>
+                        )}
+                    </View>
+
 
                     <View style={styles.buttonContainer}>
                         <View style={styles.space}/>
@@ -103,11 +106,11 @@ export default function ReportBug({navigation, route}) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        marginTop: '-45%',
+        width: '100%',
+        height: 800,
     },
 
     headerText: {
@@ -115,6 +118,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         marginBottom: '15%',
+        marginTop: -228,
         justifyContent: 'center',
         alignContent: 'center',
     },
@@ -167,6 +171,8 @@ const styles = StyleSheet.create({
         color: 'black',
     },
     errorText: {
-        color: 'red',
+        fontSize: 12,
+        color: '#FF0D10',
+        marginHorizontal: 5,
     },
 });

@@ -6,9 +6,10 @@ export default function DigiCode({navigation, route}) {
     return (
         <View style={styles.container}>
 
-            <Text style={styles.digitCodeText}>Your 16 Digit {'\n'}Recovery Code</Text>
-            <Text style={styles.recoveryText}>Save this code to {'\n'}recover your password</Text>
+            <Text style={styles.digitCodeText}>Your 16 Digit{'\n'}Recovery Code</Text>
+            <Text style={styles.recoveryText}>Save this code to{'\n'}recover your password{'\n'}in the future</Text>
             <Text style={styles.digiCode} selectable={true}>{digiCode}</Text>
+            <Text style={{fontSize:15}}>*selectable</Text>
             <Pressable style={styles.button}
                        onPress={() => navigation.navigate('SetUp', {userType, userID, ownerID, tenantID})}>
                 <Text style={styles.buttonText}>Continue to {'\n'} Dashboard</Text>
@@ -27,16 +28,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         marginTop: "auto"
     },
-    logo: {
-        width: 100,
-        height: 100,
-    },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-
     },
-
     headerText: {
         fontSize: 50,
         paddingTop: 15,
@@ -44,21 +39,18 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     digitCodeText: {
-
-        marginTop: 0,
+        marginTop: 30,
         fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 20,
         color: "#47b5ff",
         textAlign: "center"
-
     },
     button: {
         width: '40%',
         paddingVertical: 2,
-
         backgroundColor: '#e5e5e5',
-        marginTop: 150,
+        marginTop: 110,
         borderRadius: 100,
         borderColor: '#cdcdcd',
         borderWidth: 1.5,
@@ -120,12 +112,12 @@ const styles = StyleSheet.create({
 
     },
     digiCode: {
-        width: '75%',
+        width: '70%',
         height: 50,
         borderColor: '#06283d',
         borderWidth: 2,
         borderRadius: 20,
-        padding: 5,
+        padding: 7,
         marginTop: 80,
         marginBottom: 10,
         backgroundColor: '#fff',

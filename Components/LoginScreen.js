@@ -7,10 +7,11 @@ import * as Yup from 'yup';
 
 const loginSchema = Yup.object().shape({
     emailOrPhone: Yup.string()
-        .required('Email or Phone is required.'),
+        .required('Email or Phone required.')
+        .min(5, 'Email or Phone too short'),
     password: Yup.string()
-        .required('Password is required.')
-        .min(8, 'Password should be at least 8 characters long.'),
+        .required('Password required.')
+        .min(8, 'Password too short'),
 });
 
 export default function LoginScreen({navigation, route}) {
@@ -44,7 +45,7 @@ export default function LoginScreen({navigation, route}) {
                             userType: "tenant"
                         });
                         tenantID = tenantResponse.data.tenantID;
-                        navigation.navigate('TenantNotification', {userID, tenantID});
+                        navigation.navigate('MyRentals', {userID, tenantID});
                     } else if (tenantID !== 0) {
                         const ownerResponse = await axios.post(ipAddress + 'api/new-role-registration', {
                             userID: userID,
@@ -64,7 +65,7 @@ export default function LoginScreen({navigation, route}) {
                     } else if (tenantID !== 0) {
                         navigation.reset({
                             index: 0,
-                            routes: [{name: 'TenantNotification', params: {userID, tenantID}}],
+                            routes: [{name: 'MyRentals', params: {userID, tenantID}}],
                         });
                     }
                 }
@@ -108,9 +109,7 @@ export default function LoginScreen({navigation, route}) {
                                 }}
                             />
                         </View>
-                        {touched.emailOrPhone && errors.emailOrPhone && (
-                            <Text style={{color: 'red'}}>{errors.emailOrPhone}</Text>
-                        )}
+
 
                         <View style={styles.input}>
                             <TextInput
@@ -125,7 +124,12 @@ export default function LoginScreen({navigation, route}) {
                                 onSubmitEditing={handleSubmit} // Or any other action after password input
                             />
                         </View>
-                        {touched.password && errors.password && <Text style={{color: 'red'}}>{errors.password}</Text>}
+                        <View style={{flexDirection: "row", height: 20}} >
+                            {touched.emailOrPhone && errors.emailOrPhone && (
+                                <Text style={{color: 'red', marginHorizontal: 5}}>{errors.emailOrPhone}</Text>
+                            )}
+                            {touched.password && errors.password && <Text style={{color: 'red', marginHorizontal: 5}}>{errors.password}</Text>}
+                        </View>
 
                         <Pressable onPress={() => navigation.navigate('ResetPassword')}>
                             <Text>Forgot Password?</Text>
@@ -151,15 +155,16 @@ const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        marginTop: -windowHeight * 0.19,
+        width: '100%',
+        height: 800,
     },
     logo: {
         width: windowWidth * 0.25,
         height: windowWidth * 0.25,
+        marginTop: -500,
     },
     header: {
         flexDirection: 'row',
@@ -222,6 +227,7 @@ const styles = StyleSheet.create({
         fontSize: windowWidth * 0.07,
         fontWeight: 'bold',
         marginBottom: windowHeight * 0.013,
+        marginTop: -190,
 
     },
 

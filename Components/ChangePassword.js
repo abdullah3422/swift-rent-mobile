@@ -16,14 +16,14 @@ export default function ChangePassword({navigation, route}) {
             initialValues={{oldPassword: '', newPassword: '', confirmPassword: ''}}
             validationSchema={Yup.object().shape({
                 oldPassword: Yup.string()
-                    .required('Please enter your old password.')
-                    .min(8, 'Password should be at least 8 characters long.'),
+                    .required('Enter old password')
+                    .min(8, 'Too short'),
                 newPassword: Yup.string()
-                    .required('Please enter your new password.')
-                    .min(8, 'Password should be at least 8 characters long.'),
+                    .required('Enter new password')
+                    .min(8, 'Too short'),
                 confirmPassword: Yup.string()
-                    .required('Please confirm your new password.')
-                    .oneOf([Yup.ref('newPassword'), null], 'New password and confirm password do not match.'),
+                    .required('Confirm new password')
+                    .oneOf([Yup.ref('newPassword'), null], 'Passwords do not match'),
             })}
             onSubmit={async (values, {setFieldError}) => {
                 if (values.oldPassword === '') {
@@ -75,9 +75,12 @@ export default function ChangePassword({navigation, route}) {
                         onBlur={() => setFieldTouched('oldPassword')}
                         value={values.oldPassword}
                     />
-                    {touched.oldPassword && errors.oldPassword && (
-                        <Text style={styles.errorText}>{errors.oldPassword}</Text>
-                    )}
+                    <View style={{flexDirection: "row", height: 25}} >
+                        {touched.oldPassword && errors.oldPassword && (
+                            <Text style={styles.errorText}>{errors.oldPassword}</Text>
+                        )}
+                    </View>
+
 
                     <TextInput
                         style={styles.input}
@@ -88,9 +91,7 @@ export default function ChangePassword({navigation, route}) {
                         onBlur={() => setFieldTouched('newPassword')}
                         value={values.newPassword}
                     />
-                    {touched.newPassword && errors.newPassword && (
-                        <Text style={styles.errorText}>{errors.newPassword}</Text>
-                    )}
+
 
                     <TextInput
                         style={styles.input}
@@ -101,9 +102,16 @@ export default function ChangePassword({navigation, route}) {
                         onBlur={() => setFieldTouched('confirmPassword')}
                         value={values.confirmPassword}
                     />
-                    {touched.confirmPassword && errors.confirmPassword && (
-                        <Text style={styles.errorText}>{errors.confirmPassword}</Text>
-                    )}
+                    <View style={{flexDirection: "row", height: 20}} >
+                        {touched.newPassword && errors.newPassword && (
+                            <Text style={styles.errorText}>{errors.newPassword}</Text>
+                        )}
+                        {touched.confirmPassword && errors.confirmPassword && (
+                            <Text style={styles.errorText}>{errors.confirmPassword}</Text>
+                        )}
+                    </View>
+
+
 
                     <View style={styles.buttonContainer}>
                         <View style={styles.space}/>
@@ -119,18 +127,19 @@ export default function ChangePassword({navigation, route}) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        marginTop: '-50%',
+        width: '100%',
+        height: 800,
     },
 
     headerText: {
         color: 'black',
         fontSize: 30,
         fontWeight: 'bold',
-        marginBottom: '15%',
+        marginBottom: 20,
+        marginTop: -212,
         justifyContent: 'center',
         alignContent: 'center',
     },
@@ -170,6 +179,8 @@ const styles = StyleSheet.create({
         color: 'black',
     },
     errorText: {
-        color: 'red',
+        fontSize: 12,
+        color: '#FF0D10',
+        marginHorizontal: 5,
     },
 });

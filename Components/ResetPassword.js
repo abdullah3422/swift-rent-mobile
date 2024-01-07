@@ -21,16 +21,16 @@ export default function ResetPassword({navigation, route}) {
             initialValues={{emailOrPhone: '', currentDigiCode: '', newPassword: '', confirmPassword: ''}}
             validationSchema={Yup.object().shape({
                 emailOrPhone: Yup.string()
-                    .required('Please enter your email or phone.'),
+                    .required('Email or Phone empty'),
                 currentDigiCode: Yup.string()
-                    .required('Please enter your 16 Digit Code.')
-                    .matches(/^[0-9a-zA-Z]{16}$/, 'Must be a 16-digit alphanumeric code.'),
+                    .required('Code Required')
+                    .matches(/^[0-9a-zA-Z]{16}$/, 'Must be 16-digits'),
                 newPassword: Yup.string()
-                    .required('Please enter your new password.')
-                    .min(8, 'Password should be at least 8 characters long.'),
+                    .required('Enter new password')
+                    .min(8, 'Password too short'),
                 confirmPassword: Yup.string()
-                    .required('Please confirm your new password.')
-                    .oneOf([Yup.ref('newPassword'), null], 'New password and confirm password do not match.'),
+                    .required('Confirm new password.')
+                    .oneOf([Yup.ref('newPassword'), null], 'Password do not match.'),
             })}
             onSubmit={async (values, {setFieldError}) => {
                 if (values.newPassword !== values.confirmPassword) {
@@ -54,7 +54,7 @@ export default function ResetPassword({navigation, route}) {
                 } catch (error) {
                     Alert.alert('Old password does not match');
                     setFieldError('currentDigiCode', 'Old Password Does not match');
-                    console.error('Error during changing password:', error);
+                    console.log('Error during changing password:', error);
                 }
             }}
         >
@@ -69,9 +69,7 @@ export default function ResetPassword({navigation, route}) {
                         onBlur={() => setFieldTouched('emailOrPhone')}
                         value={values.emailOrPhone}
                     />
-                    {touched.emailOrPhone && errors.emailOrPhone && (
-                        <Text style={styles.errorText}>{errors.emailOrPhone}</Text>
-                    )}
+
                     <TextInput
                         style={styles.input}
                         placeholder="16 Digit Code"
@@ -81,9 +79,15 @@ export default function ResetPassword({navigation, route}) {
                         onBlur={() => setFieldTouched('currentDigiCode')}
                         value={values.currentDigiCode}
                     />
-                    {touched.currentDigiCode && errors.currentDigiCode && (
-                        <Text style={styles.errorText}>{errors.currentDigiCode}</Text>
-                    )}
+
+                    <View style={{flexDirection: "row", height: 20}} >
+                        {touched.emailOrPhone && errors.emailOrPhone && (
+                            <Text style={styles.errorText}>{errors.emailOrPhone}</Text>
+                        )}
+                        {touched.currentDigiCode && errors.currentDigiCode && (
+                            <Text style={styles.errorText}>{errors.currentDigiCode}</Text>
+                        )}
+                    </View>
 
                     <TextInput
                         style={styles.input}
@@ -94,9 +98,6 @@ export default function ResetPassword({navigation, route}) {
                         onBlur={() => setFieldTouched('newPassword')}
                         value={values.newPassword}
                     />
-                    {touched.newPassword && errors.newPassword && (
-                        <Text style={styles.errorText}>{errors.newPassword}</Text>
-                    )}
 
                     <TextInput
                         style={styles.input}
@@ -107,9 +108,16 @@ export default function ResetPassword({navigation, route}) {
                         onBlur={() => setFieldTouched('confirmPassword')}
                         value={values.confirmPassword}
                     />
-                    {touched.confirmPassword && errors.confirmPassword && (
-                        <Text style={styles.errorText}>{errors.confirmPassword}</Text>
-                    )}
+
+                    <View style={{flexDirection: "row", height: 20}} >
+                        {touched.newPassword && errors.newPassword && (
+                            <Text style={styles.errorText}>{errors.newPassword}</Text>
+                        )}
+                        {touched.confirmPassword && errors.confirmPassword && (
+                            <Text style={styles.errorText}>{errors.confirmPassword}</Text>
+                        )}
+                    </View>
+
                     <Pressable style={[{width: 'auto'}]} onPress={handleForget}>
                         <Text style={styles.buttonText}>Forgot your 16 Digit-Code?</Text>
                     </Pressable>
@@ -127,11 +135,11 @@ export default function ResetPassword({navigation, route}) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        marginTop: '-50%',
+        width: '100%',
+        height: 800,
     },
 
     headerText: {
@@ -139,6 +147,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         marginBottom: '15%',
+        marginTop: -200,
         justifyContent: 'center',
         alignContent: 'center',
     },
@@ -178,6 +187,8 @@ const styles = StyleSheet.create({
         color: 'black',
     },
     errorText: {
-        color: 'red',
+        fontSize: 12,
+        color: '#FF0D10',
+        marginHorizontal: 5,
     },
 });

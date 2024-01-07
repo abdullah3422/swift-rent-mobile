@@ -1,8 +1,9 @@
 import * as React from 'react';
 import {useState} from 'react';
-import {Dimensions, Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Dimensions, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
+import { isLeapYear, isValid, getDaysInMonth } from 'date-fns';
 
 export default function GetToKnow({navigation, route}) {
     const {userType} = route.params;
@@ -28,15 +29,36 @@ export default function GetToKnow({navigation, route}) {
             .matches(/^[a-zA-Z.\s]+$/, 'Only letters are allowed')
             .min(2, 'Too Short!')
             .max(50, 'Too Long!')
-            .required('Required'),
+            .required('First Name Required'),
         lastName: Yup.string()
             .matches(/^[a-zA-Z.\s]+$/, 'Only letters are allowed')
             .min(2, 'Too Short!')
             .max(50, 'Too Long!')
-            .required('Required'),
-        year: Yup.number().min(1900, 'Invalid year').max(2006, 'Must be 18 to Register').required('Year Required'),
-        month: Yup.number().min(1, 'Invalid month').max(12, 'Invalid month').required('Month Required'),
-        day: Yup.number().min(1, 'Invalid day').max(31, 'Invalid day').required(' Day Required')
+            .required('Last Name Required'),
+        year: Yup.number()
+            .min(1900, 'Invalid year')
+            .max(2006, 'Must be 18 to Register')
+            .required('Year Required')
+            .test('valid-year', 'Invalid year', (value) => isValid(new Date(value, 0, 1))),
+        month: Yup.number()
+            .min(1, 'Invalid month')
+            .max(12, 'Invalid month')
+            .required('Month Required'),
+        day: Yup.number()
+            .min(1, 'Invalid day')
+            .max(31, 'Invalid day')
+            .required('Day Required')
+            .test('valid-date', 'Invalid date', function (value) {
+                const { year, month } = this.parent;
+
+                // Check if it's a leap year
+                const isLeap = isLeapYear(new Date(year, 1, 1));
+
+                // Check if the day is within the valid range for the given month
+                const maxDaysInMonth = getDaysInMonth(new Date(year, month - 1));
+
+                return value >= 1 && value <= maxDaysInMonth && !(month === 2 && value === 29 && !isLeap);
+            }),
     });
 
     return (
@@ -55,9 +77,7 @@ export default function GetToKnow({navigation, route}) {
                 <View style={styles.container}>
                     <Image source={require('../img/logoColored.png')} style={styles.logo}/>
                     <Text style={styles.postHeader}>Let's Get to Know You!</Text>
-
                     <View style={styles.input}>
-
                         <TextInput
                             placeholder="First Name"
                             placeholderTextColor="#888"
@@ -66,14 +86,10 @@ export default function GetToKnow({navigation, route}) {
                             onChangeText={handleChange('firstName')}
                             onBlur={() => setFieldTouched('firstName')}
                         />
-
                         <View style={styles.iconContainer}>
                             <Image source={require('../assets/userIcon.png')} style={styles.placeholderIcon}/>
                         </View>
                     </View>
-                    {touched.firstName && errors.firstName && (
-                        <Text style={styles.errorTxt}>{errors.firstName}</Text>
-                    )}
                     <View style={styles.input}>
                         <TextInput
                             placeholder="Last Name"
@@ -83,15 +99,18 @@ export default function GetToKnow({navigation, route}) {
                             onChangeText={handleChange('lastName')}
                             onBlur={() => setFieldTouched('lastName')}
                         />
-
-
                         <View style={styles.iconContainer}>
                             <Image source={require('../assets/userIcon.png')} style={styles.placeholderIcon}/>
                         </View>
                     </View>
+                    <View style={{flexDirection: 'row', height: 20}}>
+                    {touched.firstName && errors.firstName && (
+                        <Text style={styles.errorTxt}>{errors.firstName}</Text>
+                    )}
                     {touched.lastName && errors.lastName && (
                         <Text style={styles.errorTxt}>{errors.lastName}</Text>
                     )}
+                    </View>
                     <Text style={styles.postBody}>Enter your Date of Birth</Text>
                     <View style={styles.dateInputContainer}>
                         <TextInput
@@ -127,9 +146,12 @@ export default function GetToKnow({navigation, route}) {
                     </View>
 
                     {/* Error Messages */}
-                    {touched.year && errors.year && <Text style={styles.errorTxt}>{errors.year}</Text>}
-                    {touched.month && errors.month && <Text style={styles.errorTxt}>{errors.month}</Text>}
-                    {touched.day && errors.day && <Text style={styles.errorTxt}>{errors.day}</Text>}
+                    <View style={{flexDirection: "row", height: 20}} >
+                        {touched.year && errors.year && <Text style={styles.errorTxt}>{errors.year}</Text>}
+                        {touched.month && errors.month && <Text style={styles.errorTxt}>{errors.month}</Text>}
+                        {touched.day && errors.day && <Text style={styles.errorTxt}>{errors.day}</Text>}
+                    </View>
+
 
                     {/* Existing buttons */}
                     <View style={styles.buttonContainer}>
@@ -154,35 +176,35 @@ const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
         width: '100%',
+        height: 800,
         padding: windowWidth * 0.05,
     },
     dateInputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: '90%',
+        width: '97%',
         justifyContent: 'space-between',
         padding: 10
     },
     dateInput: {
         padding: 10,
-        height: windowHeight * 0.06,
+        height: windowHeight * 0.055,
         borderRadius: windowWidth * 0.05,
         borderWidth: 2,
         borderColor: '#06283d',
         flex: 1,
         textAlign: "center",
-        margin: 3,
+        margin: 5,
         marginTop: 0
     },
     logo: {
         width: windowWidth * 0.25,
         height: windowWidth * 0.25,
-        marginTop: -windowHeight * 0.2,
+        marginTop: -190,
     },
     headerText: {
         fontSize: windowWidth * 0.05,
@@ -264,11 +286,12 @@ const styles = StyleSheet.create({
         marginTop: windowHeight * 0.0001,
         fontSize: windowWidth * 0.04,
         fontWeight: 'bold',
-        color: 'black',
+        color: '#47b5ff',
     },
     errorTxt: {
         fontSize: windowWidth * 0.03,
         color: '#FF0D10',
+        marginHorizontal: 5,
     },
 });
 

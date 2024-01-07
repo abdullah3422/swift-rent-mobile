@@ -52,7 +52,7 @@ export default function OwnerProfile({navigation, route}) {
                 });
             }
         } catch (error) {
-            console.error('Error during fetching owner details:', error);
+            console.log('Error during fetching owner details:', error);
         }
     };
 
@@ -115,28 +115,32 @@ export default function OwnerProfile({navigation, route}) {
                 <View style={styles.bottomNavRow}>
                     <Pressable style={styles.bottomNavButton}
                                onPress={() => navigation.navigate('MyProperties', {userID, ownerID})}>
-                        <Image
-                            style={{width: 40, height: 40}}
-                            source={require('../img/propertiesIcon.png')}
-                        />
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            <Image
+                                style={{width: 40, height: 40}}
+                                source={require('../img/propertiesIcon.png')}
+                            />
+                        </View>
                         <Text style={styles.bottomContainerText}>Properties</Text>
                     </Pressable>
                     <Pressable style={styles.bottomNavButton}
                                onPress={() => navigation.navigate('AnalyticsOwner', {userID, ownerID})}>
-                        <Image
-                            style={{width: 40, height: 40}}
-                            source={require('../img/analyticIcon.png')}
-                        />
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            <Image
+                                style={{width: 40, height: 40}}
+                                source={require('../img/analyticIcon.png')}
+                            />
+                        </View>
                         <Text style={styles.bottomContainerText}>Analytics</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton}
-                               onPress={() => navigation.navigate('OwnerNotification', {userID, ownerID})}>
-                        <Image
-                            style={{width: 40, height: 40}}
-                            source={require('../img/notification.png')}
-                        />
-                        <Text style={styles.bottomContainerText}>Alerts</Text>
-                    </Pressable>
+                    {/*<Pressable style={styles.bottomNavButton}*/}
+                    {/*           onPress={() => navigation.navigate('OwnerNotification', {userID, ownerID})}>*/}
+                    {/*    <Image*/}
+                    {/*        style={{width: 40, height: 40}}*/}
+                    {/*        source={require('../img/notification.png')}*/}
+                    {/*    />*/}
+                    {/*    <Text style={styles.bottomContainerText}>Alerts</Text>*/}
+                    {/*</Pressable>*/}
                     <Pressable style={styles.bottomNavButton}>
                         <Image
                             style={{width: 40, height: 40}}

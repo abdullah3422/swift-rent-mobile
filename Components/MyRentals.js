@@ -77,21 +77,23 @@ export default function MyRentals({navigation, route}) {
                 <View style={styles.bottomNavRow}>
 
                     <Pressable style={[styles.bottomNavButton]}>
-                        <Image
-                            style={{width: 40, height: 40}}
-                            source={require('../img/propertiesIconFocused.png')}
-                        />
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            <Image
+                                style={{width: 40, height: 40}}
+                                source={require('../img/propertiesIconFocused.png')}
+                            />
+                        </View>
                         <Text style={styles.bottomContainerText}>Rentals</Text>
                     </Pressable>
 
-                    <Pressable style={styles.bottomNavButton}
-                               onPress={() => navigation.navigate('TenantNotification', {userID, tenantID})}>
-                        <Image
-                            style={{width: 40, height: 40}}
-                            source={require('../img/notification.png')}
-                        />
-                        <Text style={styles.bottomContainerText}>Alerts</Text>
-                    </Pressable>
+                    {/*<Pressable style={styles.bottomNavButton}*/}
+                    {/*           onPress={() => navigation.navigate('TenantNotification', {userID, tenantID})}>*/}
+                    {/*    <Image*/}
+                    {/*        style={{width: 40, height: 40}}*/}
+                    {/*        source={require('../img/notification.png')}*/}
+                    {/*    />*/}
+                    {/*    <Text style={styles.bottomContainerText}>Alerts</Text>*/}
+                    {/*</Pressable>*/}
                     <Pressable style={styles.bottomNavButton}
                                onPress={() => navigation.navigate('TenantProfile', {userID, tenantID})}>
                         <Image
@@ -155,6 +157,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: 'bold',
         marginTop: 10,
+        marginBottom: 10,
         marginLeft: 10,
 
     },

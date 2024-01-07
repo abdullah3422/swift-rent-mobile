@@ -60,16 +60,16 @@ export default function EditProperty({navigation, route}) {
     const editPropertiesSchema = Yup.object().shape({
         propertyAddress: Yup.string()
             .min(5, 'Too Short!')
-            .required('Required'),
+            .required('Address Required'),
         dueDate: Yup.number()
             .integer('Due Date must be an integer')
-            .min(1, 'Due Date must be between 1 and 20')
-            .max(20, 'Due Date must be between 1 and 20')
-            .required('Required'),
+            .min(1, 'Date between 1-20')
+            .max(20, 'Date between 1-20')
+            .required('Date Required'),
         rent: Yup.number()
-            .min(1, 'Rent Amount must be at least 1')
+            .min(1, 'Invalid Rent')
             // .max(1000000, 'Rent Amount must be less than 1,000,000')
-            .required('Required'),
+            .required('Rent Required'),
     });
 
     return (
@@ -100,9 +100,7 @@ export default function EditProperty({navigation, route}) {
                         placeholderTextColor="#cdcdcd"
                     />
 
-                    {touched.propertyAddress && errors.propertyAddress && (
-                        <Text style={styles.errorText}>{errors.propertyAddress}</Text>
-                    )}
+
 
                     <Text style={styles.fieldHeading}> Due Date</Text>
                     <TextInput
@@ -115,7 +113,7 @@ export default function EditProperty({navigation, route}) {
                         onBlur={handleBlur('dueDate')}
                         placeholderTextColor="#cdcdcd"
                     />
-                    {touched.dueDate && errors.dueDate && <Text style={styles.errorText}>{errors.dueDate}</Text>}
+
                     <Text style={styles.fieldHeading}> Rent</Text>
                     <TextInput
                         style={styles.input}
@@ -127,7 +125,15 @@ export default function EditProperty({navigation, route}) {
                         onBlur={handleBlur('rent')}
                         placeholderTextColor="#cdcdcd"
                     />
-                    {touched.rent && errors.rent && <Text style={styles.errorText}>{errors.rent}</Text>}
+
+                    <View style={{flexDirection: "row", height: 20}} >
+                        {touched.propertyAddress && errors.propertyAddress && (
+                            <Text style={styles.errorText}>{errors.propertyAddress}</Text>
+                        )}
+                        {touched.dueDate && errors.dueDate && <Text style={styles.errorText}>{errors.dueDate}</Text>}
+                        {touched.rent && errors.rent && <Text style={styles.errorText}>{errors.rent}</Text>}
+                    </View>
+
 
 
                     <View style={styles.buttonContainer}>
@@ -146,11 +152,11 @@ export default function EditProperty({navigation, route}) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        marginTop: '-50%',
+        width: '100%',
+        height: 800,
     },
     fieldHeading: {
         fontSize: 18,
@@ -167,7 +173,8 @@ const styles = StyleSheet.create({
         color: 'black',
         fontSize: 30,
         fontWeight: 'bold',
-        marginBottom: '15%',
+        marginBottom: 10,
+        marginTop: -160,
         justifyContent: 'center',
         alignContent: 'center',
     },
@@ -207,8 +214,8 @@ const styles = StyleSheet.create({
         color: 'black',
     },
     errorText: {
-        // fontSize: 12,
+        fontSize: 12,
         color: '#FF0D10',
-
+        marginHorizontal: 5,
     },
 });

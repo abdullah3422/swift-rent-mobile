@@ -20,7 +20,7 @@ export default function LoginAs({navigation, route}) {
         if (tenantID !== 0) {
             navigation.reset({
                 index: 0,
-                routes: [{name: 'TenantNotification', params: {userID, tenantID}}],
+                routes: [{name: 'MyRentals', params: {userID, tenantID}}],
             });
         } else {
             // Handle the case when tenantId is 0

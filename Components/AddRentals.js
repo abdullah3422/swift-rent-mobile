@@ -48,7 +48,7 @@ export default function AddRentals({navigation, route}) {
                 navigation.navigate('MyProperties', {userID, tenantID});
             }
         } catch (error) {
-            console.error('Error during adding property:', error);
+            console.log('Error during adding property:', error);
         }
     };
 
@@ -222,6 +222,7 @@ const styles = StyleSheet.create({
     errorText: {
         fontSize: 12,
         color: '#FF0D10',
+        marginHorizontal: 5,
 
     },
 });

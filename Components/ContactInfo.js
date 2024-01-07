@@ -33,7 +33,7 @@ export default function LoginScreen({navigation, route}) {
                     navigation.navigate('SetPassword', {userType, firstName, lastName, DOB, email, phone});
                 } else {
                     // Handle errors, show appropriate messages to the user
-                    console.error('API Error:', response.data.error, response.statusText);
+                    console.log('API Error:', response.data.error, response.statusText);
                 }
             } else {
                 Alert.alert('Fields Cannot be Empty', 'Please make sure that either email or phone is entered.')
@@ -44,7 +44,6 @@ export default function LoginScreen({navigation, route}) {
             if (String(lastThreeNumbers) === "420") {
                 Alert.alert("Credential(s) not unique");
             }
-            // Handle network errors, show appropriate messages to the user
         }
     };
 
@@ -84,7 +83,6 @@ export default function LoginScreen({navigation, route}) {
                             />
                             <Image source={require('../img/email.png')} style={styles.imageStyle}/>
                         </View>
-                        {touched.email && errors.email && <Text style={styles.errorTxt}>{errors.email}</Text>}
                     </View>
 
                     <View style={styles.inputContainer}>
@@ -100,8 +98,13 @@ export default function LoginScreen({navigation, route}) {
                             />
                             <Image source={require('../img/hashtag.png')} style={styles.imageStyle}/>
                         </View>
-                        {touched.phoneNumber && errors.phoneNumber &&
-                            <Text style={styles.errorTxt}>{errors.phoneNumber}</Text>}
+                        <View style={{flexDirection: "row", height: 20, justifyContent: 'center', alignItems: 'center'}} >
+                            {touched.email && errors.email &&
+                                <Text style={styles.errorTxt}>{errors.email}</Text>}
+                            {touched.phoneNumber && errors.phoneNumber &&
+                                <Text style={styles.errorTxt}>{errors.phoneNumber}</Text>}
+                        </View>
+
                     </View>
 
                     <View style={styles.buttonContainer}>
@@ -124,17 +127,16 @@ const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
         width: '100%',
-        padding: windowWidth * 0.05,
+        height: 800,
     },
     logo: {
         width: windowWidth * 0.25,
         height: windowWidth * 0.25,
-        marginTop: -windowHeight * 0.25,
+        marginTop: -280,
     },
 
     headerText: {
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
     },
     input: {
         width: '90%',
-        height: windowHeight * 0.06,
+        height: windowHeight * 0.055,
         padding: windowWidth * 0.03,
     },
     imageStyle: {
@@ -194,5 +196,6 @@ const styles = StyleSheet.create({
     errorTxt: {
         fontSize: windowWidth * 0.03,
         color: '#FF0D10',
+        marginHorizontal: 5,
     },
 });

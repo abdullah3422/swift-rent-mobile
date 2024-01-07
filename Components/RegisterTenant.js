@@ -60,9 +60,12 @@ export default function RegisterTenant({navigation, route}) {
                         }}
                         onBlur={handleBlur('emailOrPhone')}
                     />
-                    {touched.emailOrPhone && errors.emailOrPhone && (
-                        <Text style={{color: 'red'}}>{errors.emailOrPhone}</Text>
-                    )}
+
+                    <View style={{flexDirection: "row", height: 20}} >
+                        {touched.emailOrPhone && errors.emailOrPhone && (
+                            <Text style={{color: 'red'}}>{errors.emailOrPhone}</Text>
+                        )}
+                    </View>
 
                     <View style={styles.buttonContainer}>
                         <View style={styles.space}/>
@@ -79,18 +82,19 @@ export default function RegisterTenant({navigation, route}) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        marginTop: '-50%',
+        width: '100%',
+        height: 800,
     },
 
     headerText: {
         color: 'black',
         fontSize: 30,
         fontWeight: 'bold',
-        marginBottom: '15%',
+        marginBottom: 40,
+        marginTop: -325,
         justifyContent: 'center',
         alignContent: 'center',
         textAlign: 'center'
@@ -131,6 +135,8 @@ const styles = StyleSheet.create({
         color: 'black',
     },
     errorText: {
-        color: 'red',
+        fontSize: 12,
+        color: '#FF0D10',
+        marginHorizontal: 5,
     },
 });

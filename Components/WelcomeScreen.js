@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
         width: '60%',
         paddingVertical: 2,
         backgroundColor: '#e5e5e5',
-        marginTop: windowWidth * 0.38,
+        marginTop: 250,
         borderRadius: 100,
         borderColor: '#cdcdcd',
         borderWidth: 1.5,

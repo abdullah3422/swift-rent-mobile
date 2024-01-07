@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     PropertyAddress: {
-        marginTop: windowHeight * 0.025,
+        marginTop: -100,
         width: "90%",
         textAlign: "center",
         marginBottom: windowHeight * 0.2,

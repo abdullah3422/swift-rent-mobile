@@ -92,28 +92,32 @@ export default function MyProperties({navigation, route}) {
                 <View style={styles.bottomNavRow}>
 
                     <Pressable style={styles.bottomNavButton}>
-                        <Image
-                            style={{width: 40, height: 40}}
-                            source={require('../img/propertiesIconFocused.png')}
-                        />
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            <Image
+                                style={{width: 40, height: 40}}
+                                source={require('../img/propertiesIconFocused.png')}
+                            />
+                        </View>
                         <Text style={styles.bottomContainerText}>Properties</Text>
                     </Pressable>
                     <Pressable style={styles.bottomNavButton}
                                onPress={() => navigation.navigate('AnalyticsOwner', {userID, ownerID})}>
-                        <Image
-                            style={{width: 40, height: 40}}
-                            source={require('../img/analyticIcon.png')}
-                        />
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            <Image
+                                style={{width: 40, height: 40}}
+                                source={require('../img/analyticIcon.png')}
+                            />
+                        </View>
                         <Text style={styles.bottomContainerText}>Analytics</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton}
-                               onPress={() => navigation.navigate('OwnerNotification', {userID, ownerID})}>
-                        <Image
-                            style={{width: 40, height: 40}}
-                            source={require('../img/notification.png')}
-                        />
-                        <Text style={styles.bottomContainerText}>Alerts</Text>
-                    </Pressable>
+                    {/*<Pressable style={styles.bottomNavButton}*/}
+                    {/*           onPress={() => navigation.navigate('OwnerNotification', {userID, ownerID})}>*/}
+                    {/*    <Image*/}
+                    {/*        style={{width: 40, height: 40}}*/}
+                    {/*        source={require('../img/notification.png')}*/}
+                    {/*    />*/}
+                    {/*    <Text style={styles.bottomContainerText}>Alerts</Text>*/}
+                    {/*</Pressable>*/}
                     <Pressable style={styles.bottomNavButton}
                                onPress={() => navigation.navigate('OwnerProfile', {userID, ownerID})}>
                         <Image
@@ -176,8 +180,8 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: 'bold',
         marginTop: 10,
+        marginBottom: 10,
         marginLeft: 10,
-
     },
     bottomContainer: {
         flex: 0.025,

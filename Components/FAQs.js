@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        // marginTop: -180,
         marginBottom: 10,
         // marginTop: 20
     },

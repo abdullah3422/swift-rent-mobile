@@ -54,7 +54,7 @@ export default function TenantProfile({navigation, route}) {
                 });
             }
         } catch (error) {
-            console.error('Error during fetching tenant details:', error);
+            console.log('Error during fetching tenant details:', error);
         }
     };
 
@@ -120,21 +120,23 @@ export default function TenantProfile({navigation, route}) {
                 <View style={styles.bottomNavRow}>
                     <Pressable style={styles.bottomNavButton}
                                onPress={() => navigation.navigate('MyRentals', {userID, tenantID})}>
-                        <Image
-                            style={{width: 40, height: 40}}
-                            source={require('../img/propertiesIcon.png')}
-                        />
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            <Image
+                                style={{width: 40, height: 40}}
+                                source={require('../img/propertiesIcon.png')}
+                            />
+                        </View>
                         <Text style={styles.bottomContainerText}>Rentals</Text>
                     </Pressable>
 
-                    <Pressable style={styles.bottomNavButton}
-                               onPress={() => navigation.navigate('TenantNotification', {userID, tenantID})}>
-                        <Image
-                            style={{width: 40, height: 40}}
-                            source={require('../img/notification.png')}
-                        />
-                        <Text style={styles.bottomContainerText}>Alerts</Text>
-                    </Pressable>
+                    {/*<Pressable style={styles.bottomNavButton}*/}
+                    {/*           onPress={() => navigation.navigate('TenantNotification', {userID, tenantID})}>*/}
+                    {/*    <Image*/}
+                    {/*        style={{width: 40, height: 40}}*/}
+                    {/*        source={require('../img/notification.png')}*/}
+                    {/*    />*/}
+                    {/*    <Text style={styles.bottomContainerText}>Alerts</Text>*/}
+                    {/*</Pressable>*/}
                     <Pressable
                         style={[styles.bottomNavButton]}>
                         <Image

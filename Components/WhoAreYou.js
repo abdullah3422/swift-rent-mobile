@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
         paddingVertical: windowHeight * 0.02,  // = 15
         padding: windowHeight * 0.025,
         backgroundColor: '#e5e5e5',
-        marginTop: windowHeight * 0.025,    // =20
+        marginTop: 50,    // =20
         borderRadius: windowHeight * 0.3,
         borderColor: '#cdcdcd',
         borderWidth: windowHeight * 0.002,  // = 2
@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
 
     },
     newRoleText: {
-        marginTop: windowHeight * 0.05,  // This will make the text fall almost to the end of the screen
-        marginBottom: windowHeight * 0.03,  // Add some margin at the bottom
+        marginTop: 150,  // This will make the text fall almost to the end of the screen
+        marginBottom: -90,  // Add some margin at the bottom
         fontSize: windowWidth * 0.04,  // Adjust the font size
         textDecorationLine: 'underline',  // Underline the text
         color: '#06283d',

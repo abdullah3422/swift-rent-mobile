@@ -56,7 +56,7 @@ export default function ReceiveRent({navigation, route}) {
     const rentValidationSchema = Yup.object().shape({
         rentAmount: Yup.number()
             .typeError('Rent must be a number')
-            .min(1, 'Rent must be at least 1')
+            .min( parseInt(data.rent), 'Rent must be ' + String(data.rent))
             .required('Rent is required'),
     });
 
@@ -85,9 +85,13 @@ export default function ReceiveRent({navigation, route}) {
                             keyboardType="numeric"
                         />
                     </View>
-                    {touched.rentAmount && errors.rentAmount && (
-                        <Text style={styles.errorText}>{errors.rentAmount}</Text>
-                    )}
+
+                    <View style={{flexDirection: "row", height: 20}} >
+                        {touched.rentAmount && errors.rentAmount && (
+                            <Text style={styles.errorText}>{errors.rentAmount}</Text>
+                        )}
+                    </View>
+
                     <View style={styles.buttonContainer}>
                         <Pressable
                             style={[styles.button, {width: 160}]}
@@ -104,11 +108,11 @@ export default function ReceiveRent({navigation, route}) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        marginTop: '-50%',
+        width: '100%',
+        height: 800,
     },
     textContainer: {
         textAlign: 'left',
@@ -121,7 +125,8 @@ const styles = StyleSheet.create({
         color: 'black',
         fontSize: 30,
         fontWeight: 'bold',
-        marginBottom: '15%',
+        marginBottom: 30,
+        marginTop: -295,
         justifyContent: 'center',
         alignContent: 'center',
         textAlign: 'center'
@@ -162,6 +167,8 @@ const styles = StyleSheet.create({
         color: 'black',
     },
     errorText: {
-        color: 'red',
+        fontSize: 12,
+        color: '#FF0D10',
+        marginHorizontal: 5,
     },
 });
