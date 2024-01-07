@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Alert, Text, TextInput, View, StyleSheet, Pressable } from 'react-native';
+import React, {useState} from 'react';
+import {Alert, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import axios from 'axios';
 import * as Yup from "yup";
 import {Formik} from "formik";
 
-export default function RegisterTenant({ navigation, route }) {
-    const { userID, ownerID, propertyID } = route.params;
+export default function RegisterTenant({navigation, route}) {
+    const {userID, ownerID, propertyID} = route.params;
     const ipAddress = route.params.ipAddress;
 
     const [tenantInfo, setTenantInfo] = useState({
@@ -14,7 +14,9 @@ export default function RegisterTenant({ navigation, route }) {
 
     // Function to handle registration
     const handleRegister = async () => {
-        const { emailOrPhone } = tenantInfo;
+        const {emailOrPhone} = tenantInfo;
+        console.log(emailOrPhone);
+        console.log(propertyID);
         try {
             const response = await axios.post(ipAddress + 'api/register-tenant', {
                 propertyID: String(propertyID),
@@ -22,11 +24,11 @@ export default function RegisterTenant({ navigation, route }) {
             });
             if (response.data.success) {
                 Alert.alert('Success', 'Tenant successfully registered')
-                navigation.navigate('MyProperties', { userID, ownerID });
+                navigation.navigate('MyProperties', {userID, ownerID});
             }
         } catch (error) {
             console.log("Error updating property data:", error);
-            Alert.alert("Error","Tenant does not exist");
+            Alert.alert("Error", "Tenant does not exist");
         }
     };
 
@@ -37,14 +39,12 @@ export default function RegisterTenant({ navigation, route }) {
 
     });
     return (
-        // ...
-
         <Formik
-            initialValues={{ emailOrPhone: '' }}
+            initialValues={{emailOrPhone: ''}}
             validationSchema={registerTenantSchema}
             onSubmit={(values) => handleRegister(values)}
         >
-            {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+            {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
                 <View style={styles.container}>
                     <Text style={styles.headerText}>Register a{'\n'}Tenant</Text>
 
@@ -53,16 +53,20 @@ export default function RegisterTenant({ navigation, route }) {
                         placeholder="Tenant email or phone"
                         placeholderTextColor="#cdcdcd"
                         value={values.emailOrPhone}
-                        onChangeText={handleChange('emailOrPhone')}
+                        //onChangeText={handleChange('emailOrPhone')}
+                        onChangeText={(text) => {
+                            setTenantInfo({...tenantInfo, emailOrPhone: text});
+                            handleChange('emailOrPhone')(text);
+                        }}
                         onBlur={handleBlur('emailOrPhone')}
                     />
                     {touched.emailOrPhone && errors.emailOrPhone && (
-                        <Text style={{ color: 'red' }}>{errors.emailOrPhone}</Text>
+                        <Text style={{color: 'red'}}>{errors.emailOrPhone}</Text>
                     )}
 
                     <View style={styles.buttonContainer}>
-                        <View style={styles.space} />
-                        <Pressable style={[styles.button, { width: 160 }]} onPress={handleSubmit}>
+                        <View style={styles.space}/>
+                        <Pressable style={[styles.button, {width: 160}]} onPress={handleSubmit}>
                             <Text style={styles.buttonText}>Register</Text>
                         </Pressable>
                     </View>

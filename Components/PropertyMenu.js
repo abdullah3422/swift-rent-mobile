@@ -1,30 +1,45 @@
 import * as React from 'react';
-import { Alert, Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import {Alert, Dimensions, Pressable, StyleSheet, Text, View} from 'react-native';
 import axios from "axios";
 
-export default function PropertyMenu({ navigation, route }) {
-    const { userID, ownerID, tenantID, propertyID, propertyAddress, rentStatus } = route.params;
+export default function PropertyMenu({navigation, route}) {
+    const {userID, ownerID, tenantID, propertyID, propertyAddress, rentStatus} = route.params;
     const ipAddress = route.params.ipAddress;
     console.log("Property Menu:");
     console.log(route.params);
 
-
-
     async function handleUnregister() {
-        //API to Un-register tenant
-        try {
-            const response = await axios.post(ipAddress + 'api/unregister-tenant', {
-                propertyID: String(propertyID),
-            });
-            if (response.data.success) {
-                Alert.alert('Success', 'Tenant successfully un-registered')
-                navigation.navigate('MyProperties', { userID, ownerID });
-            }
-        } catch (error) {
-            console.log("Error updating property data:", error);
-            Alert.alert("Error un-registering tenant");
-        }
+        // Display a confirmation alert
+        Alert.alert(
+            "Confirm Unregister",
+            "Are you sure you want to unregister this tenant? This action cannot be undone.",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel",
+                },
+                {
+                    text: "Unregister",
+                    onPress: async () => {
+                        try {
+                            const response = await axios.post(ipAddress + 'api/unregister-tenant', {
+                                propertyID: String(propertyID),
+                            });
+                            if (response.data.success) {
+                                Alert.alert('Success', 'Tenant successfully un-registered');
+                                navigation.navigate('MyProperties', {userID, ownerID});
+                            }
+                        } catch (error) {
+                            console.log("Error unregistering tenant:", error);
+                            Alert.alert("Error unregistering tenant");
+                        }
+                    },
+                    style: "destructive", // This makes the button appear in red to indicate it's destructive
+                },
+            ]
+        );
     }
+
 
     async function handleDelete() {
         // Display a confirmation alert
@@ -45,7 +60,7 @@ export default function PropertyMenu({ navigation, route }) {
                             });
                             if (response.data.success) {
                                 Alert.alert('Success', 'Property has been deleted successfully');
-                                navigation.navigate('MyProperties', { userID, ownerID });
+                                navigation.navigate('MyProperties', {userID, ownerID});
                             }
                         } catch (error) {
                             console.log("Error deleting property:", error);
@@ -61,11 +76,13 @@ export default function PropertyMenu({ navigation, route }) {
     return (
         <View style={styles.container}>
             <Text style={styles.PropertyAddress}>{propertyAddress}</Text>
-            <Pressable style={styles.button} onPress={() => navigation.navigate('EditProperty', { userID, ownerID, propertyID })}>
+            <Pressable style={styles.button}
+                       onPress={() => navigation.navigate('EditProperty', {userID, ownerID, propertyID})}>
                 <Text style={styles.buttonText}>Edit Property</Text>
             </Pressable>
             {!tenantID && (
-                <Pressable style={styles.button} onPress={() => navigation.navigate('RegisterTenant', { userID, ownerID, propertyID })}>
+                <Pressable style={styles.button}
+                           onPress={() => navigation.navigate('RegisterTenant', {userID, ownerID, propertyID})}>
                     <Text style={styles.buttonText}>Register</Text>
                 </Pressable>
             )}
@@ -74,15 +91,16 @@ export default function PropertyMenu({ navigation, route }) {
                     <Text style={styles.buttonText}>Un-Register</Text>
                 </Pressable>
             )}
-            {tenantID !== undefined && tenantID !== 0 && rentStatus === "Collect" &&(
-                <Pressable style={styles.button} onPress={() => navigation.navigate('ReceiveRent', { userID, ownerID, propertyID })}>
+            {tenantID !== undefined && tenantID !== 0 && rentStatus === "Collect" && (
+                <Pressable style={styles.button}
+                           onPress={() => navigation.navigate('ReceiveRent', {userID, ownerID, propertyID})}>
                     <Text style={styles.buttonText}>Receive Rent</Text>
                 </Pressable>
             )}
             {!tenantID && (
-            <Pressable style={styles.button} onPress={handleDelete}>
-                <Text style={styles.buttonText}>Delete Property</Text>
-            </Pressable>
+                <Pressable style={styles.button} onPress={handleDelete}>
+                    <Text style={styles.buttonText}>Delete Property</Text>
+                </Pressable>
             )}
         </View>
     );

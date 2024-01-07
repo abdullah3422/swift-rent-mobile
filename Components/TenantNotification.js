@@ -1,6 +1,6 @@
 import * as React from 'react';
+import {useState} from 'react';
 import {Alert, BackHandler, Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {useState} from "react";
 import {useFocusEffect} from "@react-navigation/native";
 
 export default function TenantNotification({navigation, route}) {
@@ -21,7 +21,7 @@ export default function TenantNotification({navigation, route}) {
                             onPress: () => BackHandler.exitApp(),
                         },
                     ],
-                    { cancelable: false }
+                    {cancelable: false}
                 );
                 return true; // Return true to prevent the default behavior (closing the app)
             };
@@ -34,13 +34,13 @@ export default function TenantNotification({navigation, route}) {
             return () => backHandler.remove(); // Clean up the event listener when the component unmounts
         }, [])
     );
-    const {userID, tenantID } = route.params;
+    const {userID, tenantID} = route.params;
     console.log("userID: " + userID);
     console.log("tenantID: " + tenantID);
 
     const [activePage, setActivePage] = useState('TenantNotification'); // Set the default active page
     const renderItem = ({item}) => (
-        <Pressable style={styles.cardButtons} >
+        <Pressable style={styles.cardButtons}>
             <Text style={styles.cardButtonText}>{item.title}</Text>
             <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
                 <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage}/>
@@ -105,8 +105,8 @@ export default function TenantNotification({navigation, route}) {
                     </Pressable>
                     <Pressable style={[styles.bottomNavButton]}>
                         <Image
-                            style={{ width: 40, height: 40 }}
-                            source={require('../img/notification.png')}
+                            style={{width: 40, height: 40}}
+                            source={require('../img/notificationFocused.png')}
                         />
                         <Text style={styles.bottomContainerText}>Alerts</Text>
                     </Pressable>
@@ -114,7 +114,7 @@ export default function TenantNotification({navigation, route}) {
                                onPress={() => navigation.navigate('TenantProfile', {userID, tenantID})}>
                         <Image
                             style={{width: 40, height: 40}}
-                            source={require('../img/profileFocused.png')}
+                            source={require('../img/profile.png')}
                         />
                         <Text style={styles.bottomContainerText}>Profile</Text>
                     </Pressable>

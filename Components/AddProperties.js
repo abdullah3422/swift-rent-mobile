@@ -1,13 +1,13 @@
 import * as React from 'react';
+import {useState} from 'react';
 import {Alert, Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
-import {useState} from "react";
 import axios from "axios";
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 
 export default function AddProperties({navigation, route}) {
 
-    const {userID, ownerID } = route.params;
+    const {userID, ownerID} = route.params;
     const ipAddress = route.params.ipAddress;
     console.log("userID: " + userID);
     console.log("ownerID: " + ownerID);
@@ -21,12 +21,11 @@ export default function AddProperties({navigation, route}) {
     const addPropertiesSchema = Yup.object().shape({
         propertyAddress: Yup.string()
             .min(5, 'Too Short!')
-            .max(50, 'Too Long!')
             .required('Required'),
         dueDate: Yup.number()
             .integer('Due Date must be an integer')
-            .min(1, 'Due Date must be between 1 and 31')
-            .max(31, 'Due Date must be between 1 and 31')
+            .min(1, 'Due Date must be between 1 and 20')
+            .max(20, 'Due Date must be between 1 and 20')
             .required('Required'),
         rentAmount: Yup.number()
             .min(1, 'Rent Amount must be at least 1')
@@ -45,7 +44,7 @@ export default function AddProperties({navigation, route}) {
 
             if (response.data.success) {
                 Alert.alert('Property Successfully Added!')
-                navigation.navigate('AnalyticsOwner', {userID, ownerID });
+                navigation.navigate('AnalyticsOwner', {userID, ownerID});
             }
         } catch (error) {
             console.error('Error during adding property:', error);
@@ -116,7 +115,7 @@ export default function AddProperties({navigation, route}) {
 
                     <View style={styles.buttonContainer}>
                         <Pressable style={styles.button}
-                                   onPress={() => navigation.navigate('MyProperties', {userID, ownerID })}>
+                                   onPress={() => navigation.navigate('MyProperties', {userID, ownerID})}>
                             <Text style={styles.buttonText}>Back</Text>
                         </Pressable>
 

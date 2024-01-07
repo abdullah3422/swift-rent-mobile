@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { useState } from 'react';
-import {Alert, Dimensions, StyleSheet, Text, TextInput, View, Pressable, Image} from 'react-native';
-import { Formik } from 'formik';
+import {useState} from 'react';
+import {Dimensions, Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Formik} from 'formik';
 import * as Yup from 'yup';
 
-export default function GetToKnow({ navigation, route }) {
+export default function GetToKnow({navigation, route}) {
     const {userType} = route.params;
     console.log(userType);
     const [year, setYear] = useState('');
@@ -15,10 +15,11 @@ export default function GetToKnow({ navigation, route }) {
 
         console.log(values.firstName);
         console.log(values.lastName);
-        console.log(values.year+"-"+values.month+"-"+values.day);
+        console.log(values.year + "-" + values.month + "-" + values.day);
 
-        let firstName = values.firstName, lastName = values.lastName, DOB = values.year+"-"+values.month+"-"+values.day;
-        navigation.navigate('ContactInfo', { userType, firstName, lastName, DOB });
+        let firstName = values.firstName, lastName = values.lastName,
+            DOB = values.year + "-" + values.month + "-" + values.day;
+        navigation.navigate('ContactInfo', {userType, firstName, lastName, DOB});
 
     };
 
@@ -33,7 +34,7 @@ export default function GetToKnow({ navigation, route }) {
             .min(2, 'Too Short!')
             .max(50, 'Too Long!')
             .required('Required'),
-        year: Yup.number().min(1900, 'Invalid year').max(2013, 'Invalid year').required('Year Required'),
+        year: Yup.number().min(1900, 'Invalid year').max(2006, 'Must be 18 to Register').required('Year Required'),
         month: Yup.number().min(1, 'Invalid month').max(12, 'Invalid month').required('Month Required'),
         day: Yup.number().min(1, 'Invalid day').max(31, 'Invalid day').required(' Day Required')
     });
@@ -50,9 +51,9 @@ export default function GetToKnow({ navigation, route }) {
             validationSchema={getToKnowSchema}
             onSubmit={handleData}
         >
-            {({ values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit }) => (
+            {({values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit}) => (
                 <View style={styles.container}>
-                    <Image source={require('../img/logoColored.png' )} style={styles.logo} />
+                    <Image source={require('../img/logoColored.png')} style={styles.logo}/>
                     <Text style={styles.postHeader}>Let's Get to Know You!</Text>
 
                     <View style={styles.input}>
@@ -67,11 +68,11 @@ export default function GetToKnow({ navigation, route }) {
                         />
 
                         <View style={styles.iconContainer}>
-                            <Image source={require('../assets/userIcon.png')} style={styles.placeholderIcon} />
+                            <Image source={require('../assets/userIcon.png')} style={styles.placeholderIcon}/>
                         </View>
                     </View>
                     {touched.firstName && errors.firstName && (
-                        <Text style={styles.errorTxt} >{errors.firstName}</Text>
+                        <Text style={styles.errorTxt}>{errors.firstName}</Text>
                     )}
                     <View style={styles.input}>
                         <TextInput
@@ -85,11 +86,11 @@ export default function GetToKnow({ navigation, route }) {
 
 
                         <View style={styles.iconContainer}>
-                            <Image source={require('../assets/userIcon.png')} style={styles.placeholderIcon} />
+                            <Image source={require('../assets/userIcon.png')} style={styles.placeholderIcon}/>
                         </View>
                     </View>
                     {touched.lastName && errors.lastName && (
-                        <Text style={styles.errorTxt} >{errors.lastName}</Text>
+                        <Text style={styles.errorTxt}>{errors.lastName}</Text>
                     )}
                     <Text style={styles.postBody}>Enter your Date of Birth</Text>
                     <View style={styles.dateInputContainer}>
@@ -136,7 +137,7 @@ export default function GetToKnow({ navigation, route }) {
                             <Text style={styles.buttonText}>Back</Text>
                         </Pressable>
 
-                        <View style={styles.space} />
+                        <View style={styles.space}/>
                         <Pressable style={styles.button} onPress={handleSubmit}>
                             <Text style={styles.buttonText}>Next</Text>
                         </Pressable>
@@ -146,7 +147,6 @@ export default function GetToKnow({ navigation, route }) {
         </Formik>
     );
 }
-
 
 
 const windowWidth = Dimensions.get('window').width;

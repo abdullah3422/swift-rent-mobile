@@ -1,38 +1,55 @@
 import * as React from 'react';
-import { Alert, Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import {Alert, Dimensions, Pressable, StyleSheet, Text, View} from 'react-native';
 import axios from "axios";
 
-export default function RentalMenu({ navigation, route }) {
-    const { userID, ownerID, tenantID, propertyID, propertyAddress, status } = route.params;
+export default function RentalMenu({navigation, route}) {
+    const {userID, ownerID, tenantID, propertyID, propertyAddress, status} = route.params;
     const ipAddress = route.params.ipAddress;
+
     async function handleCashCollection() {
-        //API to delete property handle admin side deleted properties check for owner as well
-        try {
-            const response = await axios.post(ipAddress + 'api/request-cash-collection', {
-                ownerID: ownerID,
-                tenantID: tenantID,
-                propertyID: propertyID,
-                paymentType:'P',
-            });
-            if (response.data.success) {
-                Alert.alert('Success', 'Request Submitted')
-                navigation.navigate('MyRentals', {userID, tenantID});
-            }
-        } catch (error) {
-            console.log("Error submitting request:", error);
-            Alert.alert("Error submitting request:");
-        }
+        // Display a confirmation alert
+        Alert.alert(
+            "Confirm Request",
+            "Are you sure you want to request rent collection?",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel",
+                },
+                {
+                    text: "Request",
+                    onPress: async () => {
+                        try {
+                            const response = await axios.post(ipAddress + 'api/request-cash-collection', {
+                                ownerID: ownerID,
+                                tenantID: tenantID,
+                                propertyID: propertyID,
+                                paymentType: 'P',
+                            });
+                            if (response.data.success) {
+                                Alert.alert('Success', 'Request Submitted');
+                                navigation.navigate('MyRentals', { userID, tenantID });
+                            }
+                        } catch (error) {
+                            console.log("Error submitting request:", error);
+                            Alert.alert("Error submitting request");
+                        }
+                    },
+                    style: "default", // This makes the button appear in blue to indicate it's a default action
+                },
+            ]
+        );
     }
 
     return (
         <View style={styles.container}>
             <Text style={styles.LoginAs}>{propertyAddress}</Text>
-            {status === "Pending" &&(
-            <Pressable style={styles.button} onPress={handleCashCollection}>
-                <Text style={styles.buttonText}>Request for Cash Collection</Text>
-            </Pressable>
+            {status === "Pending" && (
+                <Pressable style={styles.button} onPress={handleCashCollection}>
+                    <Text style={styles.buttonText}>Request for Cash Collection</Text>
+                </Pressable>
             )}
-            {status === "Paid" &&(
+            {status === "Paid" && (
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Already Requested</Text>
                 </Pressable>

@@ -6,14 +6,16 @@ export default function FAQs() {
     return (
         <SafeAreaProvider>
             <View style={styles.container}>
-                <Text style={styles.headerText}>Frequently Asked {'\n'}{'\t'}{'\t'}{'\t'}{'\t'}{'\t'}{'\t'}Questions</Text>
+                <Text style={styles.headerText}>Frequently
+                    Asked {'\n'}{'\t'}{'\t'}{'\t'}{'\t'}{'\t'}{'\t'}Questions</Text>
                 <ScrollView
                     contentContainerStyle={styles.scrollContent}
                     showsVerticalScrollIndicator={false}>
                     <View style={styles.scrollContainer}>
                         <View style={styles.border}>
                             <Text style={styles.questionText}>How to add a Property?</Text>
-                            <Text style={styles.button}>lorem ipsum dolores set lorem ipsum dolores set lorem ipsum dolores set</Text>
+                            <Text style={styles.button}>lorem ipsum dolores set lorem ipsum dolores set lorem ipsum
+                                dolores set</Text>
                         </View>
                         <View style={styles.border}>
                             <Text style={styles.questionText}>How to add a Tenant?</Text>
@@ -79,13 +81,13 @@ const styles = StyleSheet.create({
         width: 'auto',
         height: 'auto',
         borderColor: '#cdcdcd',
-        paddingVertical:'2%',
+        paddingVertical: '2%',
         marginTop: 10,
         marginBottom: 10,
         backgroundColor: '#fff',
         fontSize: 20
     },
-    border:{
+    border: {
         borderWidth: 2,
         borderRadius: 30,
         padding: 12,

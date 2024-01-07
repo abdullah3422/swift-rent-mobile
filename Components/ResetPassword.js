@@ -1,19 +1,24 @@
 // noinspection JSValidateTypes
 
 import React from 'react';
-import { Alert, Text, TextInput, View, StyleSheet, Pressable } from 'react-native';
+import {Alert, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import axios from 'axios';
-import { md5 } from 'js-md5';
-import { Formik } from 'formik';
+import {md5} from 'js-md5';
+import {Formik} from 'formik';
 import * as Yup from 'yup';
 
-export default function ResetPassword({ navigation, route }) {
+export default function ResetPassword({navigation, route}) {
     const ipAddress = route.params.ipAddress;
+
     //Give me variables (emailOrPhone, digiCode, newPassword, confirmPassword) here to use for my api calls
+    function handleForget() {
+        Alert.alert("Forgot 16 Digit-Code?", "Email us at:\nswiftrent2023@gmail.com");
+    }
+
     //const handleSubmit
     return (
         <Formik
-            initialValues={{ emailOrPhone: '', currentDigiCode: '', newPassword: '', confirmPassword: '' }}
+            initialValues={{emailOrPhone: '', currentDigiCode: '', newPassword: '', confirmPassword: ''}}
             validationSchema={Yup.object().shape({
                 emailOrPhone: Yup.string()
                     .required('Please enter your email or phone.'),
@@ -27,7 +32,7 @@ export default function ResetPassword({ navigation, route }) {
                     .required('Please confirm your new password.')
                     .oneOf([Yup.ref('newPassword'), null], 'New password and confirm password do not match.'),
             })}
-            onSubmit={async (values, { setFieldError }) => {
+            onSubmit={async (values, {setFieldError}) => {
                 if (values.newPassword !== values.confirmPassword) {
                     Alert.alert('New password and confirm password do not match.');
                     setFieldError('confirmPassword', 'New password and confirm password do not match.');
@@ -36,13 +41,13 @@ export default function ResetPassword({ navigation, route }) {
 
                 try {
                     const response = await axios.post(ipAddress + 'api/reset-password', {
-                        emailOrPhone : values.emailOrPhone,
+                        emailOrPhone: values.emailOrPhone,
                         currentDigiCode: values.currentDigiCode,
                         newPassword: md5(values.newPassword),
                     });
 
                     if (response.data.success) {
-                        const { digiCode } = response.data;
+                        const {digiCode} = response.data;
                         Alert.alert('Password Successfully Reset', `New 16 digit code: ${digiCode}`);
                         navigation.navigate('LoginScreen');
                     }
@@ -53,9 +58,9 @@ export default function ResetPassword({ navigation, route }) {
                 }
             }}
         >
-            {({ values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit}) => (
+            {({values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit}) => (
                 <View style={styles.container}>
-                    <Text style={styles.headerText}>Reset Your {'\n'}  Password </Text>
+                    <Text style={styles.headerText}>Reset Your {'\n'} Password </Text>
                     <TextInput
                         style={styles.input}
                         placeholder="Email or Phone"
@@ -105,10 +110,12 @@ export default function ResetPassword({ navigation, route }) {
                     {touched.confirmPassword && errors.confirmPassword && (
                         <Text style={styles.errorText}>{errors.confirmPassword}</Text>
                     )}
-
+                    <Pressable style={[{width: 'auto'}]} onPress={handleForget}>
+                        <Text style={styles.buttonText}>Forgot your 16 Digit-Code?</Text>
+                    </Pressable>
                     <View style={styles.buttonContainer}>
-                        <View style={styles.space} />
-                        <Pressable style={[styles.button, { width: 160 }]} onPress={handleSubmit}>
+                        <View style={styles.space}/>
+                        <Pressable style={[styles.button, {width: 160}]} onPress={handleSubmit}>
                             <Text style={styles.buttonText}>Change</Text>
                         </Pressable>
                     </View>

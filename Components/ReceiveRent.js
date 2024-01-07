@@ -1,14 +1,12 @@
 import React from 'react';
-import { Alert, Text, TextInput, View, StyleSheet, Pressable } from 'react-native';
+import {Alert, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import axios from 'axios';
-import { useState } from 'react';
-import { md5 } from 'js-md5';
-import { Formik } from 'formik';
+import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {useFocusEffect} from "@react-navigation/native";
 
-export default function ReceiveRent({ navigation, route }) {
-    const { userID, ownerID, propertyID } = route.params;
+export default function ReceiveRent({navigation, route}) {
+    const {userID, ownerID, propertyID} = route.params;
     const ipAddress = route.params.ipAddress;
     const [data, setData] = React.useState({
         rentAmount: '',
@@ -47,7 +45,7 @@ export default function ReceiveRent({ navigation, route }) {
             });
             if (response.data.success) {
                 Alert.alert('Success', 'Rent successfully received!')
-                navigation.navigate('MyProperties', { userID, ownerID });
+                navigation.navigate('MyProperties', {userID, ownerID});
             }
         } catch (error) {
             console.log("Error receiving rent:", error);
@@ -64,18 +62,18 @@ export default function ReceiveRent({ navigation, route }) {
 
     return (
         <Formik
-            initialValues={{ rentAmount: '' }}
+            initialValues={{rentAmount: ''}}
             validationSchema={rentValidationSchema}
             onSubmit={(values) => handleRentCollection(values)}
         >
-            {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
-        <View style={styles.container}>
-            <Text style={styles.headerText}>Receive Rent</Text>
-            <View style={styles.textContainer}>
-                <Text style={styles.bodyText}>{data.propertyAddress}</Text>
-                <Text style={styles.bodyText}>Due Date: {data.dueDate}</Text>
-                <Text style={styles.bodyText}>Rent: {data.rent}</Text>
-            </View>
+            {({values, errors, touched, handleChange, handleBlur, handleSubmit}) => (
+                <View style={styles.container}>
+                    <Text style={styles.headerText}>Receive Rent</Text>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.bodyText}>{data.propertyAddress}</Text>
+                        <Text style={styles.bodyText}>Due Date: {data.dueDate}</Text>
+                        <Text style={styles.bodyText}>Rent: {data.rent}</Text>
+                    </View>
 
                     <View style={styles.input}>
                         <TextInput
@@ -87,18 +85,18 @@ export default function ReceiveRent({ navigation, route }) {
                             keyboardType="numeric"
                         />
                     </View>
-            {touched.rentAmount && errors.rentAmount && (
-                <Text style={styles.errorText}>{errors.rentAmount}</Text>
-            )}
-            <View style={styles.buttonContainer}>
-                <Pressable
-                    style={[styles.button, { width: 160 }]}
-                    onPress={handleSubmit}
-                >
-                    <Text style={styles.buttonText}>Confirm</Text>
-                </Pressable>
-            </View>
-        </View>
+                    {touched.rentAmount && errors.rentAmount && (
+                        <Text style={styles.errorText}>{errors.rentAmount}</Text>
+                    )}
+                    <View style={styles.buttonContainer}>
+                        <Pressable
+                            style={[styles.button, {width: 160}]}
+                            onPress={handleSubmit}
+                        >
+                            <Text style={styles.buttonText}>Confirm</Text>
+                        </Pressable>
+                    </View>
+                </View>
             )}
         </Formik>
     );

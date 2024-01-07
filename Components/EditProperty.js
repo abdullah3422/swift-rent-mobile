@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { Alert, Text, TextInput, View, StyleSheet, Pressable } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import React from 'react';
+import {Alert, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 import axios from "axios";
 import * as Yup from "yup";
 import {Formik} from "formik";
 
-export default function EditProperty({ navigation, route }) {
-    const { userID, ownerID, propertyID } = route.params;
+export default function EditProperty({navigation, route}) {
+    const {userID, ownerID, propertyID} = route.params;
     const ipAddress = route.params.ipAddress;
     console.log(route.params);
 
@@ -49,7 +49,7 @@ export default function EditProperty({ navigation, route }) {
             });
             if (response.data.success) {
                 Alert.alert('Success', 'Property data successfully updated')
-                navigation.navigate('MyProperties', { userID, ownerID });
+                navigation.navigate('MyProperties', {userID, ownerID});
             }
         } catch (error) {
             console.log("Error updating property data:", error);
@@ -60,12 +60,11 @@ export default function EditProperty({ navigation, route }) {
     const editPropertiesSchema = Yup.object().shape({
         propertyAddress: Yup.string()
             .min(5, 'Too Short!')
-            .max(50, 'Too Long!')
             .required('Required'),
         dueDate: Yup.number()
             .integer('Due Date must be an integer')
-            .min(1, 'Due Date must be between 1 and 31')
-            .max(31, 'Due Date must be between 1 and 31')
+            .min(1, 'Due Date must be between 1 and 20')
+            .max(20, 'Due Date must be between 1 and 20')
             .required('Required'),
         rent: Yup.number()
             .min(1, 'Rent Amount must be at least 1')
@@ -79,11 +78,12 @@ export default function EditProperty({ navigation, route }) {
             initialValues={{
                 propertyAddress: data.propertyAddress,
                 dueDate: data.dueDate,
-                rent: data.rent }}
+                rent: data.rent
+            }}
             validationSchema={editPropertiesSchema}
             onSubmit={handlePropertyEdit}
         >
-            {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+            {({values, errors, touched, handleChange, handleBlur, handleSubmit}) => (
 
                 <View style={styles.container}>
                     <Text style={styles.headerText}>Edit Property {'\n'} Information</Text>
@@ -93,7 +93,7 @@ export default function EditProperty({ navigation, route }) {
                         style={styles.input}
                         defaultValue={String(data.propertyAddress)}
                         onChangeText={(text) => {
-                            setData({ ...data, propertyAddress: text });
+                            setData({...data, propertyAddress: text});
                             handleChange('propertyAddress')(text);
                         }}
                         onBlur={handleBlur('propertyAddress')}
@@ -109,7 +109,7 @@ export default function EditProperty({ navigation, route }) {
                         style={styles.input}
                         defaultValue={String(data.dueDate)}
                         onChangeText={(text) => {
-                            setData({ ...data, dueDate: text });
+                            setData({...data, dueDate: text});
                             handleChange('dueDate')(text);
                         }}
                         onBlur={handleBlur('dueDate')}
@@ -121,7 +121,7 @@ export default function EditProperty({ navigation, route }) {
                         style={styles.input}
                         defaultValue={String(data.rent)}
                         onChangeText={(text) => {
-                            setData({ ...data, rent: text });
+                            setData({...data, rent: text});
                             handleChange('rent')(text);
                         }}
                         onBlur={handleBlur('rent')}
@@ -131,8 +131,8 @@ export default function EditProperty({ navigation, route }) {
 
 
                     <View style={styles.buttonContainer}>
-                        <View style={styles.space} />
-                        <Pressable style={[styles.button, { width: 160 }]} onPress={handleSubmit}>
+                        <View style={styles.space}/>
+                        <Pressable style={[styles.button, {width: 160}]} onPress={handleSubmit}>
                             <Text style={styles.buttonText}>Change</Text>
                         </Pressable>
                     </View>

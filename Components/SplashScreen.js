@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import React, {useEffect} from 'react';
+import {Image, StyleSheet, Text, View} from 'react-native';
 
-export default function SplashScreen({ navigation }) {
+export default function SplashScreen({navigation}) {
 
     useEffect(() => {
         const timeout = setTimeout(() => {

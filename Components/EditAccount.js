@@ -1,8 +1,6 @@
 import React from 'react';
-import {Alert, Text, TextInput, View, StyleSheet, Pressable, Dimensions} from 'react-native';
+import {Alert, Dimensions, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import axios from 'axios';
-import {useState} from 'react';
-import {md5} from 'js-md5';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 
@@ -18,50 +16,50 @@ export default function EditAccount({navigation, route}) {
         Day: '',
     });
     React.useEffect(() => {
-    const handleInitialData = async () => {
-        if (ownerID !== undefined) {
-            try {
-                const response = await axios.post(ipAddress + 'api/owner-details', {
-                    ownerID: ownerID
-                });
-                console.log(response.data.DOB);
-                if (response.data.success) {
-                    // Update the state with the owner's data
-                    setData({
-                        Name: response.data.ownerName,
-                        email: response.data.email,
-                        phone: response.data.phone,
-                        Year: response.data.DOB.slice(0, 4),
-                        Month: response.data.DOB.slice(5, 7),
-                        Day: response.data.DOB.slice(8, 10),
+        const handleInitialData = async () => {
+            if (ownerID !== undefined) {
+                try {
+                    const response = await axios.post(ipAddress + 'api/owner-details', {
+                        ownerID: ownerID
                     });
+                    console.log(response.data.DOB);
+                    if (response.data.success) {
+                        // Update the state with the owner's data
+                        setData({
+                            Name: response.data.ownerName,
+                            email: response.data.email,
+                            phone: response.data.phone,
+                            Year: response.data.DOB.slice(0, 4),
+                            Month: response.data.DOB.slice(5, 7),
+                            Day: response.data.DOB.slice(8, 10),
+                        });
+                    }
+                } catch (error) {
+                    console.log('Error during fetching owner details:', error);
                 }
-            } catch (error) {
-                console.log('Error during fetching owner details:', error);
-            }
-        } else if (tenantID !== undefined) {
-            try {
-                const response = await axios.post(ipAddress + 'api/tenant-details', {
-                    tenantID: tenantID
-                });
+            } else if (tenantID !== undefined) {
+                try {
+                    const response = await axios.post(ipAddress + 'api/tenant-details', {
+                        tenantID: tenantID
+                    });
 
-                if (response.data.success) {
-                    // Update the state with the owner's data
-                    setData({
-                        Name: response.data.tenantName,
-                        email: response.data.email,
-                        phone: response.data.phone,
-                        Year: response.data.DOB.slice(0, 4),
-                        Month: response.data.DOB.slice(5, 7),
-                        Day: response.data.DOB.slice(8, 10),
-                    });
+                    if (response.data.success) {
+                        // Update the state with the owner's data
+                        setData({
+                            Name: response.data.tenantName,
+                            email: response.data.email,
+                            phone: response.data.phone,
+                            Year: response.data.DOB.slice(0, 4),
+                            Month: response.data.DOB.slice(5, 7),
+                            Day: response.data.DOB.slice(8, 10),
+                        });
+                    }
+                } catch (error) {
+                    console.log('Error during fetching owner details:', error);
                 }
-            } catch (error) {
-                console.log('Error during fetching owner details:', error);
             }
-        }
-    };
-    handleInitialData();
+        };
+        handleInitialData();
     }, [ownerID, tenantID, userID]);
 
     async function handleEditAccount() {
@@ -71,7 +69,7 @@ export default function EditAccount({navigation, route}) {
                 email: data.email,
                 phone: data.phone,
             });
-            if(verificationResponse.data.success){
+            if (verificationResponse.data.success) {
                 const editUserResponse = await axios.put(ipAddress + 'api/admin/edit-user', {
                     userID: userID,
                     userName: data.Name,
@@ -79,41 +77,41 @@ export default function EditAccount({navigation, route}) {
                     phone: data.phone,
                     DOB: String(data.Year + "-" + data.Month + "-" + data.Day)
                 });
-                if(editUserResponse.data.success){
+                if (editUserResponse.data.success) {
                     Alert.alert('Data Successfully Updated');
                     if (ownerID !== undefined) {
-                        navigation.navigate('OwnerProfile', { userID, ownerID });
+                        navigation.navigate('OwnerProfile', {userID, ownerID});
                     } else if (tenantID !== undefined) {
-                        navigation.navigate('TenantProfile', { userID, tenantID });
+                        navigation.navigate('TenantProfile', {userID, tenantID});
                     }
                 }
             }
         } catch (error) {
             console.log('Error during updating data:', error);
             const lastThreeNumbers = String(error).match(/\d{3}$/);
-            if (String(lastThreeNumbers) === "420"){
+            if (String(lastThreeNumbers) === "420") {
                 Alert.alert("Credential(s) not unique");
             }
         }
     }
 
-        const editAccountSchema = Yup.object().shape({
-            Name: Yup.string()
-                .matches(/^[a-zA-Z.\s]+$/, 'Only letters are allowed')
-                .min(2, 'Too Short!')
-                .max(100, 'Too Long!')
-                .required('Required'),
-            email: Yup.string()
-                .email('Invalid email address')
-                .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Invalid email address')
+    const editAccountSchema = Yup.object().shape({
+        Name: Yup.string()
+            .matches(/^[a-zA-Z.\s]+$/, 'Only letters are allowed')
+            .min(2, 'Too Short!')
+            .max(100, 'Too Long!')
             .required('Required'),
-            phone: Yup.string()
-                .matches(/^\d{11}$/, 'Invalid phone number')
-                .required('Required'),
-            Year: Yup.number().min(1900, 'Invalid year').max(2013, 'Invalid year').required('Year Required'),
-            Month: Yup.number().min(1, 'Invalid month').max(12, 'Invalid month').required('Month Required'),
-            Day: Yup.number().min(1, 'Invalid day').max(31, 'Invalid day').required(' Day Required')
-        });
+        email: Yup.string()
+            .email('Invalid email address')
+            .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Invalid email address')
+            .required('Required'),
+        phone: Yup.string()
+            .matches(/^\d{11}$/, 'Invalid phone number')
+            .required('Required'),
+        Year: Yup.number().min(1900, 'Invalid year').max(2006, 'Must be 18').required('Year Required'),
+        Month: Yup.number().min(1, 'Invalid month').max(12, 'Invalid month').required('Month Required'),
+        Day: Yup.number().min(1, 'Invalid day').max(31, 'Invalid day').required(' Day Required')
+    });
 
 
     return (
@@ -131,7 +129,7 @@ export default function EditAccount({navigation, route}) {
             validationSchema={editAccountSchema}
             onSubmit={handleEditAccount}
         >
-            {({ values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit, handleBlur }) => (
+            {({values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit, handleBlur}) => (
 
                 <View style={styles.container}>
                     <Text style={styles.headerText}>Edit Account {'\n'} Information </Text>
@@ -140,7 +138,7 @@ export default function EditAccount({navigation, route}) {
                         style={styles.input}
                         defaultValue={String(data.Name)}
                         onChangeText={(text) => {
-                            setData({ ...data, Name: text });
+                            setData({...data, Name: text});
                             handleChange('Name')(text);
                         }}
                         onBlur={handleBlur('Name')}
@@ -150,7 +148,7 @@ export default function EditAccount({navigation, route}) {
                         style={styles.input}
                         defaultValue={String(data.email)}
                         onChangeText={(text) => {
-                            setData({ ...data, email: text });
+                            setData({...data, email: text});
                             handleChange('email')(text);
                         }}
                         onBlur={handleBlur('email')}
@@ -160,7 +158,7 @@ export default function EditAccount({navigation, route}) {
                         style={styles.input}
                         defaultValue={String(data.phone)}
                         onChangeText={(text) => {
-                            setData({ ...data, phone: text });
+                            setData({...data, phone: text});
                             handleChange('phone')(text);
                         }}
                         onBlur={handleBlur('phone')}
@@ -172,7 +170,7 @@ export default function EditAccount({navigation, route}) {
                             style={styles.dateInput}
                             keyboardType="number-pad"
                             onChangeText={(text) => {
-                                setData({ ...data, Year: text });
+                                setData({...data, Year: text});
                                 handleChange('Year')(text);
                             }}
                             onBlur={handleBlur('Year')}
@@ -183,7 +181,7 @@ export default function EditAccount({navigation, route}) {
                             style={styles.dateInput}
                             keyboardType="number-pad"
                             onChangeText={(text) => {
-                                setData({ ...data, Month: text });
+                                setData({...data, Month: text});
                                 handleChange('Month')(text);
                             }}
                             onBlur={handleBlur('Month')}
@@ -194,7 +192,7 @@ export default function EditAccount({navigation, route}) {
                             style={styles.dateInput}
                             keyboardType="number-pad"
                             onChangeText={(text) => {
-                                setData({ ...data, Day: text });
+                                setData({...data, Day: text});
                                 handleChange('Day')(text);
                             }}
                             onBlur={handleBlur('Day')}

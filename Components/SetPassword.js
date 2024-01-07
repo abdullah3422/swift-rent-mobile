@@ -1,12 +1,11 @@
 import * as React from 'react';
-import {Alert, Dimensions, Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Dimensions, Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import axios from "axios";
-import CryptoJS from "react-native-crypto-js";
-import { md5 } from 'js-md5';
+import {md5} from 'js-md5';
 
-export default function SetPassword({ navigation, route }) {
+export default function SetPassword({navigation, route}) {
     const [passwordsMatch, setPasswordsMatch] = React.useState(true); // Initialize to true initially
 
     // Routing the ipAddress as a prop through the route keyword
@@ -14,7 +13,7 @@ export default function SetPassword({ navigation, route }) {
 
     const handleRegister = async (values) => {
         try {
-            const { userType, firstName, lastName, DOB, email, phone } = route.params;
+            const {userType, firstName, lastName, DOB, email, phone} = route.params;
             console.log(route.params);
             console.log(userType);
             console.log(userType);
@@ -29,16 +28,16 @@ export default function SetPassword({ navigation, route }) {
 
             console.log(ipAddress);
             const response = await axios.post(ipAddress + 'api/register-account', {
-                    userType : userType,    firstName : firstName,
-                    lastName : lastName,    DOB : DOB,
-                    email : email,          phone : phone,
-                    password : md5(password)
+                userType: userType, firstName: firstName,
+                lastName: lastName, DOB: DOB,
+                email: email, phone: phone,
+                password: md5(password)
             });
 
             if (response.data.success) {
                 console.log('Registration successful', response.data);
-                const { userID, ownerID, tenantID, digiCode } = response.data;
-                navigation.navigate('DigiCode', { userType, userID, ownerID, tenantID, digiCode });
+                const {userID, ownerID, tenantID, digiCode} = response.data;
+                navigation.navigate('DigiCode', {userType, userID, ownerID, tenantID, digiCode});
             } else {
                 console.error('Registration failed', response.data.error);
             }
@@ -67,10 +66,10 @@ export default function SetPassword({ navigation, route }) {
             validationSchema={passwordValidationSchema}
             onSubmit={handleRegister}
         >
-            {({ values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit }) => (
+            {({values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit}) => (
                 <View style={styles.container}>
                     <View style={styles.header}>
-                        <Image source={require('../img/logoColored.png')} style={styles.logo} />
+                        <Image source={require('../img/logoColored.png')} style={styles.logo}/>
                     </View>
                     <Text style={styles.passwordText}>Please set a {'\n'}Strong Password</Text>
                     <TextInput
@@ -98,12 +97,12 @@ export default function SetPassword({ navigation, route }) {
                         <Text style={styles.errorTxt}>{errors.confirmPassword}</Text>
                     )}
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={[styles.button, { width: 160 }]} onPress={() => navigation.goBack()}>
+                        <TouchableOpacity style={[styles.button, {width: 160}]} onPress={() => navigation.goBack()}>
                             <Text style={styles.buttonText}>Back</Text>
                         </TouchableOpacity>
-                        <View style={styles.space} />
-                        <Pressable style={[ styles.button]} onPress={handleSubmit}>
-                            <Text style={styles.buttonText} >Register</Text>
+                        <View style={styles.space}/>
+                        <Pressable style={[styles.button]} onPress={handleSubmit}>
+                            <Text style={styles.buttonText}>Register</Text>
                         </Pressable>
                     </View>
                 </View>

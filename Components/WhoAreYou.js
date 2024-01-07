@@ -1,15 +1,12 @@
 import * as React from 'react';
-import {Alert, Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {useState} from "react";
-import axios from "axios";
-import { md5 } from 'js-md5';
+import {Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 
 
 export default function WhoAreYou({navigation, route}) {
     // console.log(md5("Anas@2001"));
     let flag = 1;
     const ipAddressContainer = route.params.ipAddress;
-        const handleRole = async (role) => {
+    const handleRole = async (role) => {
         // Save the role into the userType state
         console.log('User-Type-Added: ' + role);
         const userType = role;
@@ -24,7 +21,7 @@ export default function WhoAreYou({navigation, route}) {
         <View style={styles.container}>
 
             <View style={styles.header}>
-                <Image source={require('../img/logoColored.png')} style={styles.logo} />
+                <Image source={require('../img/logoColored.png')} style={styles.logo}/>
             </View>
             <Text style={styles.postHeader}>Who are you?</Text>
             <Pressable style={styles.button} onPress={() => handleRole('owner')}>
@@ -36,7 +33,7 @@ export default function WhoAreYou({navigation, route}) {
             <Pressable style={styles.button} onPress={() => handleRole('tenant')}>
                 <Text style={styles.buttonText}>Tenant</Text>
             </Pressable>
-            <Pressable onPress={() => navigation.navigate('LoginScreen', { flag })}>
+            <Pressable onPress={() => navigation.navigate('LoginScreen', {flag})}>
                 <Text style={styles.newRoleText}>Create new role on existing credentials?</Text>
             </Pressable>
         </View>
@@ -61,10 +58,10 @@ const styles = StyleSheet.create({
     },
     header: {
         flexDirection: 'row',
-        alignItems:'center',
+        alignItems: 'center',
     },
 
-    headerText:{
+    headerText: {
         fontSize: windowWidth * 0.06,
         paddingTop: windowHeight * 0.15,
         color: "#1363DF",
@@ -107,8 +104,8 @@ const styles = StyleSheet.create({
         color: '#47b5ff'
 
     },
-    newRoleText:{
-        marginTop: windowHeight *0.05,  // This will make the text fall almost to the end of the screen
+    newRoleText: {
+        marginTop: windowHeight * 0.05,  // This will make the text fall almost to the end of the screen
         marginBottom: windowHeight * 0.03,  // Add some margin at the bottom
         fontSize: windowWidth * 0.04,  // Adjust the font size
         textDecorationLine: 'underline',  // Underline the text

@@ -7,8 +7,7 @@ import * as Yup from 'yup';
 
 const loginSchema = Yup.object().shape({
     emailOrPhone: Yup.string()
-        .required('Email or Phone is required.')
-        .max(30, 'Invalid Email or Phone'),
+        .required('Email or Phone is required.'),
     password: Yup.string()
         .required('Password is required.')
         .min(8, 'Password should be at least 8 characters long.'),

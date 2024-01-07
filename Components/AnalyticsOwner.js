@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {FlatList, Image, Pressable, StyleSheet, Text, View,BackHandler, Alert} from 'react-native';
+import {useState} from 'react';
+import {Alert, BackHandler, FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import axios from "axios";
-import { useFocusEffect } from '@react-navigation/native';
-import {useState} from "react";
+import {useFocusEffect} from '@react-navigation/native';
 
-export default function AnalyticsOwner({ navigation, route }) {
+export default function AnalyticsOwner({navigation, route}) {
     const [monthlyAnalyticsDataList, setmonthlyAnalyticsDataList] = useState([]);
 
     //Prevent Going Back to log in screen
@@ -25,7 +25,7 @@ export default function AnalyticsOwner({ navigation, route }) {
                             onPress: () => BackHandler.exitApp(),
                         },
                     ],
-                    { cancelable: false }
+                    {cancelable: false}
                 );
                 return true; // Return true to prevent the default behavior (closing the app)
             };
@@ -40,7 +40,7 @@ export default function AnalyticsOwner({ navigation, route }) {
     );
 
 
-    const {ipAddress, userID, ownerID } = route.params;
+    const {ipAddress, userID, ownerID} = route.params;
     const [ownerData, setOwnerData] = React.useState({
         currentMonth: '',
         currentYear: '',
@@ -49,8 +49,8 @@ export default function AnalyticsOwner({ navigation, route }) {
         totalReceived: '',
         pendingRent: '',
     });
-    console.log("userID: "+userID);
-    console.log("ownerID: "+ownerID);
+    console.log("userID: " + userID);
+    console.log("ownerID: " + ownerID);
 
 
     useFocusEffect(
@@ -112,13 +112,13 @@ export default function AnalyticsOwner({ navigation, route }) {
     //     { month: 'September', year: '2023', profit: '100000' },
     // ];
 
-    const renderItem = ({ item }) => (
+    const renderItem = ({item}) => (
         <Pressable style={styles.cardButtons}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between',}}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
                 <Text style={styles.cardButtonText}>{item.month} {item.year}</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', flex: 1 }}>
-                    <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage} />
-                    <Text style={{ fontSize: 20 }}>{item.profit} PKR</Text>
+                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', flex: 1}}>
+                    <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage}/>
+                    <Text style={{fontSize: 20}}>{item.profit} PKR</Text>
                 </View>
             </View>
         </Pressable>
@@ -128,23 +128,26 @@ export default function AnalyticsOwner({ navigation, route }) {
         <View style={styles.container}>
             <View style={styles.topContainer}>
                 <View style={styles.topContainerText}>
-                    <Text style={{ fontSize: 30, fontWeight: 'bold' }}>{ownerData.currentMonth}, {ownerData.currentYear}</Text>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-                        <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage} />
-                        <Text style={{ fontSize: 20 }}>PKR {ownerData.totalProfit}</Text>
+                    <Text style={{
+                        fontSize: 30,
+                        fontWeight: 'bold'
+                    }}>{ownerData.currentMonth}, {ownerData.currentYear}</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
+                        <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage}/>
+                        <Text style={{fontSize: 20}}>PKR {ownerData.totalProfit}</Text>
                         {/*<Image source={require('../img/outgoingArrow.png')} style={styles.arrowImage} />*/}
                     </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
-                        <Text style={{ fontSize: 20, width: '60%' }}>Total Properties </Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{ownerData.totalProperty}</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
+                        <Text style={{fontSize: 20, width: '60%'}}>Total Properties </Text>
+                        <Text style={{fontWeight: 'bold', fontSize: 20}}>{ownerData.totalProperty}</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 20, width: '60%' }}>Rents Received </Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{ownerData.totalReceived}</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Text style={{fontSize: 20, width: '60%'}}>Rents Received </Text>
+                        <Text style={{fontWeight: 'bold', fontSize: 20}}>{ownerData.totalReceived}</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 20, width: '60%' }}>Rents Pending </Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{ownerData.pendingRent}</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Text style={{fontSize: 20, width: '60%'}}>Rents Pending </Text>
+                        <Text style={{fontWeight: 'bold', fontSize: 20}}>{ownerData.pendingRent}</Text>
                     </View>
 
                 </View>
@@ -159,30 +162,33 @@ export default function AnalyticsOwner({ navigation, route }) {
             </View>
             <View style={styles.bottomContainer}>
                 <View style={styles.bottomNavRow}>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('MyProperties', {userID, ownerID })}>
+                    <Pressable style={styles.bottomNavButton}
+                               onPress={() => navigation.navigate('MyProperties', {userID, ownerID})}>
                         <Image
-                            style={{ width: 40, height: 40 }}
+                            style={{width: 40, height: 40}}
                             source={require('../img/propertiesIcon.png')}
                         />
                         <Text style={styles.bottomContainerText}>Properties</Text>
                     </Pressable>
                     <Pressable style={styles.bottomNavButton}>
                         <Image
-                            style={{ width: 40, height: 40 }}
+                            style={{width: 40, height: 40}}
                             source={require('../img/analyticIconFocused.png')}
                         />
                         <Text style={styles.bottomContainerText}>Analytics</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('OwnerNotification', {userID, ownerID })}>
+                    <Pressable style={styles.bottomNavButton}
+                               onPress={() => navigation.navigate('OwnerNotification', {userID, ownerID})}>
                         <Image
-                            style={{ width: 40, height: 40 }}
+                            style={{width: 40, height: 40}}
                             source={require('../img/notification.png')}
                         />
                         <Text style={styles.bottomContainerText}>Alerts</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('OwnerProfile', {userID, ownerID })}>
+                    <Pressable style={styles.bottomNavButton}
+                               onPress={() => navigation.navigate('OwnerProfile', {userID, ownerID})}>
                         <Image
-                            style={{ width: 40, height: 40 }}
+                            style={{width: 40, height: 40}}
                             source={require('../img/profile.png')}
                         />
                         <Text style={styles.bottomContainerText}>Profile</Text>
@@ -192,8 +198,6 @@ export default function AnalyticsOwner({ navigation, route }) {
         </View>
     );
 }
-
-
 
 
 const styles = StyleSheet.create({
@@ -291,7 +295,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20, // Adjust the margin for spacing
         marginTop: 10
     },
-    bottomContainerText:{
+    bottomContainerText: {
         fontSize: 14,
         fontWeight: "bold"
     },

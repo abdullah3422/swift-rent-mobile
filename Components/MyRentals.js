@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import React, {useState} from 'react';
+import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import axios from 'axios';
 import {useFocusEffect} from "@react-navigation/native"; // Ensure axios is installed or use fetch API
 
-export default function MyRentals({ navigation, route }) {
-    const { userID, tenantID } = route.params;
+export default function MyRentals({navigation, route}) {
+    const {userID, tenantID} = route.params;
     const ipAddress = route.params.ipAddress;
     const [activePage, setActivePage] = useState('MyRentals'); // Set the default active page
 
@@ -38,7 +38,7 @@ export default function MyRentals({ navigation, route }) {
         }, [tenantID, ipAddress])
     );
 
-    const renderItem = ({ item }) => (
+    const renderItem = ({item}) => (
         <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('RentalMenu', {
             ownerID: item.ownerID,
             tenantID,
@@ -48,14 +48,14 @@ export default function MyRentals({ navigation, route }) {
             status: item.rentStatus,
         })}>
             <Text style={styles.cardButtonText}>{item.title}</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-                <Text style={{ fontSize: 20 }}>Rent: {item.rent}</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
+                <Text style={{fontSize: 20}}>Rent: {item.rent}</Text>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 0 }}>
-                <Text style={{ fontSize: 20 }}>Due Date: {item.dueDate}</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 0}}>
+                <Text style={{fontSize: 20}}>Due Date: {item.dueDate}</Text>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 0 }}>
-                <Text style={{ fontSize: 20 }}>Rent Status: {item.rentStatus}</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 0}}>
+                <Text style={{fontSize: 20}}>Rent Status: {item.rentStatus}</Text>
             </View>
         </Pressable>
     );
@@ -78,23 +78,25 @@ export default function MyRentals({ navigation, route }) {
 
                     <Pressable style={[styles.bottomNavButton]}>
                         <Image
-                            style={{ width: 40, height: 40 }}
-                            source={require('../img/propertiesIcon.png')}
+                            style={{width: 40, height: 40}}
+                            source={require('../img/propertiesIconFocused.png')}
                         />
                         <Text style={styles.bottomContainerText}>Rentals</Text>
                     </Pressable>
 
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('TenantNotification', {userID, tenantID })}>
+                    <Pressable style={styles.bottomNavButton}
+                               onPress={() => navigation.navigate('TenantNotification', {userID, tenantID})}>
                         <Image
-                            style={{ width: 40, height: 40 }}
+                            style={{width: 40, height: 40}}
                             source={require('../img/notification.png')}
                         />
                         <Text style={styles.bottomContainerText}>Alerts</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('TenantProfile', {userID, tenantID })}>
+                    <Pressable style={styles.bottomNavButton}
+                               onPress={() => navigation.navigate('TenantProfile', {userID, tenantID})}>
                         <Image
-                            style={{ width: 40, height: 40 }}
-                            source={require('../img/profileFocused.png')}
+                            style={{width: 40, height: 40}}
+                            source={require('../img/profile.png')}
                         />
                         <Text style={styles.bottomContainerText}>Profile</Text>
                     </Pressable>
@@ -103,8 +105,6 @@ export default function MyRentals({ navigation, route }) {
         </View>
     );
 }
-
-
 
 
 const styles = StyleSheet.create({
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20, // Adjust the margin for spacing
         marginTop: 10
     },
-    bottomContainerText:{
+    bottomContainerText: {
         fontSize: 14,
         fontWeight: "bold"
     },

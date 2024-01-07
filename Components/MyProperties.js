@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import React, {useState} from 'react';
+import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import axios from 'axios'; // Ensure axios is installed or use fetch API
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 
-export default function MyProperties({ navigation, route }) {
-    const { userID, ownerID } = route.params;
+export default function MyProperties({navigation, route}) {
+    const {userID, ownerID} = route.params;
     const ipAddress = route.params.ipAddress;
 
     // State for storing properties data
@@ -37,30 +37,30 @@ export default function MyProperties({ navigation, route }) {
         }, [ownerID, ipAddress])
     );
 
-    const renderItem = ({ item }) => (
+    const renderItem = ({item}) => (
         <Pressable style={styles.cardButtons}
-           onPress={() => navigation.navigate('PropertyMenu', {
-                userID,
-                ownerID,
-                tenantID: item.tenantID,
-                propertyID: item.propertyID,
-                propertyAddress: item.title,
-                rentStatus: item.rentStatus
-            })}>
+                   onPress={() => navigation.navigate('PropertyMenu', {
+                       userID,
+                       ownerID,
+                       tenantID: item.tenantID,
+                       propertyID: item.propertyID,
+                       propertyAddress: item.title,
+                       rentStatus: item.rentStatus
+                   })}>
             <Text style={styles.cardButtonText}>{item.title}</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-                <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage} />
-                <Text style={{ fontSize: 20 }}>PKR {item.details}</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
+                <Image source={require('../img/incomingArrow.png')} style={styles.arrowImage}/>
+                <Text style={{fontSize: 20}}>PKR {item.details}</Text>
             </View>
             {item.tenantID !== undefined && item.tenantID !== 0 && (
-            <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={{ fontSize: 20 }}>  Rented to: {item.tenantName}</Text>
-            </View>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={{fontSize: 20}}> Rented to: {item.tenantName}</Text>
+                </View>
             )}
             {item.tenantID !== undefined && item.tenantID !== 0 && (
-            <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={{ fontSize: 20 }}>  Rent Status: {item.rentStatus}{/*Pending/Collect/Collected*/}</Text>
-            </View>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={{fontSize: 20}}> Rent Status: {item.rentStatus}{/*Pending/Collect/Collected*/}</Text>
+                </View>
             )}
         </Pressable>
     );
@@ -69,10 +69,10 @@ export default function MyProperties({ navigation, route }) {
 
         <View style={styles.container}>
             <View style={styles.topContainer}>
-                <Pressable onPress={() => navigation.navigate('AddProperties', {userID, ownerID })}>
+                <Pressable onPress={() => navigation.navigate('AddProperties', {userID, ownerID})}>
                     <View style={styles.topContainerText}>
-                        <Text style={{ fontSize: 35}}>+ Add a Property</Text>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
+                        <Text style={{fontSize: 35}}>+ Add a Property</Text>
+                        <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
                         </View>
                     </View>
                 </Pressable>
@@ -93,28 +93,31 @@ export default function MyProperties({ navigation, route }) {
 
                     <Pressable style={styles.bottomNavButton}>
                         <Image
-                            style={{ width: 40, height: 40 }}
+                            style={{width: 40, height: 40}}
                             source={require('../img/propertiesIconFocused.png')}
                         />
                         <Text style={styles.bottomContainerText}>Properties</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('AnalyticsOwner', {userID, ownerID })}>
+                    <Pressable style={styles.bottomNavButton}
+                               onPress={() => navigation.navigate('AnalyticsOwner', {userID, ownerID})}>
                         <Image
-                            style={{ width: 40, height: 40 }}
+                            style={{width: 40, height: 40}}
                             source={require('../img/analyticIcon.png')}
                         />
                         <Text style={styles.bottomContainerText}>Analytics</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('OwnerNotification', {userID, ownerID })}>
+                    <Pressable style={styles.bottomNavButton}
+                               onPress={() => navigation.navigate('OwnerNotification', {userID, ownerID})}>
                         <Image
-                            style={{ width: 40, height: 40 }}
+                            style={{width: 40, height: 40}}
                             source={require('../img/notification.png')}
                         />
                         <Text style={styles.bottomContainerText}>Alerts</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('OwnerProfile', {userID, ownerID })}>
+                    <Pressable style={styles.bottomNavButton}
+                               onPress={() => navigation.navigate('OwnerProfile', {userID, ownerID})}>
                         <Image
-                            style={{ width: 40, height: 40 }}
+                            style={{width: 40, height: 40}}
                             source={require('../img/profile.png')}
                         />
                         <Text style={styles.bottomContainerText}>Profile</Text>
@@ -124,8 +127,6 @@ export default function MyProperties({ navigation, route }) {
         </View>
     );
 }
-
-
 
 
 const styles = StyleSheet.create({
@@ -192,7 +193,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20, // Adjust the margin for spacing
         marginTop: 10
     },
-    bottomContainerText:{
+    bottomContainerText: {
         fontSize: 14,
         fontWeight: "bold"
     },
@@ -220,10 +221,7 @@ const styles = StyleSheet.create({
     cardButtonContainer: {
         alignItems: "center"
     },
-    tabNavigationContainer: {
-
-
-    }
+    tabNavigationContainer: {}
 
 
 });

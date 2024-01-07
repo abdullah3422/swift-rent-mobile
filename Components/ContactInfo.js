@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Alert, Dimensions, TextInput, Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import { useState } from "react";
+import {useState} from 'react';
+import {Alert, Dimensions, Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import axios from "axios";
-import { Formik } from 'formik';
+import {Formik} from 'formik';
 import * as Yup from 'yup';
 
-export default function LoginScreen({ navigation, route }) {
+export default function LoginScreen({navigation, route}) {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
 
@@ -16,32 +16,32 @@ export default function LoginScreen({ navigation, route }) {
         try {
             console.log(values.email);
             console.log(values.phoneNumber);
-            if ( values.email !== '' || values.phoneNumber !== '' ){
+            if (values.email || values.phoneNumber) {
                 const response = await axios.post(ipAddress + 'api/signup-contact', {
                     email: values.email,
                     phone: values.phoneNumber,
                 });
                 if (response.data.success) {
                     // Navigate to the next screen or perform other actions
-                    const { userType, firstName, lastName, DOB } = route.params;
+                    const {userType, firstName, lastName, DOB} = route.params;
                     let email = values.email, phone = values.phoneNumber;
                     console.log(userType);
                     console.log(firstName);
                     console.log(lastName);
                     console.log(DOB);
                     console.log(phone);
-                    navigation.navigate('SetPassword', { userType, firstName, lastName, DOB, email, phone});
+                    navigation.navigate('SetPassword', {userType, firstName, lastName, DOB, email, phone});
                 } else {
                     // Handle errors, show appropriate messages to the user
                     console.error('API Error:', response.data.error, response.statusText);
                 }
-            }else {
-                Alert.alert('Fields Cannot be Empty','Please make sure that either email or phone is entered.')
+            } else {
+                Alert.alert('Fields Cannot be Empty', 'Please make sure that either email or phone is entered.')
             }
         } catch (error) {
             console.log('Network Error:', error);
             const lastThreeNumbers = String(error).match(/\d{3}$/);
-            if (String(lastThreeNumbers) === "420"){
+            if (String(lastThreeNumbers) === "420") {
                 Alert.alert("Credential(s) not unique");
             }
             // Handle network errors, show appropriate messages to the user
@@ -51,12 +51,11 @@ export default function LoginScreen({ navigation, route }) {
     const loginSchema = Yup.object().shape({
         email: Yup.string()
             .email('Invalid email address')
-            .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Invalid email address')
-        .required('Required'),
-        phoneNumber: Yup.string()
-            .matches(/^\d{11}$/, 'Invalid phone number')
-        .required('Required'),
+            .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Invalid email address'),
+        phoneNumber: Yup.string().matches(/^\d{11}$/, 'Invalid phone number'),
     });
+
+
 
     return (
         <Formik
@@ -67,9 +66,9 @@ export default function LoginScreen({ navigation, route }) {
             validationSchema={loginSchema}
             onSubmit={handleNext}
         >
-            {({ values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit }) => (
+            {({values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit}) => (
                 <View style={styles.container}>
-                    <Image source={require('../img/logoColored.png')} style={styles.logo} />
+                    <Image source={require('../img/logoColored.png')} style={styles.logo}/>
                     <Text style={styles.headerText}>We need your information</Text>
 
                     <View style={styles.inputContainer}>
@@ -83,7 +82,7 @@ export default function LoginScreen({ navigation, route }) {
                                 onChangeText={handleChange('email')}
                                 onBlur={() => setFieldTouched('email')}
                             />
-                            <Image source={require('../img/email.png')} style={styles.imageStyle} />
+                            <Image source={require('../img/email.png')} style={styles.imageStyle}/>
                         </View>
                         {touched.email && errors.email && <Text style={styles.errorTxt}>{errors.email}</Text>}
                     </View>
@@ -99,16 +98,17 @@ export default function LoginScreen({ navigation, route }) {
                                 onChangeText={handleChange('phoneNumber')}
                                 onBlur={() => setFieldTouched('phoneNumber')}
                             />
-                            <Image source={require('../img/hashtag.png')} style={styles.imageStyle} />
+                            <Image source={require('../img/hashtag.png')} style={styles.imageStyle}/>
                         </View>
-                        {touched.phoneNumber && errors.phoneNumber && <Text style={styles.errorTxt}>{errors.phoneNumber}</Text>}
+                        {touched.phoneNumber && errors.phoneNumber &&
+                            <Text style={styles.errorTxt}>{errors.phoneNumber}</Text>}
                     </View>
 
                     <View style={styles.buttonContainer}>
-                        <Pressable onPress={() => navigation.goBack()} style={styles.button} >
+                        <Pressable onPress={() => navigation.goBack()} style={styles.button}>
                             <Text style={styles.buttonText}>Back</Text>
                         </Pressable>
-                        <View style={styles.space} />
+                        <View style={styles.space}/>
                         <Pressable style={styles.button} onPress={handleSubmit}>
                             <Text style={styles.buttonText}>Next</Text>
                         </Pressable>

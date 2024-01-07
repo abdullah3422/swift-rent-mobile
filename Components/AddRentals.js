@@ -1,13 +1,13 @@
 import * as React from 'react';
+import {useState} from 'react';
 import {Alert, Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
-import {useState} from "react";
 import axios from "axios";
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 
 export default function AddRentals({navigation, route}) {
 
-    const {userID, tenantID } = route.params;
+    const {userID, tenantID} = route.params;
     const ipAddress = route.params.ipAddress;
     console.log("userID: " + userID);
     console.log("tenantID: " + tenantID);
@@ -45,7 +45,7 @@ export default function AddRentals({navigation, route}) {
 
             if (response.data.success) {
                 Alert.alert('Property Successfully Added!')
-                navigation.navigate('MyProperties', {userID, tenantID });
+                navigation.navigate('MyProperties', {userID, tenantID});
             }
         } catch (error) {
             console.error('Error during adding property:', error);
@@ -116,7 +116,7 @@ export default function AddRentals({navigation, route}) {
 
                     <View style={styles.buttonContainer}>
                         <Pressable style={styles.button}
-                                   onPress={() => navigation.navigate('MyRentals', {userID, tenantID })}>
+                                   onPress={() => navigation.navigate('MyRentals', {userID, tenantID})}>
                             <Text style={styles.buttonText}>Back</Text>
                         </Pressable>
 

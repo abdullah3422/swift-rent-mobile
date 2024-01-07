@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {Alert, StyleSheet, Text, TextInput, View, Pressable} from 'react-native';
-import axios from 'axios';
 import {useState} from 'react';
+import {Alert, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import axios from 'axios';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 
@@ -32,19 +32,19 @@ export default function ReportBug({navigation, route}) {
 
             if (response.data.success) {
                 // Handle success, e.g., show a confirmation message
-                Alert.alert('Bug report submitted successfully');
+                Alert.alert('Complaint submitted successfully');
 
-                console.log('Bug report submitted successfully');
+                console.log('Complaint submitted successfully');
 
                 if (ownerID !== undefined) {
-                    navigation.navigate('OwnerProfile', { userID, ownerID });
+                    navigation.navigate('OwnerProfile', {userID, ownerID});
                 } else if (tenantID !== undefined) {
-                    navigation.navigate('TenantProfile', { userID, tenantID });
+                    navigation.navigate('TenantProfile', {userID, tenantID});
                 }
             }
         } catch (error) {
-            Alert.alert('Error Submitting Bug Report');
-            console.error('Error submitting bug report:', error);
+            Alert.alert('Error Submitting Complaint');
+            console.error('Error submitting Complaint:', error);
         }
     };
 

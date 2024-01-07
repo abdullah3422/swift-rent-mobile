@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Alert, BackHandler, Dimensions, Image, Pressable, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, BackHandler, Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {useFocusEffect} from "@react-navigation/native";
 
 
@@ -21,7 +21,7 @@ export default function WelcomeScreen({navigation}) {
                             onPress: () => BackHandler.exitApp(),
                         },
                     ],
-                    { cancelable: false }
+                    {cancelable: false}
                 );
                 return true; // Return true to prevent the default behavior (closing the app)
             };
@@ -37,7 +37,7 @@ export default function WelcomeScreen({navigation}) {
 
         <View style={styles.container}>
             <View style={styles.header}>
-                <Image source={require('../img/logoColored.png')} style={styles.logo} />
+                <Image source={require('../img/logoColored.png')} style={styles.logo}/>
             </View>
 
             <Text style={styles.welcomeText}>Welcome to {'\n'}Swift Rent</Text>
@@ -45,9 +45,9 @@ export default function WelcomeScreen({navigation}) {
                        onPress={() => navigation.navigate('WhoAreYou')}>
                 <Text style={styles.buttonText}>Sign-up</Text>
             </Pressable>
-            <Pressable style={styles.loginText} onPress={() => navigation.navigate('LoginScreen', { flag })}>
+            <Pressable style={styles.loginText} onPress={() => navigation.navigate('LoginScreen', {flag})}>
                 <Text style={{fontSize: 16}}>Already have an account? </Text>
-                <Text style={{color:"#47b5ff", fontWeight: "bold", fontSize: 16}}>LogIn</Text>
+                <Text style={{color: "#47b5ff", fontWeight: "bold", fontSize: 16}}>LogIn</Text>
             </Pressable>
 
 
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     },
     header: {
         flexDirection: 'row',
-        alignItems:'center',
+        alignItems: 'center',
 
     },
     welcomeText: {
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     },
     loginText: {
 
-      paddingTop: 5,
+        paddingTop: 5,
         flexDirection: "row",
 
     },

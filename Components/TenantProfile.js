@@ -1,9 +1,10 @@
 import * as React from 'react';
+import {useState} from 'react';
 import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import axios from "axios";
-import {useState} from "react";
 import {useFocusEffect} from "@react-navigation/native";
-export default function TenantProfile({ navigation, route }) {
+
+export default function TenantProfile({navigation, route}) {
     const handleLogout = () => {
         Alert.alert(
             'Confirm Logout',
@@ -19,15 +20,15 @@ export default function TenantProfile({ navigation, route }) {
                     onPress: () => {
                         navigation.reset({
                             index: 0,
-                            routes: [{ name: 'WelcomeScreen' }],
+                            routes: [{name: 'WelcomeScreen'}],
                         });
                     },
                 },
             ],
-            { cancelable: false }
+            {cancelable: false}
         );
     };
-    const {ipAddress, userID,  tenantID } = route.params;
+    const {ipAddress, userID, tenantID} = route.params;
     const [tenantData, setTenantData] = React.useState({
         tenantName: '',
         email: '',
@@ -65,45 +66,48 @@ export default function TenantProfile({ navigation, route }) {
 
     return (
         <View style={styles.container}>
-            <Pressable style={styles.topContainer} onPress={() => navigation.navigate('EditAccount', {userID, tenantID })}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 30, fontWeight: 'bold' }}>{tenantData.tenantName}</Text>
-                    <Image style={styles.profileImage} source={require('../img/edit.png')} />
+            <Pressable style={styles.topContainer}
+                       onPress={() => navigation.navigate('EditAccount', {userID, tenantID})}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                    <Text style={{fontSize: 30, fontWeight: 'bold'}}>{tenantData.tenantName}</Text>
+                    <Image style={styles.profileImage} source={require('../img/edit.png')}/>
                 </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
-                    <Text style={{ fontSize: 16, width: '95%' }}>{tenantData.phone}</Text>
+                <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
+                    <Text style={{fontSize: 16, width: '95%'}}>{tenantData.phone}</Text>
                 </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 16, width: '95%' }}>{tenantData.email}</Text>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={{fontSize: 16, width: '95%'}}>{tenantData.email}</Text>
                 </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 16, width: '95%' }}>{tenantData.DOB}</Text>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={{fontSize: 16, width: '95%'}}>{tenantData.DOB}</Text>
                 </View>
             </Pressable>
             <View style={styles.middleContainer}>
-                <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('ChangePassword', {userID, tenantID })}>
+                <Pressable style={styles.cardButtons}
+                           onPress={() => navigation.navigate('ChangePassword', {userID, tenantID})}>
                     <Text style={styles.cardButtonsText}>Change Password</Text>
-                    <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                        <Image style={styles.Pics} source={require('../img/change.png') }/>
+                    <View style={{flex: 1, alignItems: 'flex-end'}}>
+                        <Image style={styles.Pics} source={require('../img/change.png')}/>
                     </View>
                 </Pressable>
-                <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('ReportBug', {userID, tenantID})}>
+                <Pressable style={styles.cardButtons}
+                           onPress={() => navigation.navigate('ReportBug', {userID, tenantID})}>
                     <Text style={styles.cardButtonsText}>Register a Complaint</Text>
-                    <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                        <Image style={styles.Pics} source={require('../img/bug.png') }/>
+                    <View style={{flex: 1, alignItems: 'flex-end'}}>
+                        <Image style={styles.Pics} source={require('../img/bug.png')}/>
                     </View>
                 </Pressable>
                 <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('FAQs')}>
                     <Text style={styles.cardButtonsText}>FAQs</Text>
-                    <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                        <Image style={styles.Pics} source={require('../img/faqs.png') }/>
+                    <View style={{flex: 1, alignItems: 'flex-end'}}>
+                        <Image style={styles.Pics} source={require('../img/faqs.png')}/>
                     </View>
                 </Pressable>
                 <Pressable onPress={handleLogout}>
                     <View style={styles.cardButtons}>
                         <Text style={styles.cardButtonsText}>Logout</Text>
-                        <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                            <Image style={styles.Pics} source={require('../img/logout.png') }/>
+                        <View style={{flex: 1, alignItems: 'flex-end'}}>
+                            <Image style={styles.Pics} source={require('../img/logout.png')}/>
                         </View>
                     </View>
                 </Pressable>
@@ -114,17 +118,19 @@ export default function TenantProfile({ navigation, route }) {
             {/*</Pressable>*/}
             <View style={styles.bottomContainer}>
                 <View style={styles.bottomNavRow}>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('MyRentals', {userID, tenantID })}>
+                    <Pressable style={styles.bottomNavButton}
+                               onPress={() => navigation.navigate('MyRentals', {userID, tenantID})}>
                         <Image
-                            style={{ width: 40, height: 40 }}
+                            style={{width: 40, height: 40}}
                             source={require('../img/propertiesIcon.png')}
                         />
                         <Text style={styles.bottomContainerText}>Rentals</Text>
                     </Pressable>
 
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('TenantNotification', {userID, tenantID })}>
+                    <Pressable style={styles.bottomNavButton}
+                               onPress={() => navigation.navigate('TenantNotification', {userID, tenantID})}>
                         <Image
-                            style={{ width: 40, height: 40 }}
+                            style={{width: 40, height: 40}}
                             source={require('../img/notification.png')}
                         />
                         <Text style={styles.bottomContainerText}>Alerts</Text>
@@ -132,7 +138,7 @@ export default function TenantProfile({ navigation, route }) {
                     <Pressable
                         style={[styles.bottomNavButton]}>
                         <Image
-                            style={{ width: 40, height: 40 }}
+                            style={{width: 40, height: 40}}
                             source={require('../img/profileFocused.png')}
                         />
                         <Text style={styles.bottomContainerText}>Profile</Text>
@@ -183,10 +189,10 @@ const styles = StyleSheet.create({
 
         backgroundColor: '#47b5ff',
         marginTop: '5%',
-        paddingBottom:290,
+        paddingBottom: 290,
         marginBottom: '1%',
         width: '100%',
-        paddingTop:'4%'
+        paddingTop: '4%'
 
     },
     cardButtons: {
@@ -227,7 +233,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20, // Adjust the margin for spacing
         marginTop: 2
     },
-    bottomContainerText:{
+    bottomContainerText: {
         fontSize: 14,
         fontWeight: "bold"
     },

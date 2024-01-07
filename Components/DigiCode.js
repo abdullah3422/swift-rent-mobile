@@ -1,17 +1,16 @@
 import * as React from 'react';
-import {Image, Pressable, StyleSheet, Text, View } from 'react-native';
-
-
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 
 export default function DigiCode({navigation, route}) {
-    const { userType, userID, ownerID, tenantID, digiCode } = route.params;
+    const {userType, userID, ownerID, tenantID, digiCode} = route.params;
     return (
         <View style={styles.container}>
 
             <Text style={styles.digitCodeText}>Your 16 Digit {'\n'}Recovery Code</Text>
             <Text style={styles.recoveryText}>Save this code to {'\n'}recover your password</Text>
             <Text style={styles.digiCode} selectable={true}>{digiCode}</Text>
-            <Pressable style={styles.button} onPress={() => navigation.navigate('SetUp', { userType, userID, ownerID, tenantID } )}>
+            <Pressable style={styles.button}
+                       onPress={() => navigation.navigate('SetUp', {userType, userID, ownerID, tenantID})}>
                 <Text style={styles.buttonText}>Continue to {'\n'} Dashboard</Text>
             </Pressable>
 

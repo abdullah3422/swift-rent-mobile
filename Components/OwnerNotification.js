@@ -3,7 +3,7 @@ import {Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native
 
 export default function OwnerNotification({navigation, route}) {
 
-    const {userID, ownerID } = route.params;
+    const {userID, ownerID} = route.params;
     console.log("userID: " + userID);
     console.log("ownerID: " + ownerID);
 
@@ -64,16 +64,17 @@ export default function OwnerNotification({navigation, route}) {
             <View style={styles.bottomContainer}>
                 <View style={styles.bottomNavRow}>
                     <Pressable style={styles.bottomNavButton}
-                               onPress={() => navigation.navigate('MyProperties', {userID, ownerID })}>
+                               onPress={() => navigation.navigate('MyProperties', {userID, ownerID})}>
                         <Image
                             style={{width: 40, height: 40}}
                             source={require('../img/propertiesIcon.png')}
                         />
                         <Text style={styles.bottomContainerText}>Properties</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('AnalyticsOwner', {userID, ownerID })}>
+                    <Pressable style={styles.bottomNavButton}
+                               onPress={() => navigation.navigate('AnalyticsOwner', {userID, ownerID})}>
                         <Image
-                            style={{ width: 40, height: 40 }}
+                            style={{width: 40, height: 40}}
                             source={require('../img/analyticIcon.png')}
                         />
                         <Text style={styles.bottomContainerText}>Analytics</Text>
@@ -86,7 +87,7 @@ export default function OwnerNotification({navigation, route}) {
                         <Text style={styles.bottomContainerText}>Alerts</Text>
                     </Pressable>
                     <Pressable style={styles.bottomNavButton}
-                               onPress={() => navigation.navigate('OwnerProfile', {userID, ownerID })}>
+                               onPress={() => navigation.navigate('OwnerProfile', {userID, ownerID})}>
                         <Image
                             style={{width: 40, height: 40}}
                             source={require('../img/profile.png')}

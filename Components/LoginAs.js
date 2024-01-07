@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { Alert, Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import {Alert, Dimensions, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 
-export default function LoginAs({ navigation, route }) {
-    const { userID, ownerID, tenantID } = route.params;
-console.log(userID);
+export default function LoginAs({navigation, route}) {
+    const {userID, ownerID, tenantID} = route.params;
+    console.log(userID);
     const handleOwnerPress = () => {
         if (ownerID !== 0) {
             navigation.reset({
                 index: 0,
-                routes: [{ name: 'AnalyticsOwner', params: { userID, ownerID } }],
+                routes: [{name: 'AnalyticsOwner', params: {userID, ownerID}}],
             });
         } else {
             // Handle the case when ownerId is 0
@@ -20,7 +20,7 @@ console.log(userID);
         if (tenantID !== 0) {
             navigation.reset({
                 index: 0,
-                routes: [{ name: 'TenantNotification', params: { userID, tenantID } }],
+                routes: [{name: 'TenantNotification', params: {userID, tenantID}}],
             });
         } else {
             // Handle the case when tenantId is 0
@@ -31,7 +31,7 @@ console.log(userID);
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Image source={require('../img/logoColored.png')} style={styles.logo} />
+                <Image source={require('../img/logoColored.png')} style={styles.logo}/>
             </View>
             <Text style={styles.LoginAs}>Sign-in As</Text>
             <Pressable style={styles.button} onPress={handleOwnerPress}>

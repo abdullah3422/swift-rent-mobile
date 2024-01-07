@@ -1,11 +1,10 @@
 import * as React from 'react';
-import {Image, Pressable, StyleSheet, Text, View, Alert, useState } from 'react-native';
+import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import axios from "axios";
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 
 
-
-export default function OwnerProfile({ navigation, route }) {
+export default function OwnerProfile({navigation, route}) {
     const handleLogout = () => {
         Alert.alert(
             'Confirm Logout',
@@ -21,23 +20,23 @@ export default function OwnerProfile({ navigation, route }) {
                     onPress: () => {
                         navigation.reset({
                             index: 0,
-                            routes: [{ name: 'WelcomeScreen' }],
+                            routes: [{name: 'WelcomeScreen'}],
                         });
                     },
                 },
             ],
-            { cancelable: false }
+            {cancelable: false}
         );
     };
-    const {ipAddress, userID, ownerID } = route.params;
+    const {ipAddress, userID, ownerID} = route.params;
     const [ownerData, setOwnerData] = React.useState({
         ownerName: '',
         email: '',
         phone: '',
         DOB: '',
     });
-    console.log("userID: "+userID);
-    console.log("ownerID: "+ownerID);
+    console.log("userID: " + userID);
+    console.log("ownerID: " + ownerID);
     const handleOwnerDetails = async () => {
         try {
             const response = await axios.post(ipAddress + 'api/owner-details', {
@@ -65,45 +64,48 @@ export default function OwnerProfile({ navigation, route }) {
 
     return (
         <View style={styles.container}>
-                <Pressable style={styles.topContainer} onPress={() => navigation.navigate('EditAccount', {userID, ownerID })}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 30, fontWeight: 'bold' }}>{ownerData.ownerName}</Text>
-                        <Image style={styles.profileImage} source={require('../img/edit.png')} />
-                    </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
-                        <Text style={{ fontSize: 16, width: '95%' }}>{ownerData.phone}</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 16, width: '95%' }}>{ownerData.email}</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 16, width: '95%' }}>{ownerData.DOB}</Text>
-                    </View>
-                </Pressable>
+            <Pressable style={styles.topContainer}
+                       onPress={() => navigation.navigate('EditAccount', {userID, ownerID})}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                    <Text style={{fontSize: 30, fontWeight: 'bold'}}>{ownerData.ownerName}</Text>
+                    <Image style={styles.profileImage} source={require('../img/edit.png')}/>
+                </View>
+                <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
+                    <Text style={{fontSize: 16, width: '95%'}}>{ownerData.phone}</Text>
+                </View>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={{fontSize: 16, width: '95%'}}>{ownerData.email}</Text>
+                </View>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={{fontSize: 16, width: '95%'}}>{ownerData.DOB}</Text>
+                </View>
+            </Pressable>
             <View style={styles.middleContainer}>
-                <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('ChangePassword', {userID, ownerID })}>
+                <Pressable style={styles.cardButtons}
+                           onPress={() => navigation.navigate('ChangePassword', {userID, ownerID})}>
                     <Text style={styles.cardButtonsText}>Change Password</Text>
-                    <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                        <Image style={styles.Pics} source={require('../img/change.png') }/>
+                    <View style={{flex: 1, alignItems: 'flex-end'}}>
+                        <Image style={styles.Pics} source={require('../img/change.png')}/>
                     </View>
                 </Pressable>
-                <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('ReportBug', {userID, ownerID})}>
+                <Pressable style={styles.cardButtons}
+                           onPress={() => navigation.navigate('ReportBug', {userID, ownerID})}>
                     <Text style={styles.cardButtonsText}>Register a Complaint</Text>
-                    <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                        <Image style={styles.Pics} source={require('../img/bug.png') }/>
+                    <View style={{flex: 1, alignItems: 'flex-end'}}>
+                        <Image style={styles.Pics} source={require('../img/bug.png')}/>
                     </View>
                 </Pressable>
                 <Pressable style={styles.cardButtons} onPress={() => navigation.navigate('FAQs')}>
                     <Text style={styles.cardButtonsText}>FAQs</Text>
-                    <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                        <Image style={styles.Pics} source={require('../img/faqs.png') }/>
+                    <View style={{flex: 1, alignItems: 'flex-end'}}>
+                        <Image style={styles.Pics} source={require('../img/faqs.png')}/>
                     </View>
                 </Pressable>
                 <Pressable onPress={handleLogout}>
                     <View style={styles.cardButtons}>
                         <Text style={styles.cardButtonsText}>Logout</Text>
-                        <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                            <Image style={styles.Pics} source={require('../img/logout.png') }/>
+                        <View style={{flex: 1, alignItems: 'flex-end'}}>
+                            <Image style={styles.Pics} source={require('../img/logout.png')}/>
                         </View>
                     </View>
                 </Pressable>
@@ -111,30 +113,33 @@ export default function OwnerProfile({ navigation, route }) {
             </View>
             <View style={styles.bottomContainer}>
                 <View style={styles.bottomNavRow}>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('MyProperties', {userID, ownerID })}>
+                    <Pressable style={styles.bottomNavButton}
+                               onPress={() => navigation.navigate('MyProperties', {userID, ownerID})}>
                         <Image
-                            style={{ width: 40, height: 40 }}
+                            style={{width: 40, height: 40}}
                             source={require('../img/propertiesIcon.png')}
                         />
                         <Text style={styles.bottomContainerText}>Properties</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('AnalyticsOwner', {userID, ownerID })}>
+                    <Pressable style={styles.bottomNavButton}
+                               onPress={() => navigation.navigate('AnalyticsOwner', {userID, ownerID})}>
                         <Image
-                            style={{ width: 40, height: 40 }}
+                            style={{width: 40, height: 40}}
                             source={require('../img/analyticIcon.png')}
                         />
                         <Text style={styles.bottomContainerText}>Analytics</Text>
                     </Pressable>
-                    <Pressable style={styles.bottomNavButton} onPress={() => navigation.navigate('OwnerNotification', {userID, ownerID })}>
+                    <Pressable style={styles.bottomNavButton}
+                               onPress={() => navigation.navigate('OwnerNotification', {userID, ownerID})}>
                         <Image
-                            style={{ width: 40, height: 40 }}
+                            style={{width: 40, height: 40}}
                             source={require('../img/notification.png')}
                         />
                         <Text style={styles.bottomContainerText}>Alerts</Text>
                     </Pressable>
                     <Pressable style={styles.bottomNavButton}>
                         <Image
-                            style={{ width: 40, height: 40 }}
+                            style={{width: 40, height: 40}}
                             source={require('../img/profileFocused.png')}
                         />
                         <Text style={styles.bottomContainerText}>Profile</Text>
@@ -179,10 +184,10 @@ const styles = StyleSheet.create({
         flex: 0.6,
         backgroundColor: '#47b5ff',
         marginTop: '5%',
-        paddingBottom:290,
+        paddingBottom: 290,
         marginBottom: '1%',
         width: '100%',
-        paddingTop:'4%'
+        paddingTop: '4%'
 
     },
     cardButtons: {
@@ -228,7 +233,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20, // Adjust the margin for spacing
         marginTop: 2
     },
-    bottomContainerText:{
+    bottomContainerText: {
         fontSize: 14,
         fontWeight: "bold"
     },

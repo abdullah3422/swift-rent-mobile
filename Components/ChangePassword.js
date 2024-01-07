@@ -1,20 +1,19 @@
-import React from 'react';
-import { Alert, Text, TextInput, View, StyleSheet, Pressable } from 'react-native';
+import React, {useState} from 'react';
+import {Alert, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import axios from 'axios';
-import { useState } from 'react';
-import { md5 } from 'js-md5';
-import { Formik } from 'formik';
+import {md5} from 'js-md5';
+import {Formik} from 'formik';
 import * as Yup from 'yup';
 
-export default function ChangePassword({ navigation, route }) {
-    const { userID, ownerID, tenantID } = route.params;
+export default function ChangePassword({navigation, route}) {
+    const {userID, ownerID, tenantID} = route.params;
     const ipAddress = route.params.ipAddress;
 
     const [error, setError] = useState('');
 
     return (
         <Formik
-            initialValues={{ oldPassword: '', newPassword: '', confirmPassword: '' }}
+            initialValues={{oldPassword: '', newPassword: '', confirmPassword: ''}}
             validationSchema={Yup.object().shape({
                 oldPassword: Yup.string()
                     .required('Please enter your old password.')
@@ -26,7 +25,7 @@ export default function ChangePassword({ navigation, route }) {
                     .required('Please confirm your new password.')
                     .oneOf([Yup.ref('newPassword'), null], 'New password and confirm password do not match.'),
             })}
-            onSubmit={async (values, { setFieldError }) => {
+            onSubmit={async (values, {setFieldError}) => {
                 if (values.oldPassword === '') {
                     Alert.alert('Please enter your old password.');
                     setFieldError('oldPassword', 'Please enter your old password.');
@@ -47,13 +46,13 @@ export default function ChangePassword({ navigation, route }) {
                     });
 
                     if (response.data.success) {
-                        const { digiCode } = response.data;
+                        const {digiCode} = response.data;
                         console.log(digiCode);
                         Alert.alert('Password Successfully Changed', `New 16 digit code: ${digiCode}`);
                         if (ownerID !== undefined) {
-                            navigation.navigate('OwnerProfile', { userID, ownerID });
+                            navigation.navigate('OwnerProfile', {userID, ownerID});
                         } else if (tenantID !== undefined) {
-                            navigation.navigate('TenantProfile', { userID, tenantID });
+                            navigation.navigate('TenantProfile', {userID, tenantID});
                         }
                     }
                 } catch (error) {
@@ -63,9 +62,9 @@ export default function ChangePassword({ navigation, route }) {
                 }
             }}
         >
-            {({ values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit}) => (
+            {({values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit}) => (
                 <View style={styles.container}>
-                    <Text style={styles.headerText}>Change Your {'\n'}  Password </Text>
+                    <Text style={styles.headerText}>Change Your {'\n'} Password </Text>
 
                     <TextInput
                         style={styles.input}
@@ -107,8 +106,8 @@ export default function ChangePassword({ navigation, route }) {
                     )}
 
                     <View style={styles.buttonContainer}>
-                        <View style={styles.space} />
-                        <Pressable style={[styles.button, { width: 160 }]} onPress={handleSubmit}>
+                        <View style={styles.space}/>
+                        <Pressable style={[styles.button, {width: 160}]} onPress={handleSubmit}>
                             <Text style={styles.buttonText}>Change</Text>
                         </Pressable>
                     </View>
