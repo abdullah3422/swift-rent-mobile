@@ -3,7 +3,7 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {useEffect} from "react";
 
 
-export default function SplashScreen({navigation, route}) {
+export default function SetUp({navigation, route}) {
     useEffect(() => {
         const timeout = setTimeout(() => {
             const { userType, userID, ownerID, tenantID } = route.params;

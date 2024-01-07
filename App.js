@@ -41,13 +41,13 @@ import RentalMenu from "./Components/RentalMenu";
 const Stack = createNativeStackNavigator();
 
 // passing this ipAddress as a prop to other screens where needed, so it needs to be change only here
-const ipAddress = "http://192.168.1.6:3000/";
+const ipAddress = "http://192.168.1.10:3000/";
 
 const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="RegisterTenant" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="SplashScreen" screenOptions={{ headerShown: false }}>
 
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />

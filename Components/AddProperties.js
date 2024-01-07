@@ -122,7 +122,7 @@ export default function AddProperties({navigation, route}) {
 
                         <View style={styles.space}/>
                         <Pressable style={styles.button} onPress={handleSubmit}>
-                            <Text style={styles.buttonText}>Next</Text>
+                            <Text style={styles.buttonText}>Register</Text>
                         </Pressable>
 
                     </View>
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: 150,
+        width: 180,
         marginTop: 10,
     },
     button: {

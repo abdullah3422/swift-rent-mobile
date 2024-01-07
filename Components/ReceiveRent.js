@@ -16,6 +16,7 @@ export default function ReceiveRent({ navigation, route }) {
         dueDate: '',
         rent: '',
     });
+
     useFocusEffect(
         React.useCallback(() => {
             const handleInitialData = async () => {
@@ -38,24 +39,36 @@ export default function ReceiveRent({ navigation, route }) {
         }, [propertyID])
     );
 
-    async function handleRentCollection() {
+    const handleRentCollection = async (values) => {
         try {
             const response = await axios.post(ipAddress + 'api/receive-rent', {
                 propertyID: String(propertyID),
-                rent: data.rentAmount,
+                rent: values.rentAmount,
             });
             if (response.data.success) {
                 Alert.alert('Success', 'Rent successfully received!')
-                navigation.navigate('MyProperties', {userID, ownerID});
+                navigation.navigate('MyProperties', { userID, ownerID });
             }
         } catch (error) {
             console.log("Error receiving rent:", error);
             Alert.alert("Error receiving rent");
         }
-    }
+    };
+
+    const rentValidationSchema = Yup.object().shape({
+        rentAmount: Yup.number()
+            .typeError('Rent must be a number')
+            .min(1, 'Rent must be at least 1')
+            .required('Rent is required'),
+    });
 
     return (
-
+        <Formik
+            initialValues={{ rentAmount: '' }}
+            validationSchema={rentValidationSchema}
+            onSubmit={(values) => handleRentCollection(values)}
+        >
+            {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
         <View style={styles.container}>
             <Text style={styles.headerText}>Receive Rent</Text>
             <View style={styles.textContainer}>
@@ -63,22 +76,31 @@ export default function ReceiveRent({ navigation, route }) {
                 <Text style={styles.bodyText}>Due Date: {data.dueDate}</Text>
                 <Text style={styles.bodyText}>Rent: {data.rent}</Text>
             </View>
-            <TextInput
-                style={styles.input}
-                placeholder="Rent Amount"
-                placeholderTextColor="#cdcdcd"
-                onChangeText={(text) => setData({ ...data, rentAmount: text })}
-            />
 
+                    <View style={styles.input}>
+                        <TextInput
+                            placeholder="Rent Amount"
+                            placeholderTextColor="#cdcdcd"
+                            onChangeText={handleChange('rentAmount')}
+                            onBlur={handleBlur('rentAmount')}
+                            value={values.rentAmount}
+                            keyboardType="numeric"
+                        />
+                    </View>
+            {touched.rentAmount && errors.rentAmount && (
+                <Text style={styles.errorText}>{errors.rentAmount}</Text>
+            )}
             <View style={styles.buttonContainer}>
-                <View style={styles.space} />
-                <Pressable style={[styles.button, { width: 160 }]} onPress={handleRentCollection}>
+                <Pressable
+                    style={[styles.button, { width: 160 }]}
+                    onPress={handleSubmit}
+                >
                     <Text style={styles.buttonText}>Confirm</Text>
                 </Pressable>
             </View>
         </View>
-
-
+            )}
+        </Formik>
     );
 }
 

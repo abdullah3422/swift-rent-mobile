@@ -40,6 +40,7 @@ export default function EditProperty({ navigation, route }) {
 
     async function handlePropertyEdit() {
         try {
+            console.log(data.propertyAddress);
             const response = await axios.post(ipAddress + 'api/edit-property', {
                 propertyID: propertyID,
                 propertyAddress: data.propertyAddress,
@@ -74,7 +75,11 @@ export default function EditProperty({ navigation, route }) {
 
     return (
         <Formik
-            initialValues={{ propertyAddress: '', dueDate: '', rent: '' }}
+            enableReinitialize={true}
+            initialValues={{
+                propertyAddress: data.propertyAddress,
+                dueDate: data.dueDate,
+                rent: data.rent }}
             validationSchema={editPropertiesSchema}
             onSubmit={handlePropertyEdit}
         >
@@ -87,11 +92,14 @@ export default function EditProperty({ navigation, route }) {
                     <TextInput
                         style={styles.input}
                         defaultValue={String(data.propertyAddress)}
-                        //onChangeText={(text) => setData({ ...data, propertyAddress: text })}
-                        onChangeText={handleChange('propertyAddress')}
+                        onChangeText={(text) => {
+                            setData({ ...data, propertyAddress: text });
+                            handleChange('propertyAddress')(text);
+                        }}
                         onBlur={handleBlur('propertyAddress')}
                         placeholderTextColor="#cdcdcd"
                     />
+
                     {touched.propertyAddress && errors.propertyAddress && (
                         <Text style={styles.errorText}>{errors.propertyAddress}</Text>
                     )}
@@ -100,8 +108,10 @@ export default function EditProperty({ navigation, route }) {
                     <TextInput
                         style={styles.input}
                         defaultValue={String(data.dueDate)}
-                        //onChangeText={(text) => setData({ ...data, dueDate: text })}
-                        onChangeText={handleChange('dueDate')}
+                        onChangeText={(text) => {
+                            setData({ ...data, dueDate: text });
+                            handleChange('dueDate')(text);
+                        }}
                         onBlur={handleBlur('dueDate')}
                         placeholderTextColor="#cdcdcd"
                     />
@@ -110,16 +120,19 @@ export default function EditProperty({ navigation, route }) {
                     <TextInput
                         style={styles.input}
                         defaultValue={String(data.rent)}
-                        //onChangeText={(text) => setData({ ...data, rent: text })}
-                        onChangeText={handleChange('rent')}
+                        onChangeText={(text) => {
+                            setData({ ...data, rent: text });
+                            handleChange('rent')(text);
+                        }}
                         onBlur={handleBlur('rent')}
                         placeholderTextColor="#cdcdcd"
                     />
                     {touched.rent && errors.rent && <Text style={styles.errorText}>{errors.rent}</Text>}
 
+
                     <View style={styles.buttonContainer}>
                         <View style={styles.space} />
-                        <Pressable style={[styles.button, { width: 160 }]} onPress={handlePropertyEdit}>
+                        <Pressable style={[styles.button, { width: 160 }]} onPress={handleSubmit}>
                             <Text style={styles.buttonText}>Change</Text>
                         </Pressable>
                     </View>

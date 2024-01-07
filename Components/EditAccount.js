@@ -64,7 +64,7 @@ export default function EditAccount({navigation, route}) {
     handleInitialData();
     }, [ownerID, tenantID, userID]);
 
-    async function HandleChange() {
+    async function handleEditAccount() {
         try {
             const verificationResponse = await axios.post(ipAddress + 'api/signup-contact', {
                 userID: userID,
@@ -119,16 +119,17 @@ export default function EditAccount({navigation, route}) {
     return (
 
         <Formik
+            enableReinitialize={true}
             initialValues={{
-                Name: '',
-                email:'',
-                phone:'',
-                Year: '',
-                Month: '',
-                Day: ''
+                Name: data.Name,
+                email: data.email,
+                phone: data.phone,
+                Year: data.Year,
+                Month: data.Month,
+                Day: data.Day,
             }}
             validationSchema={editAccountSchema}
-            onSubmit={HandleChange}
+            onSubmit={handleEditAccount}
         >
             {({ values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit, handleBlur }) => (
 
@@ -137,47 +138,65 @@ export default function EditAccount({navigation, route}) {
 
                     <TextInput
                         style={styles.input}
-                        defaultValue={data.Name}
-                        onChangeText={handleChange('Name')}
+                        defaultValue={String(data.Name)}
+                        onChangeText={(text) => {
+                            setData({ ...data, Name: text });
+                            handleChange('Name')(text);
+                        }}
                         onBlur={handleBlur('Name')}
                     />
                     {touched.Name && errors.Name && <Text style={styles.errorText}>{errors.Name}</Text>}
                     <TextInput
                         style={styles.input}
-                        defaultValue={data.email}
-                        onChangeText={handleChange('email')}
+                        defaultValue={String(data.email)}
+                        onChangeText={(text) => {
+                            setData({ ...data, email: text });
+                            handleChange('email')(text);
+                        }}
                         onBlur={handleBlur('email')}
                     />
                     {touched.email && errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
                     <TextInput
                         style={styles.input}
-                        defaultValue={data.phone}
-                        onChangeText={handleChange('phone')}
+                        defaultValue={String(data.phone)}
+                        onChangeText={(text) => {
+                            setData({ ...data, phone: text });
+                            handleChange('phone')(text);
+                        }}
                         onBlur={handleBlur('phone')}
                     />
                     {touched.phone && errors.phone && <Text style={styles.errorText}>{errors.phone}</Text>}
                     <View style={styles.dateInputContainer}>
                         <TextInput
-                            defaultValue={data.Year}
+                            defaultValue={String(data.Year)}
                             style={styles.dateInput}
                             keyboardType="number-pad"
-                            onChangeText={handleChange('Year')}
+                            onChangeText={(text) => {
+                                setData({ ...data, Year: text });
+                                handleChange('Year')(text);
+                            }}
                             onBlur={handleBlur('Year')}
                         />
 
                         <TextInput
-                            defaultValue={data.Month}
+                            defaultValue={String(data.Month)}
                             style={styles.dateInput}
                             keyboardType="number-pad"
-                            onChangeText={handleChange('Month')}
+                            onChangeText={(text) => {
+                                setData({ ...data, Month: text });
+                                handleChange('Month')(text);
+                            }}
                             onBlur={handleBlur('Month')}
                         />
 
                         <TextInput
-                            defaultValue={data.Day}
+                            defaultValue={String(data.Day)}
                             style={styles.dateInput}
                             keyboardType="number-pad"
-                            onChangeText={handleChange('Day')}
+                            onChangeText={(text) => {
+                                setData({ ...data, Day: text });
+                                handleChange('Day')(text);
+                            }}
                             onBlur={handleBlur('Day')}
                         />
 
@@ -187,7 +206,7 @@ export default function EditAccount({navigation, route}) {
                     {touched.Day && errors.Day && <Text style={styles.errorText}>{errors.Day}</Text>}
                     <View style={styles.buttonContainer}>
                         <View style={styles.space}/>
-                        <Pressable style={[styles.button, {width: 160}]} onPress={handleChange}>
+                        <Pressable style={[styles.button, {width: 160}]} onPress={handleSubmit}>
                             <Text style={styles.buttonText}>Change</Text>
                         </Pressable>
                     </View>
