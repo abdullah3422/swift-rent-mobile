@@ -1,31 +1,48 @@
 import * as React from 'react';
-import {Image, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaProvider} from "react-native-safe-area-context";
 
-export default function FAQs({ navigation }) {
+export default function FAQs() {
     return (
-        <View style={styles.container}>
-            <Text style={styles.headerText}>Frequently Asked {'\n'}{'\t'}{'\t'}{'\t'}{'\t'}{'\t'}{'\t'}Questions</Text>
-
-            <Pressable style={styles.button}>
-                <Text>How to add a Property</Text>
-                <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                    <Image style={styles.Pics} source={require('../img/downArrow.png')}/>
-                </View>
-            </Pressable>
-            <Pressable style={styles.button}>
-                <Text>How register a Tenant</Text>
-                <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                <Image style={styles.Pics} source={require('../img/downArrow.png')}/>
-                </View>
-            </Pressable>
-            <Pressable style={styles.detailedButton}>
-                <Text>How to change a Tenant</Text>
-                <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                <Image style={styles.Pics} source={require('../img/upArrow.png')}/>
-                </View>
-            </Pressable>
-
-        </View>
+        <SafeAreaProvider>
+            <View style={styles.container}>
+                <Text style={styles.headerText}>Frequently Asked {'\n'}{'\t'}{'\t'}{'\t'}{'\t'}{'\t'}{'\t'}Questions</Text>
+                <ScrollView
+                    contentContainerStyle={styles.scrollContent}
+                    showsVerticalScrollIndicator={false}>
+                    <View style={styles.scrollContainer}>
+                        <View style={styles.border}>
+                            <Text style={styles.questionText}>How to add a Property?</Text>
+                            <Text style={styles.button}>lorem ipsum dolores set lorem ipsum dolores set lorem ipsum dolores set</Text>
+                        </View>
+                        <View style={styles.border}>
+                            <Text style={styles.questionText}>How to add a Tenant?</Text>
+                            <Text style={styles.button}>lorem ipsum dolores set</Text>
+                        </View>
+                        <View style={styles.border}>
+                            <Text style={styles.questionText}>How to add a Property?</Text>
+                            <Text style={styles.button}>lorem ipsum dolores set</Text>
+                        </View>
+                        <View style={styles.border}>
+                            <Text style={styles.questionText}>How to add a Property?</Text>
+                            <Text style={styles.button}>lorem ipsum dolores set</Text>
+                        </View>
+                        <View style={styles.border}>
+                            <Text style={styles.questionText}>How to add a Property?</Text>
+                            <Text style={styles.button}>lorem ipsum dolores set</Text>
+                        </View>
+                        <View style={styles.border}>
+                            <Text style={styles.questionText}>How to add a Property?</Text>
+                            <Text style={styles.button}>lorem ipsum dolores set</Text>
+                        </View>
+                        <View style={styles.border}>
+                            <Text style={styles.questionText}>How to add a Property?</Text>
+                            <Text style={styles.button}>lorem ipsum dolores set</Text>
+                        </View>
+                    </View>
+                </ScrollView>
+            </View>
+        </SafeAreaProvider>
     );
 }
 
@@ -35,15 +52,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        marginTop: '-45%',
+        paddingTop: '10%', // Adjusted marginTop to paddingTop
+        width: '100%',
 
     },
 
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: -180,
+        // marginTop: -180,
         marginBottom: 10,
+        // marginTop: 20
     },
 
     headerText: {
@@ -53,32 +72,34 @@ const styles = StyleSheet.create({
         marginBottom: '15%',
         justifyContent: "center",
         alignContent: "center",
-
+        marginTop: '10%'
 
     },
     button: {
-        width: '90%',
-        height: 40,
+        width: 'auto',
+        height: 'auto',
         borderColor: '#cdcdcd',
-        borderWidth: 2,
-        borderRadius: 30,
-        padding: 10,
         paddingVertical:'2%',
-        marginTop: 3,
+        marginTop: 10,
         marginBottom: 10,
         backgroundColor: '#fff',
-        fontWeight: 'bold',
+        fontSize: 20
+    },
+    border:{
+        borderWidth: 2,
+        borderRadius: 30,
+        padding: 12,
+        margin: 5,
     },
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: '35%',
+        width: '100%',
         marginTop: 10,
     },
     detailedButton: {
         width: '90%',
         height: 100,
-
         borderColor: '#cdcdcd',
         borderWidth: 2,
         borderRadius: 15,
@@ -88,7 +109,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         fontWeight: 'bold',
     },
-
     space: {
         width: 10,
     },
@@ -99,5 +119,21 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20,
         marginTop: -18
+    },
+    questionText: {
+        fontSize: 25,
+        fontWeight: 'bold',
+        textAlign: 'left',
+        alignSelf: 'flex-start',
+    },
+    scrollContent: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: "100%"
+    },
+    scrollContainer: {
+        width: '100%'
     }
+
 });

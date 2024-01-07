@@ -41,7 +41,7 @@ import RentalMenu from "./Components/RentalMenu";
 const Stack = createNativeStackNavigator();
 
 // passing this ipAddress as a prop to other screens where needed, so it needs to be change only here
-const ipAddress = "http://192.168.1.10:3000/";
+const ipAddress = "http://192.168.0.40:3000/";
 
 const App = () => {
 
