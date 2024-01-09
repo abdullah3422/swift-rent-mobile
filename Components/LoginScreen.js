@@ -33,8 +33,6 @@ export default function LoginScreen({navigation, route}) {
 
             if (response.data.success) {
                 console.log('Login Successful');
-                Alert.alert('Login Successful!');
-                // ... (rest of your code)
                 var {userID, ownerID, tenantID} = response.data;
                 if (flag) {
                     if (ownerID !== 0 && tenantID !== 0) {
@@ -68,6 +66,11 @@ export default function LoginScreen({navigation, route}) {
                             routes: [{name: 'MyRentals', params: {userID, tenantID}}],
                         });
                     }
+                }
+                if(values.emailOrPhone === values.password) {
+                    Alert.alert('Login Successful!', 'Please change your password as soon as possible!');
+                } else {
+                    Alert.alert('Login Successful!');
                 }
             } else {
                 console.log('Login Failed:', response.data.error);

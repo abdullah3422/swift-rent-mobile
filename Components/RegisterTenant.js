@@ -28,7 +28,13 @@ export default function RegisterTenant({navigation, route}) {
             }
         } catch (error) {
             console.log("Error updating property data:", error);
-            Alert.alert("Error", "Tenant does not exist");
+            const lastThreeNumbers = String(error).match(/\d{3}$/);
+            console.log("lastThreeNumbers"+lastThreeNumbers);
+            if (String(lastThreeNumbers) === "401") {
+                Alert.alert("Error","Cannot register as a tenant to your own property");
+            } else{
+                Alert.alert("Error", "Tenant does not exist");
+            }
         }
     };
 

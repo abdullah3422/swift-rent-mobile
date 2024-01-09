@@ -57,6 +57,7 @@ export default function ReceiveRent({navigation, route}) {
         rentAmount: Yup.number()
             .typeError('Rent must be a number')
             .min( parseInt(data.rent), 'Rent must be ' + String(data.rent))
+            .max( parseInt(data.rent), 'Rent must be ' + String(data.rent))
             .required('Rent is required'),
     });
 
