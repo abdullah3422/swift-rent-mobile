@@ -24,7 +24,7 @@ export default function RegisterTenant({navigation, route}) {
             });
             if (response.data.success) {
                 Alert.alert('Success', 'Tenant successfully registered')
-                navigation.navigate('MyProperties', {userID, ownerID});
+                navigation.navigate('AnalyticsOwner', {userID, ownerID});
             }
         } catch (error) {
             console.log("Error updating property data:", error);

@@ -119,7 +119,7 @@ export default function ResetPassword({navigation, route}) {
                     </View>
 
                     <Pressable style={[{width: 'auto'}]} onPress={handleForget}>
-                        <Text style={styles.buttonText}>Forgot your 16 Digit-Code?</Text>
+                        <Text style={{padding:6}}>Forgot your 16 Digit-Code?</Text>
                     </Pressable>
                     <View style={styles.buttonContainer}>
                         <View style={styles.space}/>

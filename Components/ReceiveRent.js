@@ -45,7 +45,7 @@ export default function ReceiveRent({navigation, route}) {
             });
             if (response.data.success) {
                 Alert.alert('Success', 'Rent successfully received!')
-                navigation.navigate('MyProperties', {userID, ownerID});
+                navigation.navigate('AnalyticsOwner', {userID, ownerID});
             }
         } catch (error) {
             console.log("Error receiving rent:", error);

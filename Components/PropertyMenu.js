@@ -27,7 +27,7 @@ export default function PropertyMenu({navigation, route}) {
                             });
                             if (response.data.success) {
                                 Alert.alert('Success', 'Tenant successfully un-registered');
-                                navigation.navigate('MyProperties', {userID, ownerID});
+                                navigation.navigate('AnalyticsOwner', {userID, ownerID});
                             }
                         } catch (error) {
                             console.log("Error unregistering tenant:", error);
@@ -60,7 +60,7 @@ export default function PropertyMenu({navigation, route}) {
                             });
                             if (response.data.success) {
                                 Alert.alert('Success', 'Property has been deleted successfully');
-                                navigation.navigate('MyProperties', {userID, ownerID});
+                                navigation.navigate('AnalyticsOwner', {userID, ownerID});
                             }
                         } catch (error) {
                             console.log("Error deleting property:", error);

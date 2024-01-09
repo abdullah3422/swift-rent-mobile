@@ -135,7 +135,7 @@ export default function LoginScreen({navigation, route}) {
                         </View>
 
                         <Pressable onPress={() => navigation.navigate('ResetPassword')}>
-                            <Text>Forgot Password?</Text>
+                            <Text style={{padding:6}}>Forgot Password?</Text>
                         </Pressable>
 
                         <View style={styles.buttonContainer}>

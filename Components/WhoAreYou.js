@@ -105,11 +105,12 @@ const styles = StyleSheet.create({
 
     },
     newRoleText: {
+        padding: 20,
         marginTop: 150,  // This will make the text fall almost to the end of the screen
         marginBottom: -90,  // Add some margin at the bottom
         fontSize: windowWidth * 0.04,  // Adjust the font size
         textDecorationLine: 'underline',  // Underline the text
-        color: '#06283d',
+        color: '#000',
     }
 
 });

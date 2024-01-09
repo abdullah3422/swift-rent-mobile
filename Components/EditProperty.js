@@ -49,7 +49,7 @@ export default function EditProperty({navigation, route}) {
             });
             if (response.data.success) {
                 Alert.alert('Success', 'Property data successfully updated')
-                navigation.navigate('MyProperties', {userID, ownerID});
+                navigation.navigate('AnalyticsOwner', {userID, ownerID});
             }
         } catch (error) {
             console.log("Error updating property data:", error);
